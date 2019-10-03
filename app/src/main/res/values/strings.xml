@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name" translatable="false">BeeGeesApp</string>
+    <string name="about_author1gitpage" translatable="false">https://github.com/TiagoPereira06</string>
+    <string name="about_author1_name" translatable="false">Tiago Pereira</string>
+    <string name="about_author2gitpage" translatable="false">https://github.com/PedroTereso</string>
+    <string name="about_author2_name" translatable="false">Pedro Tereso</string>
+    <string name="about_dev_message">Proudly Developed By:</string>
+    <string name="about_edu_message" translatable="false">ISEL-LEIC PDM 2019/2020</string>
+</resources>
