@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">BeeGeesApp</string>
+    <string name="app_name" translatable="false">BGG</string>
     <string name="about_author1gitpage" translatable="false">https://github.com/TiagoPereira06</string>
     <string name="about_author1_name" translatable="false">Tiago Pereira</string>
     <string name="about_author2gitpage" translatable="false">https://github.com/PedroTereso</string>
