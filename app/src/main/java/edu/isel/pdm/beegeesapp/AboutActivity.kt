@@ -1,8 +1,10 @@
 package edu.isel.pdm.beegeesapp
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_about.*
 
@@ -15,7 +17,7 @@ class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
-
+        supportActionBar?.hide()
         fun navigateToGitHub(author : Int) {
             if(author==1) {
                 val url = Uri.parse(getString(R.string.about_author1gitpage))
@@ -30,4 +32,7 @@ class AboutActivity : AppCompatActivity() {
         githubLogoa1.setOnClickListener { navigateToGitHub(1) }
         githubLogoa2.setOnClickListener { navigateToGitHub(2) }
     }
+
+
+
 }

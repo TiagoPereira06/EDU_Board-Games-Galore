@@ -6,4 +6,5 @@
     <string name="about_author2_name" translatable="false">Pedro Tereso</string>
     <string name="about_dev_message">Proudly Developed By:</string>
     <string name="about_edu_message" translatable="false">ISEL-LEIC PDM 2019/2020</string>
+    <string name="about_data_provider_message">Data Source : Game Board Atlas REST API</string>
 </resources>

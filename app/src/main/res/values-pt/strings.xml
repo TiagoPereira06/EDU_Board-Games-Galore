@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_dev_message">Desenvolvido Orgulhosamente Por:</string>
+    <string name="about_data_provider_message">Fonte Dados : Game Board Atlas REST API</string>
 </resources>
