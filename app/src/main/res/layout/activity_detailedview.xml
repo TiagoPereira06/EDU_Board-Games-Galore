@@ -126,7 +126,7 @@
             app:layout_constraintTop_toTopOf="@+id/ageIcon" />
 
         <ImageView
-            android:id="@+id/gameThumb"
+            android:id="@+id/thumbGame"
             android:layout_width="221dp"
             android:layout_height="283dp"
             android:layout_marginStart="5dp"
@@ -159,7 +159,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/ratingIcon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/gameThumb"
+            app:layout_constraintStart_toEndOf="@+id/thumbGame"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -209,7 +209,7 @@
             android:layout_marginTop="15dp"
             android:contentDescription="timeicon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gameThumb"
+            app:layout_constraintTop_toBottomOf="@+id/thumbGame"
             app:srcCompat="@drawable/players" />
 
         <ImageView
