@@ -2,4 +2,7 @@
 <resources>
     <string name="about_dev_message">Desenvolvido Orgulhosamente Por:</string>
     <string name="about_data_provider_message">Fonte Dados : Game Board Atlas REST API</string>
+    <string name="navbar_search">Pesquisar</string>
+    <string name="navbar_about">Sobre</string>
+    <string name="navbar_fav">Favoritos</string>
 </resources>

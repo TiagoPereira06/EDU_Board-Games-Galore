@@ -18,5 +18,9 @@ class DetailedViewActivity : AppCompatActivity() {
             val url = Uri.parse("https://drive.google.com/file/d/0B9kp130SgLtdcGxTcTFodlhaWDg")
             startActivity(Intent(Intent.ACTION_VIEW, url))
         }
+        gameThumb.setOnClickListener{
+            val url = Uri.parse("https://www.boardgameatlas.com/search/game/kPDxpJZ8PD/spirit-island")
+            startActivity(Intent(Intent.ACTION_VIEW, url))
+        }
     }
 }

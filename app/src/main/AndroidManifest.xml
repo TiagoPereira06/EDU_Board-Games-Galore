@@ -19,6 +19,7 @@
         <activity android:name=".AboutActivity"/>
         <activity android:name=".DetailedViewActivity" />
 
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
