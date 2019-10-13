@@ -6,21 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabRippleColor="@color/colorText"
-            app:tabSelectedTextColor="@color/bnv_tab_item_foreground"
-            app:tabTextColor="@color/colorText" />
-
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </FrameLayout>
 
 

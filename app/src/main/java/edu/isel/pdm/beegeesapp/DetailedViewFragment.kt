@@ -20,18 +20,25 @@ class DetailedViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        if (savedInstanceState != null) {
+            var currentGame = savedInstanceState.get("Game Object") as Game
+            gameName.text = currentGame.name
+            //TODO: PREENCHER VISTA
+        }
         return inflater.inflate(R.layout.fragment_detailed_view, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        ruleBookText.setOnClickListener{
+        ruleBookText.setOnClickListener {
             val url = Uri.parse("https://drive.google.com/file/d/0B9kp130SgLtdcGxTcTFodlhaWDg")
             startActivity(Intent(Intent.ACTION_VIEW, url))
         }
-        thumbGame.setOnClickListener{
-            val url = Uri.parse("https://www.boardgameatlas.com/search/game/kPDxpJZ8PD/spirit-island")
+        thumbGame.setOnClickListener {
+            val url =
+                Uri.parse("https://www.boardgameatlas.com/search/game/kPDxpJZ8PD/spirit-island")
             startActivity(Intent(Intent.ACTION_VIEW, url))
         }
     }
+
 }

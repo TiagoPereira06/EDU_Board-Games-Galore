@@ -16,12 +16,11 @@ class AboutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
         supportActionBar?.hide()
-        fun navigateToGitHub(author : Int) {
-            if(author==1) {
+        fun navigateToGitHub(author: Int) {
+            if (author == 1) {
                 val url = Uri.parse(getString(R.string.about_author1gitpage))
                 startActivity(Intent(Intent.ACTION_VIEW, url))
-            }
-            else{
+            } else {
                 val url = Uri.parse(getString(R.string.about_author2gitpage))
                 startActivity(Intent(Intent.ACTION_VIEW, url))
             }
@@ -30,7 +29,6 @@ class AboutActivity : AppCompatActivity() {
         githubLogoa1.setOnClickListener { navigateToGitHub(1) }
         githubLogoa2.setOnClickListener { navigateToGitHub(2) }
     }
-
 
 
 }
