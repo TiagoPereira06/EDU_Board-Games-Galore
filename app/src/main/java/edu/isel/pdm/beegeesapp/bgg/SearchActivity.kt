@@ -1,6 +1,5 @@
-package edu.isel.pdm.beegeesapp
+package edu.isel.pdm.beegeesapp.bgg
 
-import android.app.PendingIntent.getActivity
 import android.app.SearchManager
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
@@ -12,14 +11,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_search.*
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.model.GamesViewModel
+import edu.isel.pdm.beegeesapp.bgg.view.GameViewHolder
+import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 
-
+private const val GAMES_LIST_KEY = "games_list"
 
 
 class SearchActivity : AppCompatActivity() {
+
+
+    private lateinit var games: GamesViewModel
     private var optionsSelect = "Name"
     private var lastOption = R.id.search_name
     var searchView: androidx.appcompat.widget.SearchView? = null
@@ -32,16 +35,14 @@ class SearchActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_search)
 
-        val games = listOf(
-            Game(R.drawable.thumb, 95, "Spirit Island", "Greater Than Games", 53.45, 4.97754),
-            Game(R.drawable.thumb, 125, "GVgv HUUvwd", "Hbbfih DIUHUh IGGIg", 10.45, 1.97754),
-            Game(R.drawable.thumb, 100, "KJBjib IBhgd", "Greater Than Games", 22.45, 2.97754),
-            Game(R.drawable.thumb, 15, "SDJHwhd AJdihd", "Greater Than Games", 20.45, 2.97754),
-            Game(R.drawable.thumb, 22, "Spirit Island", "Greater Than Games", 41.45, 1.97754),
-            Game(R.drawable.thumb, 105, "Spirit Island", "Greater Than Games", 124.45, 0.97754)
-        )
+        search_recycler_view.setHasFixedSize(true)
         search_recycler_view.layoutManager = LinearLayoutManager(this)
-        search_recycler_view.adapter = RecyclerViewAdapter(games)
+
+        games = getViewModel(GAMES_LIST_KEY) {
+            savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
+        }
+
+        search_recycler_view.adapter = GameViewHolder.GamesListAdapter(games)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -110,9 +111,12 @@ class SearchActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-/*        val fm = MainActivity().supportFragmentManager
-        fm.popBackStack()*/
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (!isChangingConfigurations) {
+            outState.putParcelable(GAMES_LIST_KEY, games)
+        }
     }
+
+
 }

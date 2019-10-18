@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp
+package edu.isel.pdm.beegeesapp.bgg
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -7,9 +7,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import edu.isel.pdm.beegeesapp.R
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val favGames: List<Game> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
+    }
+
+    fun addToFavourites(game : Game){
+      //  favGames[]=game
     }
 
 }

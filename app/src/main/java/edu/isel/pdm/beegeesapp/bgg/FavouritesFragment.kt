@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp
+package edu.isel.pdm.beegeesapp.bgg
 
 
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import edu.isel.pdm.beegeesapp.R
 import kotlinx.android.synthetic.main.fragment_favourites.*
 
 /**
@@ -20,7 +21,10 @@ class FavouritesFragment : Fragment() {
         //TEST FRAGMENT
         buttonTest.setOnClickListener {
             var fr = fragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragment_container, DetailedViewFragment())
+            fr?.replace(
+                R.id.fragment_container,
+                DetailedViewFragment()
+            )
             fr?.commit()
             /*val intent = Intent (activity, DetailedViewActivity::class.java)
             activity?.startActivity(intent)*/
@@ -34,4 +38,5 @@ class FavouritesFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favourites, container, false)
     }
+
 }

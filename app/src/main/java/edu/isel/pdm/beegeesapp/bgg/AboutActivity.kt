@@ -1,9 +1,10 @@
-package edu.isel.pdm.beegeesapp
+package edu.isel.pdm.beegeesapp.bgg
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import edu.isel.pdm.beegeesapp.R
 import kotlinx.android.synthetic.main.activity_about.*
 
 /**

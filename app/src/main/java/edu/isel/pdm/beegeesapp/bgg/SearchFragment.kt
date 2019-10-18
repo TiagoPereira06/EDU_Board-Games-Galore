@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp
+package edu.isel.pdm.beegeesapp.bgg
 
 
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import edu.isel.pdm.beegeesapp.R
 
 /**
  * A simple [Fragment] subclass.

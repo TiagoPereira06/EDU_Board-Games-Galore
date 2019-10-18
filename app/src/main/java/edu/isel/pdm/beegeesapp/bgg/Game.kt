@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp
+package edu.isel.pdm.beegeesapp.bgg
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -46,7 +46,8 @@ data class Game(
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Game> = object : Parcelable.Creator<Game> {
-            override fun createFromParcel(source: Parcel): Game = Game(source)
+            override fun createFromParcel(source: Parcel): Game =
+                Game(source)
             override fun newArray(size: Int): Array<Game?> = arrayOfNulls(size)
         }
     }

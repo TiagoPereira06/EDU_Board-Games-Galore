@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailedViewFragment">
+    tools:context=".bgg.DetailedViewFragment">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -12,14 +12,14 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         android:orientation="vertical"
-        tools:context=".DetailedViewActivity">
+        tools:context=".bgg.DetailedViewActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context=".DetailedViewActivity">
+            tools:context=".bgg.DetailedViewActivity">
 
             <ImageView
                 android:id="@+id/linkIcon"
