@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="10dp"
         tools:context=".bgg.DetailedViewActivity">
 
         <ImageView
@@ -95,7 +96,7 @@
             android:contentDescription="yearicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/priceIcon"
-            app:srcCompat="@drawable/calendarcolor" />
+            app:srcCompat="@drawable/calendar" />
 
         <TextView
             android:id="@+id/gameYear"
@@ -105,9 +106,8 @@
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="2015"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/yearIcon"
             app:layout_constraintTop_toTopOf="@+id/yearIcon" />
 
@@ -119,9 +119,8 @@
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="+3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/ageIcon"
             app:layout_constraintTop_toTopOf="@+id/ageIcon" />
 
@@ -155,7 +154,6 @@
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimary"
-            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/ratingIcon"
             app:layout_constraintEnd_toEndOf="parent"
@@ -170,9 +168,8 @@
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="25.65€"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/priceIcon"
             app:layout_constraintTop_toTopOf="@+id/priceIcon" />
 
@@ -184,9 +181,8 @@
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="93/100"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/ratingIcon"
             app:layout_constraintTop_toTopOf="@+id/ratingIcon" />
 
@@ -199,7 +195,7 @@
             android:contentDescription="priceicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingIcon"
-            app:srcCompat="@drawable/pricetag" />
+            app:srcCompat="@drawable/coin" />
 
         <ImageView
             android:id="@+id/playerIcon"
@@ -210,7 +206,7 @@
             android:contentDescription="timeicon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/thumbGame"
-            app:srcCompat="@drawable/players" />
+            app:srcCompat="@drawable/users_line" />
 
         <ImageView
             android:id="@+id/ratingIcon"
@@ -221,7 +217,7 @@
             android:contentDescription="ratingicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gameName"
-            app:srcCompat="@drawable/positivevotecolor" />
+            app:srcCompat="@drawable/positivevote" />
 
         <TextView
             android:id="@+id/nPlayers"
@@ -231,9 +227,8 @@
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="1-5"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/playerIcon"
             app:layout_constraintTop_toTopOf="@+id/playerIcon" />
 
@@ -245,9 +240,8 @@
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="90-120 min"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/timeIcon"
             app:layout_constraintTop_toTopOf="@+id/timeIcon" />
 
@@ -260,7 +254,7 @@
             android:contentDescription="timeIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerIcon"
-            app:srcCompat="@drawable/clockcolor" />
+            app:srcCompat="@drawable/clock_line" />
 
         <TextView
             android:id="@+id/description"
@@ -273,9 +267,8 @@
             android:scrollbars="vertical"
             android:text="Powerful Spirits have existed on this isolated island for time immemorial. They are both part of the natural world and - at the same time - something beyond nature. Native Islanders, known as the Dahan, have learned how to co-exist with the spirits, but with a healthy dose of fear and reverence. However, now, the island has been &quot;discovered&quot; by invaders from a far-off land. These would-be colonists are taking over the land and upsetting the natural balance, destroying the presence of Spirits as they go. As Spirits, you must grow in power and work together to drive the invaders from your island... before it's too late!"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorText"
-            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gameYear" />

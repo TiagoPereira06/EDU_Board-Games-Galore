@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.model.GameInfo
 import kotlinx.android.synthetic.main.activity_detailedview.*
 
 class DetailedViewActivity : AppCompatActivity() {
@@ -13,6 +14,12 @@ class DetailedViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailedview)
+        if(intent.hasExtra("Game Object")){
+            var currentGame = intent.getParcelableExtra("Game Object") as GameInfo
+            gameName.text = currentGame!!.name
+            //TODO: POPULAR AS RESTANTES VISTAS
+
+        }else throw IllegalArgumentException("Object not Found!")
         supportActionBar?.hide()
         creatorText.movementMethod = ScrollingMovementMethod()
         ruleBookText.setOnClickListener {

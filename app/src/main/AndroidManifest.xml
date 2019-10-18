@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/beegees_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bgg.MainActivity">
+        <activity android:name=".bgg.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +19,8 @@
         <activity android:name=".bgg.AboutActivity"/>
         <activity android:name=".bgg.DetailedViewActivity" />
         <activity android:name=".bgg.SearchActivity" />
+        <activity android:name=".bgg.FavouritesActivity" />
+        <activity android:name=".bgg.TrendingActivity" />
 
 
         <meta-data

@@ -1,6 +1,7 @@
 package edu.isel.pdm.beegeesapp.bgg
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,8 @@ class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
-        supportActionBar?.hide()
+        supportActionBar?.title = "Who made this?"
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
         fun navigateToGitHub(author: Int) {
             if (author == 1) {
                 val url = Uri.parse(getString(R.string.about_author1gitpage))
