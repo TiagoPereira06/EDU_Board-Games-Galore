@@ -7,59 +7,56 @@
     android:background="@color/colorBackground"
     tools:context=".bgg.DashboardActivity">
 
-    <Button
-        android:id="@+id/button"
+    <ImageView
+        android:id="@+id/background"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="129dp"
-        android:layout_marginEnd="87dp"
-        android:layout_marginBottom="35dp"
-        android:text="FAV"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="87dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="82dp"
-        android:layout_marginBottom="34dp"
-        android:text="TRENDING"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        android:layout_height="222dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="69dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="91dp"
-        android:layout_marginBottom="471dp"
-        android:text="SEARCH"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/backtestpng"
+        tools:srcCompat="@drawable/backtestpng" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="471dp"
-        android:text="ABOUT"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <include
+        android:id="@+id/favouritesView"
+        layout="@layout/dashboard_card"
+        android:layout_width="170dp"
+        android:layout_height="230dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/background" />
+
+    <include
+        android:id="@+id/trendingView"
+        layout="@layout/dashboard_card"
+        android:layout_width="170dp"
+        android:layout_height="230dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/searchView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <include
+        android:id="@+id/searchView"
+        layout="@layout/dashboard_card"
+        android:layout_width="170dp"
+        android:layout_height="230dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favouritesView" />
+
+    <include
+        android:id="@+id/aboutView"
+        layout="@layout/dashboard_card"
+        android:layout_width="170dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/trendingView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

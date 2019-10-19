@@ -1,13 +1,16 @@
 package edu.isel.pdm.beegeesapp.bgg.model
 
 import android.os.Parcelable
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.TYPE
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class GamesViewModel : ViewModel(), Parcelable {
-
+ class GamesViewModel(val mode: TYPE) : ViewModel(), Parcelable {
+    
+    val url = mode.toString().toLowerCase()
     val games : List<GameInfo> = listOf(
         GameInfo(
             R.drawable.thumb,
@@ -58,6 +61,5 @@ class GamesViewModel : ViewModel(), Parcelable {
             0.97754
         )
     )
-
-
 }
+

@@ -6,7 +6,7 @@
     android:layout_marginLeft="@dimen/mtrl_card_spacing"
     android:layout_marginTop="@dimen/mtrl_card_spacing"
     android:layout_marginRight="@dimen/mtrl_card_spacing"
-    app:cardBackgroundColor="@color/colorBackground"
+    app:cardBackgroundColor="@color/colorAccent"
     app:cardCornerRadius="2dp"
     app:cardElevation="5dp"
     app:cardMaxElevation="5dp">

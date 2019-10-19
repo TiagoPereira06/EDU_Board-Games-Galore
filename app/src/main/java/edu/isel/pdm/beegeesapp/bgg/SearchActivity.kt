@@ -19,13 +19,12 @@ import edu.isel.pdm.beegeesapp.bgg.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 
 private const val GAMES_LIST_KEY = "games_list"
+private var searchType : TYPE? = TYPE.Name
 
 
 class SearchActivity : AppCompatActivity() {
 
-
     private lateinit var games: GamesViewModel
-    private var optionsSelect = "Name"
     private var lastOption = R.id.search_name
     var searchView: androidx.appcompat.widget.SearchView? = null
 
@@ -38,7 +37,7 @@ class SearchActivity : AppCompatActivity() {
         list_recycler_view.setHasFixedSize(true)
         list_recycler_view.layoutManager = LinearLayoutManager(this)
         games = getViewModel(GAMES_LIST_KEY) {
-            savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
+            savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel(searchType!!)
         }
         list_recycler_view.adapter = GameViewHolder.GamesListAdapter(games) { gameItem : GameInfo -> gameItemClicked(gameItem) }
     }
@@ -59,7 +58,7 @@ class SearchActivity : AppCompatActivity() {
         searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
 
         searchView!!.setSearchableInfo(manager.getSearchableInfo(componentName))
-        searchView!!.queryHint = "Search by " + optionsSelect
+        searchView!!.queryHint = "Search by " + searchType.toString()
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -69,7 +68,7 @@ class SearchActivity : AppCompatActivity() {
                 searchItem.collapseActionView()
                 Toast.makeText(
                     applicationContext,
-                    "Search " + query + " " + optionsSelect,
+                    "Search by " + searchType.toString(),
                     Toast.LENGTH_LONG
                 ).show()
                 return true
@@ -91,22 +90,19 @@ class SearchActivity : AppCompatActivity() {
             R.id.search_author -> {
                 /*if (changeOptionAvailable && lastOption != R.id.search_author) optionsSelect =
                     "Author"*/
-                optionsSelect="Author"
-                searchView?.queryHint = "Search by " + optionsSelect
-                println(optionsSelect)
+                searchType=TYPE.Author
+                searchView?.queryHint = "Search by " + searchType.toString()
 
             }
             R.id.search_publisher -> {
-                optionsSelect = "Publisher"
-                searchView?.queryHint = "Search by " + optionsSelect
-
+                searchType=TYPE.Publisher
+                searchView?.queryHint = "Search by " + searchType.toString()
             }
             R.id.search_name -> {
-                optionsSelect = "Name"
-                searchView?.queryHint = "Search by " + optionsSelect
+                searchType=TYPE.Name
+                searchView?.queryHint = "Search by " + searchType.toString()
 
             }
-            R.id.home_item -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }

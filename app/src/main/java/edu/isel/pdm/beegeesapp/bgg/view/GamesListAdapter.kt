@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.like.LikeButton
 import com.like.OnLikeListener
 import com.mikhaellopez.circularimageview.CircularImageView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.model.GameInfo
 
@@ -36,10 +34,7 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
         //TODO:LISTENER FAVORITOS
         //heartButton.isLiked = contains...
 
-
-        //Toast.makeText(this, "You clicked -> " + game.name, Toast.LENGTH_LONG).show()
         cardLayout.setOnClickListener{clickListener(game)}
-
         heartButton.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
                 Log.v("DEBUG","LIKED")

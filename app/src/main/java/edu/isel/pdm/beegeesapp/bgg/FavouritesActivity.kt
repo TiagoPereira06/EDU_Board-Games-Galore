@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import edu.isel.pdm.beegeesapp.R
 
-class FavouritesActivity : AppCompatActivity(){
+class FavouritesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,5 +13,6 @@ class FavouritesActivity : AppCompatActivity(){
 
         supportActionBar?.title = "Your Shelf"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
+
     }
 }
