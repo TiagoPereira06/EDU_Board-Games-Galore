@@ -17,6 +17,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="5dp"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
         tools:context=".bgg.DetailedViewActivity">
 
         <ImageView
@@ -54,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description"
-            app:srcCompat="@drawable/openbook" />
+            app:srcCompat="@drawable/openbookcolor" />
 
         <TextView
             android:id="@+id/companyText"
@@ -96,7 +102,7 @@
             android:contentDescription="yearicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/priceIcon"
-            app:srcCompat="@drawable/calendar" />
+            app:srcCompat="@drawable/calendarcolor" />
 
         <TextView
             android:id="@+id/gameYear"
@@ -128,20 +134,20 @@
             android:id="@+id/thumbGame"
             android:layout_width="221dp"
             android:layout_height="283dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:contentDescription="gameThumb"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toTopOf="@+id/playerIcon"
-            app:layout_constraintEnd_toStartOf="@+id/gameName"
+            app:layout_constraintEnd_toStartOf="@+id/game_Name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/thumb" />
 
         <TextView
-            android:id="@+id/gameName"
+            android:id="@+id/game_Name"
             android:layout_width="178dp"
             android:layout_height="284dp"
             android:layout_marginStart="5dp"
@@ -195,7 +201,7 @@
             android:contentDescription="priceicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingIcon"
-            app:srcCompat="@drawable/coin" />
+            app:srcCompat="@drawable/pricetag" />
 
         <ImageView
             android:id="@+id/playerIcon"
@@ -206,7 +212,7 @@
             android:contentDescription="timeicon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/thumbGame"
-            app:srcCompat="@drawable/users_line" />
+            app:srcCompat="@drawable/players" />
 
         <ImageView
             android:id="@+id/ratingIcon"
@@ -216,8 +222,8 @@
             android:layout_marginEnd="133dp"
             android:contentDescription="ratingicon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gameName"
-            app:srcCompat="@drawable/positivevote" />
+            app:layout_constraintTop_toBottomOf="@+id/game_Name"
+            app:srcCompat="@drawable/positivevotecolor" />
 
         <TextView
             android:id="@+id/nPlayers"
@@ -254,7 +260,7 @@
             android:contentDescription="timeIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerIcon"
-            app:srcCompat="@drawable/clock_line" />
+            app:srcCompat="@drawable/clockcolor" />
 
         <TextView
             android:id="@+id/description"

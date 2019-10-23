@@ -7,10 +7,17 @@
     <string name="about_dev_message">Proudly Developed By:</string>
     <string name="about_edu_message" translatable="false">ISEL-LEIC PDM 2019/2020</string>
     <string name="about_data_provider_message">Data Source : Game Board Atlas REST API</string>
-    <string name="navbar_trending" translatable="false">Popular</string>
-    <string name="navbar_search">Search</string>
-    <string name="navbar_about">About</string>
-    <string name="navbar_fav">Favourites</string>
+    <string name="dash_trending">Popular</string>
+    <string name="dash_search">Search</string>
+    <string name="dash_about">About</string>
+    <string name="dash_fav">Favourites</string>
+    <string name="dash_tredingInfo">See what\'s trending</string>
+    <string name="dash_favouritesInfo">Your games shelf</string>
+    <string name="dash_searchInfo">Looking for a specific game?</string>
+    <string name="dash_aboutInfo">The developers who did this</string>
+    <string name="search_type_author">Author</string>
+    <string name="search_type_name">Name</string>
+    <string name="search_type_publisher">Publisher</string>
+    <string name="detailed_bookrule">Click Here to Rule Book</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
 </resources>

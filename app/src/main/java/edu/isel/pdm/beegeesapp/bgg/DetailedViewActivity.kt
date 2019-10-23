@@ -1,35 +1,60 @@
 package edu.isel.pdm.beegeesapp.bgg
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
+import edu.isel.pdm.beegeesapp.bgg.search.Type
+import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import kotlinx.android.synthetic.main.activity_detailedview.*
 
 class DetailedViewActivity : AppCompatActivity() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailedview)
-        if(intent.hasExtra("Game Object")){
-            var currentGame = intent.getParcelableExtra("Game Object") as GameInfo
-            gameName.text = currentGame!!.name
-            //TODO: POPULAR AS RESTANTES VISTAS
+        if(intent.hasExtra("GAME_OBJECT")){
+            val currentGame = intent.getParcelableExtra("Game Object") as GameInfo
+            //TODO:IMAGEM
+            game_Name.text = currentGame.name
+            nPlayers.text = currentGame.minPlayers.toString() + "-" + currentGame.maxPlayers.toString()
+            playTime.text = currentGame.minPlayTime.toString() + "-" + currentGame.maxPlayTime.toString()+" min"
+            minAge.text = "+" + currentGame.minAge
+            ratingText.text = currentGame.averageUserRating.toInt().toString() + "/5"
+            priceText.text = currentGame.price.toString() + "$"
+            gameYear.text = currentGame.yearPublished.toString()
+            description.text = currentGame.description
+            companyText.text = currentGame.publisher
+            creatorText.text = currentGame.developers
+            ruleBookText.setOnClickListener {
+                val url = Uri.parse(currentGame.rulesURL)
+                startActivity(Intent(Intent.ACTION_VIEW, url))
+            }
+            thumbGame.setOnClickListener {
+                val url = Uri.parse(currentGame.gameURL)
+                startActivity(Intent(Intent.ACTION_VIEW, url))
+            }
+            companyText.setOnClickListener {
+                var info = SearchInfo(
+                    Type.Publisher,
+                    companyText.text as String
+                )
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra("SEARCH_KEYWORD",info)
+                startActivity(intent)
+            }
+
+
 
         }else throw IllegalArgumentException("Object not Found!")
+
         supportActionBar?.hide()
-        creatorText.movementMethod = ScrollingMovementMethod()
-        ruleBookText.setOnClickListener {
-            val url = Uri.parse("https://drive.google.com/file/d/0B9kp130SgLtdcGxTcTFodlhaWDg")
-            startActivity(Intent(Intent.ACTION_VIEW, url))
-        }
-        thumbGame.setOnClickListener {
-            val url =
-                Uri.parse("https://www.boardgameatlas.com/search/game/kPDxpJZ8PD/spirit-island")
-            startActivity(Intent(Intent.ACTION_VIEW, url))
-        }
+        //creatorText.movementMethod = ScrollingMovementMethod()
+
     }
 }

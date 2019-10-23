@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg
+package edu.isel.pdm.beegeesapp.bgg.search
 
 import android.app.SearchManager
 import android.content.Context
@@ -13,22 +13,33 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_search.*
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.model.GamesViewModel
-import edu.isel.pdm.beegeesapp.bgg.view.GameViewHolder
+import edu.isel.pdm.beegeesapp.bgg.*
+import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.search.model.GamesViewModel
+import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
+import edu.isel.pdm.beegeesapp.bgg.search.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 
-private const val GAMES_LIST_KEY = "games_list"
-private var searchType : TYPE? = TYPE.Name
-
+private const val GAMES_LIST_KEY = "search_games_list"
+private var searchType =
+    SearchInfo(Type.Name, null)
+private lateinit var searchGames: GamesViewModel
+private var lastOption = R.id.search_name
+var initSearchWithValue: Boolean = false
 
 class SearchActivity : AppCompatActivity() {
-
-    private lateinit var games: GamesViewModel
-    private var lastOption = R.id.search_name
     var searchView: androidx.appcompat.widget.SearchView? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        if(intent.hasExtra("SEARCH_KEYWORD")){
+            initSearchWithValue = true
+            val currentInfo = intent.getParcelableExtra("SEARCH_KEYWORD") as SearchInfo
+            searchType.mode=currentInfo.mode
+            searchType.keyWord=currentInfo.keyWord
+            //TODO: APLICAR SEARCH
+        }
         super.onCreate(savedInstanceState)
         //supportActionBar?.hide()
         supportActionBar?.title = "Search"
@@ -36,16 +47,23 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
         list_recycler_view.setHasFixedSize(true)
         list_recycler_view.layoutManager = LinearLayoutManager(this)
-        games = getViewModel(GAMES_LIST_KEY) {
-            savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel(searchType!!)
+
+
+
+        // Get view model instance and add its contents to the recycler view
+        searchGames = getViewModel(GAMES_LIST_KEY) {
+            savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
         }
-        list_recycler_view.adapter = GameViewHolder.GamesListAdapter(games) { gameItem : GameInfo -> gameItemClicked(gameItem) }
+        list_recycler_view.adapter =
+            GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
+                gameItemClicked(gameItem)
+            }
     }
 
     private fun gameItemClicked(gameItem : GameInfo) {
         Toast.makeText(this, "Clicked: ${gameItem.name}", Toast.LENGTH_LONG).show()
-        val intent = Intent(this,DetailedViewActivity::class.java)
-        intent.putExtra("Game Object", gameItem)
+        val intent = Intent(this, DetailedViewActivity::class.java)
+        intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
     }
 
@@ -58,24 +76,32 @@ class SearchActivity : AppCompatActivity() {
         searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
 
         searchView!!.setSearchableInfo(manager.getSearchableInfo(componentName))
-        searchView!!.queryHint = "Search by " + searchType.toString()
+        searchView!!.queryHint = "Search by ${searchType.mode}"
+        //TODO:SUBMIT???
+        if(initSearchWithValue)searchView!!.setQuery(searchType.keyWord,true)
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
+
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchView!!.clearFocus()
                 searchView!!.setQuery("", false)
                 searchItem.collapseActionView()
-                Toast.makeText(
+                searchGames.updateGames(this@SearchActivity,
+                    searchType
+                )
+                /*Toast.makeText(
                     applicationContext,
-                    "Search by " + searchType.toString(),
+                    "Search by " + query +  searchType.toString(),
                     Toast.LENGTH_LONG
-                ).show()
+                ).show()*/
                 return true
             }
             override fun onQueryTextChange(newtext: String?): Boolean {
                 return false
             }
+
         })
         return true
     }
@@ -90,17 +116,20 @@ class SearchActivity : AppCompatActivity() {
             R.id.search_author -> {
                 /*if (changeOptionAvailable && lastOption != R.id.search_author) optionsSelect =
                     "Author"*/
-                searchType=TYPE.Author
-                searchView?.queryHint = "Search by " + searchType.toString()
+                searchType.mode=
+                    Type.Author
+                searchView?.queryHint = "Search by ${searchType.mode}"
 
             }
             R.id.search_publisher -> {
-                searchType=TYPE.Publisher
-                searchView?.queryHint = "Search by " + searchType.toString()
+                searchType.mode=
+                    Type.Publisher
+                searchView?.queryHint = "Search by ${searchType.mode}"
             }
             R.id.search_name -> {
-                searchType=TYPE.Name
-                searchView?.queryHint = "Search by " + searchType.toString()
+                searchType.mode=
+                    Type.Name
+                searchView?.queryHint = "Search by ${searchType.mode}"
 
             }
         }
@@ -110,7 +139,10 @@ class SearchActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if (!isChangingConfigurations) {
-            outState.putParcelable(GAMES_LIST_KEY, games)
+            outState.putParcelable(
+                GAMES_LIST_KEY,
+                searchGames
+            )
         }
     }
 

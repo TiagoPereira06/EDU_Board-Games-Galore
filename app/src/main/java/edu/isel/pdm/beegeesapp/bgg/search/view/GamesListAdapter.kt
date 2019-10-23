@@ -1,6 +1,5 @@
-package edu.isel.pdm.beegeesapp.bgg.view
+package edu.isel.pdm.beegeesapp.bgg.search.view
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,13 +11,13 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 import com.mikhaellopez.circularimageview.CircularImageView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.model.GamesViewModel
-import edu.isel.pdm.beegeesapp.bgg.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.search.model.GamesViewModel
 
 class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
     private val gameThumbnail: CircularImageView = view.findViewById(R.id.thumbGame)
-    private val gameName: TextView = view.findViewById(R.id.gameName)
+    private val gameName: TextView = view.findViewById(R.id.game_Name)
     private val gamePublisher: TextView = view.findViewById(R.id.companyName)
     private val gameReviewersCount: TextView = view.findViewById(R.id.reviewersCount)
     private val gameRating: RatingBar = view.findViewById(R.id.ratingBar)
@@ -28,7 +27,7 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
     fun bindTo(game: GameInfo, clickListener: (GameInfo) -> Unit) {
         gameThumbnail.setImageResource(R.drawable.thumb)
         gameName.text = game.name
-        gameReviewersCount.text = "(" + game.numberUserReviews.toString() + " reviews )"
+        gameReviewersCount.text = "(" + game.numberUserReviews.toString() + " reviews)"
         gamePublisher.text = game.publisher
         gameRating.rating = game.averageUserRating.toFloat()
         //TODO:LISTENER FAVORITOS
@@ -48,12 +47,12 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
     }
 
-    class GamesListAdapter(private val viewModel : GamesViewModel,val clickListener: (GameInfo) -> Unit) : RecyclerView.Adapter<GameViewHolder>() {
+    class GamesListAdapter(private val viewModel : GamesViewModel, val clickListener: (GameInfo) -> Unit) : RecyclerView.Adapter<GameViewHolder>() {
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-            holder.bindTo(viewModel.games[position],clickListener)
+            holder.bindTo(viewModel.content.value?.get(position)!!,clickListener)
         }
-        override fun getItemCount() : Int = viewModel.games.size
+        override fun getItemCount() : Int = viewModel.content.value?.size ?: 0
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
             GameViewHolder(

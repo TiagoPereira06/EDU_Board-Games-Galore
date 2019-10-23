@@ -7,25 +7,25 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always" />
     <group
         android:id="@+id/search_items"
         android:checkableBehavior="single">
         <item
             android:id="@+id/search_author"
             android:checkable="true"
-            android:title="Author"
+            android:title="@string/search_type_author"
             app:showAsAction="never" />
         <item
             android:id="@+id/search_publisher"
             android:checkable="true"
-            android:title="Publisher"
+            android:title="@string/search_type_publisher"
             app:showAsAction="never" />
         <item
             android:id="@+id/search_name"
             android:checkable="true"
             android:checked="true"
-            android:title="Name"
+            android:title="@string/search_type_name"
             app:showAsAction="never" />
     </group>
 

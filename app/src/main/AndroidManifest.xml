@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/beegees_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".bgg.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,15 +17,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".bgg.AboutActivity"/>
+        <activity android:name=".bgg.about.AboutActivity"/>
         <activity android:name=".bgg.DetailedViewActivity" />
-        <activity android:name=".bgg.SearchActivity" />
-        <activity android:name=".bgg.FavouritesActivity" />
-        <activity android:name=".bgg.TrendingActivity" />
+        <activity android:name=".bgg.search.SearchActivity" />
+        <activity android:name=".bgg.favourites.FavouritesActivity" />
+        <activity android:name=".bgg.trending.TrendingActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

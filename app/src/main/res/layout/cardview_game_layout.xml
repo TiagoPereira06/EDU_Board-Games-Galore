@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/gameName"
+            android:id="@+id/game_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -41,7 +41,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/colorText"
             app:layout_constraintStart_toEndOf="@+id/thumbGame"
-            app:layout_constraintTop_toBottomOf="@+id/gameName" />
+            app:layout_constraintTop_toBottomOf="@+id/game_Name" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/thumbGame"
@@ -53,7 +53,7 @@
             android:baseline="22dp"
             android:baselineAlignBottom="true"
             app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="0dp"
+            app:civ_border_width="4dp"
             app:civ_shadow="false"
             app:civ_shadow_color="@color/colorPrimary"
             app:civ_shadow_radius="5"

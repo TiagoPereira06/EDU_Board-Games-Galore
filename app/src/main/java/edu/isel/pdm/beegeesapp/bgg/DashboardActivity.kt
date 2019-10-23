@@ -7,11 +7,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.about.AboutActivity
+import edu.isel.pdm.beegeesapp.bgg.favourites.FavouritesActivity
+import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
+import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.trending.TrendingActivity
 
 
 class DashboardActivity : AppCompatActivity() {
 
-    private val favGames: List<Game> = emptyList()
+    private val favGames: List<GameInfo> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +70,7 @@ private fun initUI(trendView:CardView, favView:CardView, searchView:CardView, ab
     val image3 : ImageView = aboutView.findViewById(R.id.iconView) as ImageView
     image3.setImageResource(R.drawable.informationdash)
 }
-    fun addToFavourites(game: Game) {
+    fun addToFavourites(game: GameInfo) {
         //  favGames[]=game
         //TODO: LISTENER FAVORITOS
     }

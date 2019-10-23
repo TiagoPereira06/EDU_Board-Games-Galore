@@ -2,7 +2,16 @@
 <resources>
     <string name="about_dev_message">Desenvolvido Orgulhosamente Por:</string>
     <string name="about_data_provider_message">Fonte Dados : Game Board Atlas REST API</string>
-    <string name="navbar_search">Pesquisar</string>
-    <string name="navbar_about">Sobre</string>
-    <string name="navbar_fav">Favoritos</string>
+    <string name="dash_search">Pesquisar</string>
+    <string name="dash_about">Sobre</string>
+    <string name="dash_fav">Favoritos</string>
+    <string name="dash_tredingInfo">Veja as tendências</string>
+    <string name="dash_trending">Populares</string>
+    <string name="dash_favouritesInfo">Prateleira de jogos</string>
+    <string name="dash_searchInfo">À procura de algo em específico?</string>
+    <string name="dash_aboutInfo">Os developers que fizeram isto</string>
+    <string name="search_type_author">Autor</string>
+    <string name="search_type_name">Nome</string>
+    <string name="search_type_publisher">Editora</string>
+    <string name="detailed_bookrule">Clique Aqui para Livro de Regras</string>
 </resources>
