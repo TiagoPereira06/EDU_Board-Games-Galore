@@ -27,32 +27,37 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
     fun bindTo(game: GameInfo, clickListener: (GameInfo) -> Unit) {
         gameThumbnail.setImageResource(R.drawable.thumb)
         gameName.text = game.name
-        gameReviewersCount.text = "(" + game.numberUserReviews.toString() + " reviews)"
+        //TODO -> string.xml holders
+        gameReviewersCount.text = "(${game.numberUserRatings} reviews)"
         gamePublisher.text = game.publisher
         gameRating.rating = game.averageUserRating.toFloat()
         //TODO:LISTENER FAVORITOS
         //heartButton.isLiked = contains...
 
-        cardLayout.setOnClickListener{clickListener(game)}
+        cardLayout.setOnClickListener { clickListener(game) }
         heartButton.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton?) {
-                Log.v("DEBUG","LIKED")
+                Log.v("DEBUG", "LIKED")
             }
 
             override fun unLiked(likeButton: LikeButton?) {
-                Log.v("DEBUG","UNLIKED")
+                Log.v("DEBUG", "UNLIKED")
             }
 
         })
 
     }
 
-    class GamesListAdapter(private val viewModel : GamesViewModel, val clickListener: (GameInfo) -> Unit) : RecyclerView.Adapter<GameViewHolder>() {
+    class GamesListAdapter(
+        private val viewModel: GamesViewModel,
+        val clickListener: (GameInfo) -> Unit
+    ) : RecyclerView.Adapter<GameViewHolder>() {
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-            holder.bindTo(viewModel.content.value?.get(position)!!,clickListener)
+            holder.bindTo(viewModel.content.value?.get(position)!!, clickListener)
         }
-        override fun getItemCount() : Int = viewModel.content.value?.size ?: 0
+
+        override fun getItemCount(): Int = viewModel.content.value?.size ?: 0
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
             GameViewHolder(

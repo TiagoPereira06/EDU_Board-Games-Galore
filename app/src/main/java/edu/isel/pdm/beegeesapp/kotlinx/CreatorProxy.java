@@ -9,6 +9,7 @@ import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo;
 /**
  * Work around for bug on the Android plugin that is responsible for generating the Parcelize
  * implementation
+ *
  * @see [https://youtrack.jetbrains.com/issue/KT-19853]
  */
 public class CreatorProxy {

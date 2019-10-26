@@ -11,14 +11,14 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_search.*
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.*
+import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.search.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import edu.isel.pdm.beegeesapp.bgg.search.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
+import kotlinx.android.synthetic.main.activity_search.*
 
 private const val GAMES_LIST_KEY = "search_games_list"
 private var searchType =
@@ -30,14 +30,15 @@ var initSearchWithValue: Boolean = false
 class SearchActivity : AppCompatActivity() {
     var searchView: androidx.appcompat.widget.SearchView? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if(intent.hasExtra("SEARCH_KEYWORD")){
+        if (intent.hasExtra("SEARCH_KEYWORD")) {
             initSearchWithValue = true
             val currentInfo = intent.getParcelableExtra("SEARCH_KEYWORD") as SearchInfo
-            searchType.mode=currentInfo.mode
-            searchType.keyWord=currentInfo.keyWord
+            // podes fazer logo:
+            // searchType = intent.getParcelableExtra("SEARCH_KEYWORD") as SearchInfo
+            searchType.mode = currentInfo.mode
+            searchType.keyWord = currentInfo.keyWord
             //TODO: APLICAR SEARCH
         }
         super.onCreate(savedInstanceState)
@@ -47,7 +48,6 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
         list_recycler_view.setHasFixedSize(true)
         list_recycler_view.layoutManager = LinearLayoutManager(this)
-
 
 
         // Get view model instance and add its contents to the recycler view
@@ -60,7 +60,7 @@ class SearchActivity : AppCompatActivity() {
             }
     }
 
-    private fun gameItemClicked(gameItem : GameInfo) {
+    private fun gameItemClicked(gameItem: GameInfo) {
         Toast.makeText(this, "Clicked: ${gameItem.name}", Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
@@ -68,6 +68,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        //TODO - QUE CÓDIGO É ESTE !!!??
+
         //super.onCreateOptionsMenu(menu)
         val inflater = menuInflater
         inflater.inflate(R.menu.top_searchbar, menu)
@@ -78,7 +81,7 @@ class SearchActivity : AppCompatActivity() {
         searchView!!.setSearchableInfo(manager.getSearchableInfo(componentName))
         searchView!!.queryHint = "Search by ${searchType.mode}"
         //TODO:SUBMIT???
-        if(initSearchWithValue)searchView!!.setQuery(searchType.keyWord,true)
+        if (initSearchWithValue) searchView!!.setQuery(searchType.keyWord, true)
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -88,7 +91,8 @@ class SearchActivity : AppCompatActivity() {
                 searchView!!.clearFocus()
                 searchView!!.setQuery("", false)
                 searchItem.collapseActionView()
-                searchGames.updateGames(this@SearchActivity,
+                searchGames.updateGames(
+                    this@SearchActivity,
                     searchType
                 )
                 /*Toast.makeText(
@@ -98,6 +102,7 @@ class SearchActivity : AppCompatActivity() {
                 ).show()*/
                 return true
             }
+
             override fun onQueryTextChange(newtext: String?): Boolean {
                 return false
             }
@@ -105,8 +110,9 @@ class SearchActivity : AppCompatActivity() {
         })
         return true
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // TODO - NÃO ATUALIZA O CHECKED
         val changeOptionAvailable = false
 
         //item.isChecked = !item.isChecked
@@ -116,19 +122,16 @@ class SearchActivity : AppCompatActivity() {
             R.id.search_author -> {
                 /*if (changeOptionAvailable && lastOption != R.id.search_author) optionsSelect =
                     "Author"*/
-                searchType.mode=
-                    Type.Author
+                searchType.mode = Type.Author
                 searchView?.queryHint = "Search by ${searchType.mode}"
 
             }
             R.id.search_publisher -> {
-                searchType.mode=
-                    Type.Publisher
+                searchType.mode = Type.Publisher
                 searchView?.queryHint = "Search by ${searchType.mode}"
             }
             R.id.search_name -> {
-                searchType.mode=
-                    Type.Name
+                searchType.mode = Type.Name
                 searchView?.queryHint = "Search by ${searchType.mode}"
 
             }

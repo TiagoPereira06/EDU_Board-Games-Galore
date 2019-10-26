@@ -43,14 +43,16 @@ class TrendingActivity : AppCompatActivity() {
         // Should we refresh the data?
         if (savedInstanceState == null || !savedInstanceState.containsKey(GAMES_LIST_KEY)) {
             // No saved state? Lets fetch list from the server
-            trendingGames.updateGames(this,
+            trendingGames.updateGames(
+                this,
                 searchType
             )
         }
 
         // Setup ui event handlers
         pullToRefresh.setOnRefreshListener {
-            trendingGames.updateGames(this,
+            trendingGames.updateGames(
+                this,
                 searchType
             )
         }
@@ -69,7 +71,7 @@ class TrendingActivity : AppCompatActivity() {
         }
     }
 
-    private fun gameItemClicked(gameItem : GameInfo) {
+    private fun gameItemClicked(gameItem: GameInfo) {
         Toast.makeText(this, "Clicked: ${gameItem.name}", Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)

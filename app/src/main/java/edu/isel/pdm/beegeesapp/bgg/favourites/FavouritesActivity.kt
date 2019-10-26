@@ -3,16 +3,16 @@ package edu.isel.pdm.beegeesapp.bgg.favourites
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import edu.isel.pdm.beegeesapp.R
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.favourites.view.FavouritesListAdapter
 import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
 
 
 class FavouritesActivity : AppCompatActivity() {
 
-    private val favGames : List<GameInfo> = listOf(
+    private val favGames: List<GameInfo> = listOf(
         GameInfo("Spirit Island"),
         GameInfo("DOmokm Bwndu"),
         GameInfo("Opm Gsiw"),

@@ -10,7 +10,8 @@ inline fun <reified T : ViewModel> AppCompatActivity.getViewModel(key: String): 
 }
 
 inline fun <reified T : ViewModel> AppCompatActivity.getViewModel(
-    key: String, crossinline create: () -> T): T {
+    key: String, crossinline create: () -> T
+): T {
 
     @Suppress("UNCHECKED_CAST")
     val factory = object : ViewModelProvider.Factory {

@@ -5,24 +5,27 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class GameInfo(
-    val id: Int,
+    val id: String,
     val minPlayTime: Int,
     val maxPlayTime: Int,
     val minPlayers: Int,
     val maxPlayers: Int,
-    val thumb: Int,
-    val bigThumb : String,
+    val thumb: String,
     val minAge: Int,
-    val numberUserReviews: Int,
+    val numberUserRatings: Int,
     val yearPublished: Int,
     val name: String,
     val description: String,
     val publisher: String,
-    val developers: String,
+    val designers: String,
     val rulesURL: String,
     val gameURL: String,
-    val price: Double,
-    val averageUserRating: Double) : Parcelable{
-    constructor(name: String) : this(0,0,0,0,0,0,"",0,0,0,
-        name,"","","","","",0.0,0.0)
+    val price: String,
+    val averageUserRating: Double
+) : Parcelable {
+
+    constructor(name: String) : this(
+        "", 0, 0, 0, 0, "", 0, 0, 0,
+        name, "", "", "", "", "", "0.00", 0.0
+    )
 }
