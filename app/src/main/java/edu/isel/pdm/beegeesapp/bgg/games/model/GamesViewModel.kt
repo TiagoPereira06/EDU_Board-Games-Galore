@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.search.model
+package edu.isel.pdm.beegeesapp.bgg.games.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -10,6 +10,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import edu.isel.pdm.beegeesapp.bgg.search.Type.*
+import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import edu.isel.pdm.beegeesapp.kotlinx.CreatorProxy
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parceler
@@ -21,22 +23,23 @@ import org.json.JSONObject
 @Parcelize
 @TypeParceler<MutableLiveData<List<GameInfo>>, GamesViewModel.GamesViewModelParcelizer>
 class GamesViewModel(
-    val content: MutableLiveData<List<GameInfo>> = MutableLiveData()
+     val content: MutableLiveData<List<GameInfo>> = MutableLiveData()
 ) : ViewModel(), Parcelable {
-
+   /* init {
+        content.value = mutableListOf<GameInfo>()
+    }*/
     @IgnoredOnParcel
     private val mostPopularGamesURL =
         "https://www.boardgameatlas.com/api/search?order_by=popularity&"
-
     @IgnoredOnParcel
     private val clientId = "client_id=77iiYwBhLL"
-
     @IgnoredOnParcel
     private val url = mostPopularGamesURL + clientId
 
-
     fun updateGames(app: AppCompatActivity, mode: SearchInfo) {
         val queue = Volley.newRequestQueue(app.applicationContext)
+        //TODO : IMPLEMENTAR MODO DE PESQUISA
+
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener<JSONObject> { response ->
@@ -64,7 +67,7 @@ class GamesViewModel(
                             game.optString("name", "Name not found."),
                             game.optString("description", "Description not available."),
                             game.getJSONArray("publishers").optString(0, ""),
-                            game.getJSONArray("designers").optString(0, ""),
+                            game.getJSONArray("artists").optString  (0, ""),
                             game.optString("rules_url", ""),
                             game.getString("url"),
                             game.optString("price", "0.00"),
@@ -73,7 +76,7 @@ class GamesViewModel(
                     )
                 }
 
-                content.value = list
+                this.content.value = list
                 Toast.makeText(app.applicationContext, "List Finished", Toast.LENGTH_SHORT).show()
 
             },
@@ -100,7 +103,7 @@ class GamesViewModel(
         { jsonObject -> jsonObject.getString("name") },
         { jsonObject -> jsonObject.getString("description") },
         { jsonObject -> jsonObject.getString("publisher") },
-        { jsonObject -> jsonObject.getString("designers") },
+        { jsonObject -> jsonObject.getString("artists") },
         { jsonObject -> jsonObject.getString("rules_url") },
         { jsonObject -> jsonObject.getString("gameURL") },
         { jsonObject -> jsonObject.getString("price") },

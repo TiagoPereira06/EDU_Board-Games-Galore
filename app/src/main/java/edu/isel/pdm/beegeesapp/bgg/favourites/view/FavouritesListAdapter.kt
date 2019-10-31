@@ -1,12 +1,14 @@
 package edu.isel.pdm.beegeesapp.bgg.favourites.view
 
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import kotlinx.android.synthetic.main.fav_cardview.view.*
 
 class FavouritesListAdapter(private val favGames: List<GameInfo>) :
@@ -23,8 +25,13 @@ class FavouritesListAdapter(private val favGames: List<GameInfo>) :
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
         val game = favGames[position]
+        Picasso.get()
+            .load(Uri.parse(game.thumb)) // load the image
+            .fit()
+            .centerCrop()
+            .into(holder.view.game_Image) // select the ImageView to load it into
         holder.view.game_Name.text = game.name
-        holder.view.game_Image.setImageResource(R.drawable.thumb)
+        //holder.view.game_Image.setImageResource(R.drawable.thumb)
     }
 
     class GameViewHolder(val view: View) : RecyclerView.ViewHolder(view)

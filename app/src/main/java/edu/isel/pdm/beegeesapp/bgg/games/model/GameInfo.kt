@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.search.model
+package edu.isel.pdm.beegeesapp.bgg.games.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -17,8 +17,8 @@ data class GameInfo(
     val name: String,
     val description: String,
     val publisher: String,
-    val designers: String,
-    val rulesURL: String,
+    val artists: String,
+    val rulesURL:String,
     val gameURL: String,
     val price: String,
     val averageUserRating: Double

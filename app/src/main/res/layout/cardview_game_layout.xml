@@ -53,7 +53,7 @@
             android:baseline="22dp"
             android:baselineAlignBottom="true"
             app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="4dp"
+            app:civ_border_width="2dp"
             app:civ_shadow="false"
             app:civ_shadow_color="@color/colorPrimary"
             app:civ_shadow_radius="5"

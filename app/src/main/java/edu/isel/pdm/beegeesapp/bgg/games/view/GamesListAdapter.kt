@@ -1,5 +1,6 @@
-package edu.isel.pdm.beegeesapp.bgg.search.view
+package edu.isel.pdm.beegeesapp.bgg.games.view
 
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.like.LikeButton
 import com.like.OnLikeListener
 import com.mikhaellopez.circularimageview.CircularImageView
+import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.search.model.GamesViewModel
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 
 class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
@@ -25,9 +27,12 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
     private val cardLayout: ConstraintLayout = view.findViewById(R.id.card_constraintlayout)
 
     fun bindTo(game: GameInfo, clickListener: (GameInfo) -> Unit) {
-        gameThumbnail.setImageResource(R.drawable.thumb)
+        Picasso.get()
+            .load(Uri.parse(game.thumb)) // load the image
+            .fit()
+            .centerCrop()
+            .into(gameThumbnail) // select the ImageView to load it into
         gameName.text = game.name
-        //TODO -> string.xml holders
         gameReviewersCount.text = "(${game.numberUserRatings} reviews)"
         gamePublisher.text = game.publisher
         gameRating.rating = game.averageUserRating.toFloat()
@@ -50,7 +55,7 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
     class GamesListAdapter(
         private val viewModel: GamesViewModel,
-        val clickListener: (GameInfo) -> Unit
+        private val clickListener: (GameInfo) -> Unit
     ) : RecyclerView.Adapter<GameViewHolder>() {
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {

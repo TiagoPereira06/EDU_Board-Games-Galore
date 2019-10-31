@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.search.model.GamesViewModel
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
-import edu.isel.pdm.beegeesapp.bgg.search.view.GameViewHolder
+import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 
@@ -81,7 +81,7 @@ class SearchActivity : AppCompatActivity() {
         searchView!!.setSearchableInfo(manager.getSearchableInfo(componentName))
         searchView!!.queryHint = "Search by ${searchType.mode}"
         //TODO:SUBMIT???
-        if (initSearchWithValue) searchView!!.setQuery(searchType.keyWord, true)
+        //if (initSearchWithValue) searchView!!.setQuery(searchType.keyWord, false)
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -95,11 +95,7 @@ class SearchActivity : AppCompatActivity() {
                     this@SearchActivity,
                     searchType
                 )
-                /*Toast.makeText(
-                    applicationContext,
-                    "Search by " + query +  searchType.toString(),
-                    Toast.LENGTH_LONG
-                ).show()*/
+
                 return true
             }
 

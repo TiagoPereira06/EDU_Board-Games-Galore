@@ -4,7 +4,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo;
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo;
 
 /**
  * Work around for bug on the Android plugin that is responsible for generating the Parcelize

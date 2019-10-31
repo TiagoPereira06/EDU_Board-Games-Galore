@@ -5,18 +5,20 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.search.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.search.model.GamesViewModel
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
-import edu.isel.pdm.beegeesapp.bgg.search.view.GameViewHolder
+import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 import kotlinx.android.synthetic.main.activity_trending.*
 
 private lateinit var trendingGames: GamesViewModel
 private const val GAMES_LIST_KEY = "trending_games_list"
+private const val IS_RECONFIGURING_KEY = "is_reconfiguring_flag"
 private val searchType = SearchInfo()
 
 class TrendingActivity : AppCompatActivity() {
@@ -40,6 +42,15 @@ class TrendingActivity : AppCompatActivity() {
                 gameItemClicked(gameItem)
             }
 
+        trendingGames.content.observe(this, Observer<List<GameInfo>>{
+            trending_recycler_view.adapter = GameViewHolder.GamesListAdapter(trendingGames) { gameItem: GameInfo ->
+                gameItemClicked(gameItem)
+            }
+            pullToRefresh.isRefreshing=false
+
+        })
+
+
         // Should we refresh the data?
         if (savedInstanceState == null || !savedInstanceState.containsKey(GAMES_LIST_KEY)) {
             // No saved state? Lets fetch list from the server
@@ -48,6 +59,12 @@ class TrendingActivity : AppCompatActivity() {
                 searchType
             )
         }
+        else {
+            savedInstanceState.remove(IS_RECONFIGURING_KEY)
+        }
+
+
+
 
         // Setup ui event handlers
         pullToRefresh.setOnRefreshListener {
@@ -58,24 +75,24 @@ class TrendingActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Callback method that handles view state preservation
-     */
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        if (!isChangingConfigurations) {
-            outState.putParcelable(
-                GAMES_LIST_KEY,
-                trendingGames
-            )
-        }
-    }
-
     private fun gameItemClicked(gameItem: GameInfo) {
         Toast.makeText(this, "Clicked: ${gameItem.name}", Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
+    }
+
+    /**
+     * Callback method that handles view state preservation
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (isChangingConfigurations) {
+            outState.putBoolean(IS_RECONFIGURING_KEY, true)
+        }
+        else {
+            outState.putParcelable(GAMES_LIST_KEY, trendingGames)
+        }
     }
 }
 
