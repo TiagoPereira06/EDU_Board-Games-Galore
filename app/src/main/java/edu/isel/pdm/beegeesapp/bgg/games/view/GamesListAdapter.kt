@@ -28,14 +28,15 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
     fun bindTo(game: GameInfo, clickListener: (GameInfo) -> Unit) {
         Picasso.get()
-            .load(Uri.parse(game.thumb)) // load the image
+            .load(Uri.parse(game.thumb_url)) // load the image
             .fit()
             .centerCrop()
             .into(gameThumbnail) // select the ImageView to load it into
         gameName.text = game.name
-        gameReviewersCount.text = "(${game.numberUserRatings} reviews)"
-        gamePublisher.text = game.publisher
-        gameRating.rating = game.averageUserRating.toFloat()
+        gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
+        //TODO
+        gamePublisher.text = publishersText(game.publishers)
+        gameRating.rating = game.average_user_rating.toFloat()
         //TODO:LISTENER FAVORITOS
         //heartButton.isLiked = contains...
 
@@ -51,6 +52,15 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
         })
 
+    }
+
+    private fun publishersText(publishers: List<String>): String {
+        var res = ""
+        val aux = ", "
+        for (element in publishers) {
+            res += "$element, "
+        }
+        return res.removeSuffix(aux)
     }
 
     class GamesListAdapter(

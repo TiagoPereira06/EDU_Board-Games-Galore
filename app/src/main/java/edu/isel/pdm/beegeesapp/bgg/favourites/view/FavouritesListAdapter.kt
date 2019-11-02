@@ -26,12 +26,12 @@ class FavouritesListAdapter(private val favGames: List<GameInfo>) :
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
         val game = favGames[position]
         Picasso.get()
-            .load(Uri.parse(game.thumb)) // load the image
+            .load(Uri.parse(game.thumb_url)) // load the image
             .fit()
             .centerCrop()
             .into(holder.view.game_Image) // select the ImageView to load it into
         holder.view.game_Name.text = game.name
-        //holder.view.game_Image.setImageResource(R.drawable.thumb)
+        //holder.view.game_Image.setImageResource(R.drawable.thumb_url)
     }
 
     class GameViewHolder(val view: View) : RecyclerView.ViewHolder(view)

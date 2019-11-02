@@ -7,9 +7,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
 import edu.isel.pdm.beegeesapp.bgg.search.Type
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import kotlinx.android.synthetic.main.activity_detailedview.*
 
@@ -25,25 +25,27 @@ class DetailedViewActivity : AppCompatActivity() {
             //TODO:IMAGEM
             if (currentGame != null) {
                 Picasso.get()
-                    .load(Uri.parse(currentGame.thumb)) // load the image
+                    .load(Uri.parse(currentGame.thumb_url)) // load the image
                     .fit()
                     .into(thumbGame) // select the ImageView to load it into
                 game_Name.text = currentGame.name
-                nPlayers.text = currentGame.minPlayers.toString() + "-" + currentGame.maxPlayers.toString()
-                playTime.text = currentGame.minPlayTime.toString() + "-" + currentGame.maxPlayTime.toString() + " min"
-                minAge.text = "+" + currentGame.minAge
-                ratingText.text = currentGame.averageUserRating.toInt().toString() + "/5"
+                nPlayers.text =
+                    currentGame.min_players.toString() + "-" + currentGame.max_players.toString()
+                playTime.text =
+                    currentGame.min_playtime.toString() + "-" + currentGame.max_playtime.toString() + " min"
+                minAge.text = "+" + currentGame.min_age
+                ratingText.text = currentGame.average_user_rating.toInt().toString() + "/5"
                 priceText.text = currentGame.price + "$"
-                gameYear.text = currentGame.yearPublished.toString()
+                gameYear.text = currentGame.year_published.toString()
                 description.text = currentGame.description
-                companyText.text = currentGame.publisher
-                creatorText.text = currentGame.artists
+                companyText.text = currentGame.publishers.toString()
+                creatorText.text = currentGame.artists.toString()
                 ruleBookText.setOnClickListener {
-                    val url = Uri.parse(currentGame.rulesURL)
+                    val url = Uri.parse(currentGame.rules_url)
                     startActivity(Intent(Intent.ACTION_VIEW, url))
                 }
                 thumbGame.setOnClickListener {
-                    val url = Uri.parse(currentGame.gameURL)
+                    val url = Uri.parse(currentGame.gameUrl)
                     startActivity(Intent(Intent.ACTION_VIEW, url))
                 }
                 companyText.setOnClickListener {
