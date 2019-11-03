@@ -30,10 +30,5 @@ data class GameInfo(
     @JsonProperty("url") val gameUrl: String = "",
     val price: String = "",
     val average_user_rating: Double = 0.0
-) : Parcelable {
+) : Parcelable
 
-    constructor(name: String) : this(
-        "", 0, 0, 0, 0, "", 0, 0, 0,
-        name, "", emptyList(), emptyList(), "", "", "0.00", 0.0
-    )
-}
