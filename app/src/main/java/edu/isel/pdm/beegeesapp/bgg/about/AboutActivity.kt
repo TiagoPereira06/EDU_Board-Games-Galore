@@ -17,7 +17,7 @@ class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
-        supportActionBar?.title = "Who made this?"
+        supportActionBar?.title = resources.getString(R.string.dash_aboutInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
         fun navigateToGitHub(author: Int) {
             if (author == 1) {

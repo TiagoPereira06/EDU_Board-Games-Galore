@@ -1,6 +1,5 @@
 package edu.isel.pdm.beegeesapp.bgg.request
 
-import android.util.Log
 import com.android.volley.NetworkResponse
 import com.android.volley.Request
 import com.android.volley.Response
@@ -17,7 +16,6 @@ class GetRequest(
 ) : JsonRequest<GamesMapper>(Request.Method.GET, url, "", success, error) {
 
     override fun parseNetworkResponse(response: NetworkResponse): Response<GamesMapper> {
-        Log.v("BeeGeesApp", "parseNetworkResponse on thread ${Thread.currentThread().name}")
         val mapper = jacksonObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 

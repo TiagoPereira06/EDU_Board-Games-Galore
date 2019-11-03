@@ -44,7 +44,6 @@ class GamesViewModel(
         val request = GetRequest(
             url,
             Response.Listener {
-                Log.v("BeeGeesApp", "Success handler on thread ${Thread.currentThread().name}")
                 content.value = it.games
             },
             Response.ErrorListener {
