@@ -11,7 +11,7 @@
     <string name="dash_search">Search</string>
     <string name="dash_about">About</string>
     <string name="dash_fav">Favourites</string>
-    <string name="dash_tredingInfo">See what\'s trending</string>
+    <string name="dash_trendingInfo">See what\'s trending</string>
     <string name="dash_favouritesInfo">Your games shelf</string>
     <string name="dash_searchInfo">Looking for a specific game?</string>
     <string name="dash_aboutInfo">The developers who did this</string>

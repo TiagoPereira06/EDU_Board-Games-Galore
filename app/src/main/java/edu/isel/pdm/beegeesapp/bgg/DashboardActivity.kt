@@ -42,7 +42,7 @@ class DashboardActivity : AppCompatActivity() {
         val title: TextView = trendView.findViewById(R.id.titleView) as TextView
         title.text = getString(R.string.dash_trending)
         val subtitle: TextView = trendView.findViewById(R.id.infoView) as TextView
-        subtitle.text = getString(R.string.dash_tredingInfo)
+        subtitle.text = getString(R.string.dash_trendingInfo)
         val image: ImageView = trendView.findViewById(R.id.iconView) as ImageView
         image.setImageResource(R.drawable.trendingdash)
 

@@ -39,7 +39,7 @@ class SearchActivity : AppCompatActivity() {
             searchType.keyWord = currentInfo.keyWord
         }
         super.onCreate(savedInstanceState)
-        supportActionBar?.title = "Search"
+        supportActionBar?.title = getString(R.string.dash_search)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
         setContentView(R.layout.activity_search)
         search_recycler_view.setHasFixedSize(true)
