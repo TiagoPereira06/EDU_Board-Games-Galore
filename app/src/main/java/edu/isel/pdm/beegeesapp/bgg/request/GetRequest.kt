@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.Request
+package edu.isel.pdm.beegeesapp.bgg.request
 
 import android.util.Log
 import com.android.volley.NetworkResponse

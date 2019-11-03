@@ -12,9 +12,9 @@
         android:id="@+id/search_items"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/search_author"
+            android:id="@+id/search_artist"
             android:checkable="true"
-            android:title="@string/search_type_author"
+            android:title="@string/search_type_artist"
             app:showAsAction="never" />
         <item
             android:id="@+id/search_publisher"
@@ -24,7 +24,6 @@
         <item
             android:id="@+id/search_name"
             android:checkable="true"
-            android:checked="true"
             android:title="@string/search_type_name"
             app:showAsAction="never" />
     </group>

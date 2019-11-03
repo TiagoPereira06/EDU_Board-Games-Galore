@@ -12,26 +12,7 @@ import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 
 class FavouritesActivity : AppCompatActivity() {
 
-    private val favGames: List<GameInfo> = listOf(
-        GameInfo("Spirit Island"),
-        GameInfo("DOmokm Bwndu"),
-        GameInfo("Opm Gsiw"),
-        GameInfo("Odpkm KDIMOKm"),
-        GameInfo("Fdgok"),
-        GameInfo("OFKMNokm"),
-        GameInfo("OJFNojnwo"),
-        GameInfo("IHHBq"),
-        GameInfo("DWAub"),
-        GameInfo("BBIB9w"),
-        GameInfo("BBIB9w"),
-        GameInfo("BBIB9w"),
-        GameInfo("BBIB9w"),
-        GameInfo("BBIB9w"),
-        GameInfo("BBIB9w"),
-        GameInfo("BBIB9w"),
-        GameInfo("BBIB9w"),
-        GameInfo("IBIbbo")
-    )
+    private val favGames: List<GameInfo> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -24,6 +24,7 @@ data class GameInfo(
     val year_published: Int = 0,
     val name: String = "",
     val description: String = "",
+    val primary_publisher: String? = "",
     val publishers: List<String> = emptyList(),
     val artists: List<String> = emptyList(),
     val rules_url: String? = "",

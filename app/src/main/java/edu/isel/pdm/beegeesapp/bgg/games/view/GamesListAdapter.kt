@@ -23,7 +23,6 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
     private val gamePublisher: TextView = view.findViewById(R.id.companyName)
     private val gameReviewersCount: TextView = view.findViewById(R.id.reviewersCount)
     private val gameRating: RatingBar = view.findViewById(R.id.ratingBar)
-    private val heartButton: LikeButton = view.findViewById(R.id.heart_button)
     private val cardLayout: ConstraintLayout = view.findViewById(R.id.card_constraintlayout)
 
     fun bindTo(game: GameInfo, clickListener: (GameInfo) -> Unit) {
@@ -34,34 +33,13 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
             .into(gameThumbnail) // select the ImageView to load it into
         gameName.text = game.name
         gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
-        //TODO
-        gamePublisher.text = game.publishers.toString()
+        gamePublisher.text = game.primary_publisher
         gameRating.rating = game.average_user_rating.toFloat()
-        //TODO:LISTENER FAVORITOS
-        //heartButton.isLiked = contains...
-
         cardLayout.setOnClickListener { clickListener(game) }
-        heartButton.setOnLikeListener(object : OnLikeListener {
-            override fun liked(likeButton: LikeButton?) {
-                Log.v("DEBUG", "LIKED")
-            }
 
-            override fun unLiked(likeButton: LikeButton?) {
-                Log.v("DEBUG", "UNLIKED")
-            }
-
-        })
 
     }
 
-    private fun publishersText(publishers: List<String>): String {
-        var res = ""
-        val aux = ", "
-        for (element in publishers) {
-            res += "$element, "
-        }
-        return res.removeSuffix(aux)
-    }
 
     class GamesListAdapter(
         private val viewModel: GamesViewModel,

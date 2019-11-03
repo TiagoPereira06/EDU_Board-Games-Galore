@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,13 +19,12 @@ import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.activity_trending.*
 
 private const val GAMES_LIST_KEY = "search_games_list"
 private var searchType =
     SearchInfo(Type.Name, null)
 private lateinit var searchGames: GamesViewModel
-private var lastOption = R.id.search_name
+private var lastItemClicked : MenuItem? = null
 var initSearchWithValue: Boolean = false
 
 class SearchActivity : AppCompatActivity() {
@@ -41,33 +39,32 @@ class SearchActivity : AppCompatActivity() {
             searchType.keyWord = currentInfo.keyWord
         }
         super.onCreate(savedInstanceState)
-        //supportActionBar?.hide()
         supportActionBar?.title = "Search"
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
         setContentView(R.layout.activity_search)
-        list_recycler_view.setHasFixedSize(true)
-        list_recycler_view.layoutManager = LinearLayoutManager(this)
+        search_recycler_view.setHasFixedSize(true)
+        search_recycler_view.layoutManager = LinearLayoutManager(this)
 
 
         // Get view model instance and add its contents to the recycler view
         searchGames = getViewModel(GAMES_LIST_KEY) {
             savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
         }
-        list_recycler_view.adapter =
+        search_recycler_view.adapter =
             GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
                 gameItemClicked(gameItem)
             }
         searchGames.content.observe(this, Observer<List<GameInfo>>{
-            trending_recycler_view.adapter = GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
+            search_recycler_view.adapter = GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
                 gameItemClicked(gameItem)
             }
-
         })
-        if(initSearchWithValue) searchGames.updateGames(this, searchType)
+        if(initSearchWithValue){
+            searchGames.updateGames(this, searchType)
+            supportActionBar?.title = searchType.keyWord
+        }
     }
-
     private fun gameItemClicked(gameItem: GameInfo) {
-        Toast.makeText(this, "Clicked: ${gameItem.name}", Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
@@ -76,6 +73,17 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.top_searchbar, menu)
+
+        lastItemClicked = if(initSearchWithValue) {
+            when(searchType.mode){
+                Type.Artist -> menu?.findItem(R.id.search_artist)
+                Type.Publisher -> menu?.findItem(R.id.search_publisher)
+                else -> menu?.findItem(R.id.search_name)
+            }
+
+        } else menu?.findItem(R.id.search_name)
+        lastItemClicked?.isChecked=true
+
         val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu?.findItem(R.id.search_item)
         searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
@@ -93,28 +101,22 @@ class SearchActivity : AppCompatActivity() {
                     this@SearchActivity,
                     searchType
                 )
-
+                supportActionBar?.title = searchType.keyWord
                 return true
             }
-
             override fun onQueryTextChange(newtext: String?): Boolean {
                 return false
             }
-
         })
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // TODO - NÃO ATUALIZA O CHECKED
-        //item.isChecked = !item.isChecked
-
+        lastItemClicked?.isChecked=false
         when (item.itemId) {
-
-            R.id.search_author -> {
+            R.id.search_artist -> {
                 searchType.mode = Type.Artist
                 searchView?.queryHint = "Search by ${searchType.mode}"
-
             }
             R.id.search_publisher -> {
                 searchType.mode = Type.Publisher
@@ -123,9 +125,10 @@ class SearchActivity : AppCompatActivity() {
             R.id.search_name -> {
                 searchType.mode = Type.Name
                 searchView?.queryHint = "Search by ${searchType.mode}"
-
             }
         }
+        lastItemClicked=item
+        lastItemClicked!!.isChecked=true
         return super.onOptionsItemSelected(item)
     }
 

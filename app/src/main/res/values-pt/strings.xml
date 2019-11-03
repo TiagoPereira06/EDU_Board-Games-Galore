@@ -10,8 +10,8 @@
     <string name="dash_favouritesInfo">Prateleira de jogos</string>
     <string name="dash_searchInfo">À procura de algo em específico?</string>
     <string name="dash_aboutInfo">Os developers que fizeram isto</string>
-    <string name="search_type_author">Autor</string>
     <string name="search_type_name">Nome</string>
     <string name="search_type_publisher">Editora</string>
     <string name="detailed_bookrule">Clique Aqui para Livro de Regras</string>
+    <string name="search_type_artist">Artista</string>
 </resources>

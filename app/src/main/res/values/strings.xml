@@ -15,7 +15,7 @@
     <string name="dash_favouritesInfo">Your games shelf</string>
     <string name="dash_searchInfo">Looking for a specific game?</string>
     <string name="dash_aboutInfo">The developers who did this</string>
-    <string name="search_type_author">Author</string>
+    <string name="search_type_artist">Artist</string>
     <string name="search_type_name">Name</string>
     <string name="search_type_publisher">Publisher</string>
     <string name="detailed_bookrule">Click Here to Rule Book</string>

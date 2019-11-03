@@ -4,14 +4,20 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
-import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
 import edu.isel.pdm.beegeesapp.bgg.search.Type
 import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import kotlinx.android.synthetic.main.activity_detailedview.*
+import android.view.Gravity
+import android.widget.TableRow
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
+import edu.isel.pdm.beegeesapp.R
+
 
 class DetailedViewActivity : AppCompatActivity() {
 
@@ -22,7 +28,6 @@ class DetailedViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detailedview)
         if (intent.hasExtra("GAME_OBJECT")) {
             val currentGame = intent.getParcelableExtra("GAME_OBJECT") as GameInfo?
-            //TODO:IMAGEM
             if (currentGame != null) {
                 Picasso.get()
                     .load(Uri.parse(currentGame.thumb_url)) // load the image
@@ -37,9 +42,28 @@ class DetailedViewActivity : AppCompatActivity() {
                 ratingText.text = currentGame.average_user_rating.toInt().toString() + "/5"
                 priceText.text = currentGame.price + "$"
                 gameYear.text = currentGame.year_published.toString()
-                description.text = currentGame.description
-                companyText.text = currentGame.publishers.toString()
-                creatorText.text = currentGame.artists.toString()
+                description.text = Html.fromHtml(currentGame.description)
+                companyText.text = currentGame.primary_publisher
+                val list = currentGame.artists
+                for (index in list.indices){
+                    val row = TableRow(this)
+                    val a1 = TextView(this)
+                    a1.text=list[index]
+                    a1.setTextColor(resources.getColor(R.color.colorText))
+                    a1.textSize = (15f)
+                    a1.typeface = ResourcesCompat.getFont(this,R.font.biryani)
+                    a1.setOnClickListener {
+                        val info = SearchInfo( Type.Artist, a1.text as String)
+                        val intent = Intent(this, SearchActivity::class.java)
+                        intent.putExtra("SEARCH_KEYWORD", info)
+                        startActivity(intent)
+                    }
+                    a1.gravity = Gravity.CENTER
+                    row.gravity = Gravity.CENTER
+                    row.addView(a1)
+                    creatorText.addView(row)
+
+                }
                 ruleBookText.setOnClickListener {
                     val url = Uri.parse(currentGame.rules_url)
                     startActivity(Intent(Intent.ACTION_VIEW, url))
@@ -60,7 +84,6 @@ class DetailedViewActivity : AppCompatActivity() {
         else throw IllegalArgumentException("Object not Found!")
 
         supportActionBar?.hide()
-        //creatorText.movementMethod = ScrollingMovementMethod()
 
     }
 }

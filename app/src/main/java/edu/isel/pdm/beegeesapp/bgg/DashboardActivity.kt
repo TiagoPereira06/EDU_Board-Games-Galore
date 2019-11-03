@@ -79,13 +79,6 @@ class DashboardActivity : AppCompatActivity() {
         val image3: ImageView = aboutView.findViewById(R.id.iconView) as ImageView
         image3.setImageResource(R.drawable.informationdash)
     }
-
-    fun addToFavourites(game: GameInfo) {
-        //  favGames[]=game
-        //TODO: LISTENER FAVORITOS
-    }
-
-
 }
 
 

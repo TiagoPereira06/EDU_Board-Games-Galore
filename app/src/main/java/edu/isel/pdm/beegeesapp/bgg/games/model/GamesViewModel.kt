@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
-import edu.isel.pdm.beegeesapp.bgg.Request.GetRequest
+import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
 import edu.isel.pdm.beegeesapp.bgg.search.Type
 import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import edu.isel.pdm.beegeesapp.kotlinx.CreatorProxy
@@ -30,24 +30,17 @@ class GamesViewModel(
     private val baseURL =
         "https://www.boardgameatlas.com/api/search?"
     @IgnoredOnParcel
-    private val clientId = "client_id=77iiYwBhLL"
-
-
+    private val clientId = "&client_id=77iiYwBhLL"
     fun updateGames(app: AppCompatActivity, mode: SearchInfo) {
         val queue = Volley.newRequestQueue(app.applicationContext)
 
         val typeURL:String = when(mode.mode){
-            Type.Trending -> ("order_by=popularity&")
+            Type.Trending -> ("order_by=popularity")
             Type.Artist -> ("artist=" + mode.keyWord)
             Type.Publisher -> ("publisher=" + mode.keyWord)
             Type.Name -> ("name=" + mode.keyWord)
         }
-
-
         val url = baseURL+typeURL+clientId
-
-        //TODO : IMPLEMENTAR MODO DE PESQUISA
-
         val request = GetRequest(
             url,
             Response.Listener {

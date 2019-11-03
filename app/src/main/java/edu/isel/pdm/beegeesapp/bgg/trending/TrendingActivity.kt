@@ -76,7 +76,6 @@ class TrendingActivity : AppCompatActivity() {
     }
 
     private fun gameItemClicked(gameItem: GameInfo) {
-        Toast.makeText(this, "Clicked: ${gameItem.name}", Toast.LENGTH_LONG).show()
         val intent = Intent(this, DetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
