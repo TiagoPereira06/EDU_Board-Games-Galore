@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
-            android:text="Click Here to Rule Book"
+            android:text="@string/detailed_bookrule"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorPrimary"
             android:textSize="20dp"

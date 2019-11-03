@@ -3,7 +3,6 @@ package edu.isel.pdm.beegeesapp.bgg.trending
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +26,7 @@ class TrendingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trending)
 
-        supportActionBar?.title = "What's Trending"
+        supportActionBar?.title = getString(R.string.dash_trendingInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
 
         trending_recycler_view.setHasFixedSize(true)

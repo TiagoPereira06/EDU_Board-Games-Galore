@@ -18,7 +18,7 @@ class FavouritesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourites)
 
-        supportActionBar?.title = "Your Shelf"
+        supportActionBar?.title = getString(R.string.dash_favouritesInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
 
 
