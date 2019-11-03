@@ -40,9 +40,9 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, TrendingActivity::class.java))
         }
         val title: TextView = trendView.findViewById(R.id.titleView) as TextView
-        title.text = "Trending"
+        title.text = getString(R.string.dash_trending)
         val subtitle: TextView = trendView.findViewById(R.id.infoView) as TextView
-        subtitle.text = "See what's trending"
+        subtitle.text = getString(R.string.dash_tredingInfo)
         val image: ImageView = trendView.findViewById(R.id.iconView) as ImageView
         image.setImageResource(R.drawable.trendingdash)
 
@@ -51,9 +51,9 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, FavouritesActivity::class.java))
         }
         val title1: TextView = favView.findViewById(R.id.titleView) as TextView
-        title1.text = "Favourites"
+        title1.text = getString(R.string.dash_fav)
         val subtitle1: TextView = favView.findViewById(R.id.infoView) as TextView
-        subtitle1.text = "Your games shelf"
+        subtitle1.text = getString(R.string.dash_favouritesInfo)
         val image1: ImageView = favView.findViewById(R.id.iconView) as ImageView
         image1.setImageResource(R.drawable.favoritedash)
 
@@ -62,9 +62,9 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, SearchActivity::class.java))
         }
         val title2: TextView = searchView.findViewById(R.id.titleView) as TextView
-        title2.text = "Search"
+        title2.text = getString(R.string.dash_search)
         val subtitle2: TextView = searchView.findViewById(R.id.infoView) as TextView
-        subtitle2.text = "Looking for a specific game?"
+        subtitle2.text = getString(R.string.dash_searchInfo)
         val image2: ImageView = searchView.findViewById(R.id.iconView) as ImageView
         image2.setImageResource(R.drawable.searchdash)
 
@@ -73,9 +73,9 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, AboutActivity::class.java))
         }
         val title3: TextView = aboutView.findViewById(R.id.titleView) as TextView
-        title3.text = "About"
+        title3.text = getString(R.string.dash_about)
         val subtitle3: TextView = aboutView.findViewById(R.id.infoView) as TextView
-        subtitle3.text = "The developers who did this"
+        subtitle3.text = getString(R.string.dash_aboutInfo)
         val image3: ImageView = aboutView.findViewById(R.id.iconView) as ImageView
         image3.setImageResource(R.drawable.informationdash)
     }

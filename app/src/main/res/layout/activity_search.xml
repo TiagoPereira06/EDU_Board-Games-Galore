@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:buttonTint="@color/colorPrimary"
             android:fontFamily="@font/biryani_bold"
-            android:text="Author"
+            android:text="Artist"
             android:textColor="@color/colorText" />
 
         <RadioButton

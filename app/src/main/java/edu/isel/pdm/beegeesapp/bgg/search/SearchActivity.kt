@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
@@ -19,6 +20,7 @@ import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_trending.*
 
 private const val GAMES_LIST_KEY = "search_games_list"
 private var searchType =
@@ -35,11 +37,8 @@ class SearchActivity : AppCompatActivity() {
         if (intent.hasExtra("SEARCH_KEYWORD")) {
             initSearchWithValue = true
             val currentInfo = intent.getParcelableExtra("SEARCH_KEYWORD") as SearchInfo
-            // podes fazer logo:
-            // searchType = intent.getParcelableExtra("SEARCH_KEYWORD") as SearchInfo
             searchType.mode = currentInfo.mode
             searchType.keyWord = currentInfo.keyWord
-            //TODO: APLICAR SEARCH
         }
         super.onCreate(savedInstanceState)
         //supportActionBar?.hide()
@@ -58,6 +57,13 @@ class SearchActivity : AppCompatActivity() {
             GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
                 gameItemClicked(gameItem)
             }
+        searchGames.content.observe(this, Observer<List<GameInfo>>{
+            trending_recycler_view.adapter = GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
+                gameItemClicked(gameItem)
+            }
+
+        })
+        if(initSearchWithValue) searchGames.updateGames(this, searchType)
     }
 
     private fun gameItemClicked(gameItem: GameInfo) {
@@ -68,28 +74,20 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-        //TODO - QUE CÓDIGO É ESTE !!!??
-
-        //super.onCreateOptionsMenu(menu)
         val inflater = menuInflater
         inflater.inflate(R.menu.top_searchbar, menu)
         val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchItem = menu?.findItem(R.id.search_item)
         searchView = searchItem?.actionView as androidx.appcompat.widget.SearchView
-
         searchView!!.setSearchableInfo(manager.getSearchableInfo(componentName))
         searchView!!.queryHint = "Search by ${searchType.mode}"
-        //TODO:SUBMIT???
-        //if (initSearchWithValue) searchView!!.setQuery(searchType.keyWord, false)
 
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
-
-
             override fun onQueryTextSubmit(query: String?): Boolean {
                 searchView!!.clearFocus()
                 searchView!!.setQuery("", false)
+                searchType.keyWord=query
                 searchItem.collapseActionView()
                 searchGames.updateGames(
                     this@SearchActivity,
@@ -109,16 +107,12 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // TODO - NÃO ATUALIZA O CHECKED
-        val changeOptionAvailable = false
-
         //item.isChecked = !item.isChecked
 
         when (item.itemId) {
 
             R.id.search_author -> {
-                /*if (changeOptionAvailable && lastOption != R.id.search_author) optionsSelect =
-                    "Author"*/
-                searchType.mode = Type.Author
+                searchType.mode = Type.Artist
                 searchView?.queryHint = "Search by ${searchType.mode}"
 
             }
