@@ -35,7 +35,7 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
         gameName.text = game.name
         gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
         //TODO
-        gamePublisher.text = publishersText(game.publishers)
+        gamePublisher.text = game.publishers.toString()
         gameRating.rating = game.average_user_rating.toFloat()
         //TODO:LISTENER FAVORITOS
         //heartButton.isLiked = contains...
