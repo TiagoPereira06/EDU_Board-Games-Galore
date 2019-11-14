@@ -1,15 +1,12 @@
 package edu.isel.pdm.beegeesapp.bgg.games.view
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.like.LikeButton
-import com.like.OnLikeListener
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
@@ -45,7 +42,6 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
         private val viewModel: GamesViewModel,
         private val clickListener: (GameInfo) -> Unit
     ) : RecyclerView.Adapter<GameViewHolder>() {
-
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
             holder.bindTo(viewModel.content.value?.get(position)!!, clickListener)
         }

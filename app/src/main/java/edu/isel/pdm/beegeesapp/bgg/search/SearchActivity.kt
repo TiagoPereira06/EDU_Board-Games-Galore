@@ -15,14 +15,13 @@ import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
-import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
+import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 
 private const val GAMES_LIST_KEY = "search_games_list"
-private var searchType =
-    SearchInfo(Type.Name, null)
+private var searchType = RequestInfo(Type.Name, null)
 private lateinit var searchGames: GamesViewModel
 private var lastItemClicked : MenuItem? = null
 var initSearchWithValue: Boolean = false
@@ -34,7 +33,7 @@ class SearchActivity : AppCompatActivity() {
 
         if (intent.hasExtra("SEARCH_KEYWORD")) {
             initSearchWithValue = true
-            val currentInfo = intent.getParcelableExtra("SEARCH_KEYWORD") as SearchInfo
+            val currentInfo = intent.getParcelableExtra("SEARCH_KEYWORD") as RequestInfo
             searchType.mode = currentInfo.mode
             searchType.keyWord = currentInfo.keyWord
         }

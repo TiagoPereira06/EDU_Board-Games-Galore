@@ -5,18 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import androidx.appcompat.app.AppCompatActivity
-import com.squareup.picasso.Picasso
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
-import edu.isel.pdm.beegeesapp.bgg.search.Type
-import edu.isel.pdm.beegeesapp.bgg.search.model.SearchInfo
-import kotlinx.android.synthetic.main.activity_detailedview.*
 import android.view.Gravity
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
+import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
+import edu.isel.pdm.beegeesapp.bgg.search.Type
+import kotlinx.android.synthetic.main.activity_detailedview.*
 
 
 class DetailedViewActivity : AppCompatActivity() {
@@ -53,7 +53,10 @@ class DetailedViewActivity : AppCompatActivity() {
                     a1.textSize = (15f)
                     a1.typeface = ResourcesCompat.getFont(this,R.font.biryani)
                     a1.setOnClickListener {
-                        val info = SearchInfo( Type.Artist, a1.text as String)
+                        val info = RequestInfo(
+                            Type.Artist,
+                            a1.text as String
+                        )
                         val intent = Intent(this, SearchActivity::class.java)
                         intent.putExtra("SEARCH_KEYWORD", info)
                         startActivity(intent)
@@ -73,7 +76,10 @@ class DetailedViewActivity : AppCompatActivity() {
                     startActivity(Intent(Intent.ACTION_VIEW, url))
                 }
                 companyText.setOnClickListener {
-                    val info = SearchInfo( Type.Publisher, companyText.text as String)
+                    val info = RequestInfo(
+                        Type.Publisher,
+                        companyText.text as String
+                    )
                     val intent = Intent(this, SearchActivity::class.java)
                     intent.putExtra("SEARCH_KEYWORD", info)
                     startActivity(intent)
