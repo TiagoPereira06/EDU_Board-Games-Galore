@@ -30,7 +30,6 @@ class SearchActivity : AppCompatActivity() {
     var searchView: androidx.appcompat.widget.SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         if (intent.hasExtra("SEARCH_KEYWORD")) {
             initSearchWithValue = true
             val currentInfo = intent.getParcelableExtra("SEARCH_KEYWORD") as RequestInfo
@@ -74,7 +73,7 @@ class SearchActivity : AppCompatActivity() {
         inflater.inflate(R.menu.top_searchbar, menu)
 
         lastItemClicked = if(initSearchWithValue) {
-            when(searchType.mode){
+            when (searchType.mode) {
                 Type.Artist -> menu?.findItem(R.id.search_artist)
                 Type.Publisher -> menu?.findItem(R.id.search_publisher)
                 else -> menu?.findItem(R.id.search_name)

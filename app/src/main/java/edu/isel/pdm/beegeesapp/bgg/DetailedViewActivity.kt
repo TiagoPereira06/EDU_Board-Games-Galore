@@ -26,8 +26,10 @@ class DetailedViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detailedview)
+
         if (intent.hasExtra("GAME_OBJECT")) {
             val currentGame = intent.getParcelableExtra("GAME_OBJECT") as GameInfo?
+
             if (currentGame != null) {
                 Picasso.get()
                     .load(Uri.parse(currentGame.thumb_url)) // load the image
@@ -44,11 +46,12 @@ class DetailedViewActivity : AppCompatActivity() {
                 gameYear.text = currentGame.year_published.toString()
                 description.text = Html.fromHtml(currentGame.description)
                 companyText.text = currentGame.primary_publisher
+
                 val list = currentGame.artists
                 for (index in list.indices){
                     val row = TableRow(this)
                     val a1 = TextView(this)
-                    a1.text=list[index]
+                    a1.text = list[index]
                     a1.setTextColor(resources.getColor(R.color.colorText))
                     a1.textSize = (15f)
                     a1.typeface = ResourcesCompat.getFont(this,R.font.biryani)

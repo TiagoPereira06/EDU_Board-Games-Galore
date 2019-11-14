@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <group
         android:id="@+id/search_items"
         android:checkableBehavior="single">

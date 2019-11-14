@@ -7,7 +7,7 @@ import java.util.Collections.emptyList
 
 @Parcelize
 data class GamesMapper(
-    val games: List<GameInfo> = emptyList()
+    val games: List<GameInfo>
 ) : Parcelable
 
 

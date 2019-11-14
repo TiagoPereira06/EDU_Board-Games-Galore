@@ -6,7 +6,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonRequest
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
 
 class GetRequest(
@@ -19,7 +18,7 @@ class GetRequest(
         val mapper = jacksonObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-        val games: GamesMapper = mapper.readValue(response.data)
+        val games: GamesMapper = mapper.readValue(String(response.data), GamesMapper::class.java)
         return Response.success(games, null)
     }
 }

@@ -3,7 +3,6 @@ package edu.isel.pdm.beegeesapp.bgg.trending
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,14 +20,10 @@ private lateinit var trendingGames: GamesViewModel
 private const val GAMES_LIST_KEY = "trending_games_list"
 private const val IS_RECONFIGURING_KEY = "is_reconfiguring_flag"
 private val requestType = RequestInfo()
-
-
-
-
-
+private var indexToAskMoreData = 6
+private var askedMoreData = false
 
 class TrendingActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,43 +35,31 @@ class TrendingActivity : AppCompatActivity() {
         trending_recycler_view.layoutManager = LinearLayoutManager(this)
         trending_recycler_view.setHasFixedSize(true)
 
-
-
-
-
         trending_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                //super.onScrollStateChanged(recyclerView, newState)
+                super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    Toast.makeText(this@TrendingActivity, "Last", Toast.LENGTH_LONG).show()
-
+                    if (askedMoreData) {
+                        askedMoreData = false
+                        trendingGames.updateModel()
+                        changeCursorPosition(recyclerView)
+                    }
                 }
-
             }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val layout = recyclerView.layoutManager as LinearLayoutManager
-                var visibleGamesCount: Int = layout.childCount
-                var totalGamesCount: Int = layout.itemCount
-                var lastGameView: Int =
-                    layout.findLastVisibleItemPosition() //PEDIDO MAIS JOGO MULTIPLOS 6
-                //getmoreGames(trendingGames - MODEL)
-                //MUDAR DE ADAPTER QUANDO LASTGAMEVIEW = TOTAL GAME COUNT
-                //
-
-                //if(recyclerView.layoutManager.fin)
                 super.onScrolled(recyclerView, dx, dy)
+                if (askedMoreData) return
+                val layout = recyclerView.layoutManager as LinearLayoutManager
+                if (layout.findLastVisibleItemPosition() == indexToAskMoreData) {
+                    askedMoreData = true
+                    indexToAskMoreData += requestType.limit
+                    trendingGames.updateGames(this@TrendingActivity, requestType)
+                }
+
             }
-
         })
-
-
-
-
-
-
-
-
 
         // Get view model instance and add its contents to the recycler view
         trendingGames = getViewModel(GAMES_LIST_KEY) {
@@ -88,13 +71,10 @@ class TrendingActivity : AppCompatActivity() {
             }
 
         trendingGames.content.observe(this, Observer<List<GameInfo>> {
-            //SE O CONTENT NÃO MUDOU, NÃO MUDA O ADAPTER
             trending_recycler_view.swapAdapter(GameViewHolder.GamesListAdapter(trendingGames) { gameItem: GameInfo ->
                 gameItemClicked(gameItem)
             }, true)
-            pullToRefresh.isRefreshing=false
-
-
+            pullToRefresh.isRefreshing = false
         })
 
         // Should we refresh the data?
@@ -104,8 +84,7 @@ class TrendingActivity : AppCompatActivity() {
                 this,
                 requestType
             )
-        }
-        else {
+        } else {
             savedInstanceState.remove(IS_RECONFIGURING_KEY)
         }
 
@@ -116,6 +95,13 @@ class TrendingActivity : AppCompatActivity() {
                 requestType
             )
         }
+
+        pullToRefresh.isRefreshing = true
+    }
+
+    private fun changeCursorPosition(recyclerView: RecyclerView) {
+        val layout = recyclerView.layoutManager as LinearLayoutManager
+        layout.scrollToPosition(requestType.skip - requestType.limit - 1)
     }
 
     private fun gameItemClicked(gameItem: GameInfo) {
@@ -132,8 +118,7 @@ class TrendingActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         if (isChangingConfigurations) {
             outState.putBoolean(IS_RECONFIGURING_KEY, true)
-        }
-        else {
+        } else {
             outState.putParcelable(GAMES_LIST_KEY, trendingGames)
         }
     }
