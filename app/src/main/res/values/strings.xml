@@ -19,5 +19,7 @@
     <string name="search_type_name">Name</string>
     <string name="search_type_publisher">Publisher</string>
     <string name="detailed_bookrule">Click Here to Rule Book</string>
+    <string name="dash_userLists">Collections</string>
+    <string name="dash_userListsInfo">Your games lists</string>
 
 </resources>

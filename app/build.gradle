@@ -47,4 +47,5 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.0'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.10.0'
     implementation 'androidx.core:core:1.1.0'
+    implementation 'com.github.sabujak-sabujak:RoundedButton:v0.1.1'
 }

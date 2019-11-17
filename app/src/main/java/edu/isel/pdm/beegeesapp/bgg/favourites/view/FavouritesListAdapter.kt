@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import kotlinx.android.synthetic.main.fav_cardview.view.*
+import kotlinx.android.synthetic.main.card_fav.view.*
 
 class FavouritesListAdapter(private val favGames: List<GameInfo>) :
     RecyclerView.Adapter<FavouritesListAdapter.GameViewHolder>() {
@@ -17,7 +17,7 @@ class FavouritesListAdapter(private val favGames: List<GameInfo>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
         return GameViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.fav_cardview, parent, false)
+                .inflate(R.layout.card_fav, parent, false)
         )
     }
 

@@ -12,6 +12,7 @@ import edu.isel.pdm.beegeesapp.bgg.favourites.FavouritesActivity
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
 import edu.isel.pdm.beegeesapp.bgg.trending.TrendingActivity
+import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
 
 
 class DashboardActivity : AppCompatActivity() {
@@ -26,14 +27,16 @@ class DashboardActivity : AppCompatActivity() {
         val fav = findViewById<CardView>(R.id.favouritesView)
         val search = findViewById<CardView>(R.id.searchView)
         val about = findViewById<CardView>(R.id.aboutView)
-        initUI(trend, fav, search, about)
+        val userlist = findViewById<CardView>(R.id.userlist_View)
+        initUI(trend, fav, search, about,userlist)
     }
 
     private fun initUI(
         trendView: CardView,
         favView: CardView,
         searchView: CardView,
-        aboutView: CardView
+        aboutView: CardView,
+        userList : CardView
     ) {
         // TRENDING
         trendView.setOnClickListener {
@@ -78,6 +81,20 @@ class DashboardActivity : AppCompatActivity() {
         subtitle3.text = getString(R.string.dash_aboutInfo)
         val image3: ImageView = aboutView.findViewById(R.id.iconView) as ImageView
         image3.setImageResource(R.drawable.informationdash)
+        // CUSTOM LIST
+        userList.setOnClickListener{
+            startActivity(Intent(this,UserListsActivity::class.java))
+        }
+        val title4: TextView = userList.findViewById(R.id.titleView) as TextView
+        title4.text = getString(R.string.dash_userLists)
+        val subtitle4: TextView = userList.findViewById(R.id.infoView) as TextView
+        subtitle4.text = getString(R.string.dash_userListsInfo)
+        val image4: ImageView = userList.findViewById(R.id.iconView) as ImageView
+        image4.setImageResource(R.drawable.customlistsdash)
+
+
+
+
     }
 }
 

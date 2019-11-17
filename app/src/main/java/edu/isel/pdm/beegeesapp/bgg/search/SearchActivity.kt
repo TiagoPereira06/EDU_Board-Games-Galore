@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.dialogs.AddToListDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
@@ -49,13 +50,12 @@ class SearchActivity : AppCompatActivity() {
             savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
         }
         search_recycler_view.adapter =
-            GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
-                gameItemClicked(gameItem)
-            }
+            GameViewHolder.GamesListAdapter(searchGames , { gameItem: GameInfo ->
+                gameItemClicked(gameItem)},{gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
+
         searchGames.content.observe(this, Observer<List<GameInfo>>{
-            search_recycler_view.adapter = GameViewHolder.GamesListAdapter(searchGames) { gameItem: GameInfo ->
-                gameItemClicked(gameItem)
-            }
+            search_recycler_view.adapter = GameViewHolder.GamesListAdapter(searchGames , { gameItem: GameInfo ->
+                gameItemClicked(gameItem)},{gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
         })
         if(initSearchWithValue){
             searchGames.updateGames(this, searchType)
@@ -66,6 +66,11 @@ class SearchActivity : AppCompatActivity() {
         val intent = Intent(this, DetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
+    }
+
+    private fun addToCollectionItemClicked(gameItem: GameInfo){
+        val dialog = AddToListDialog(mutableListOf()) //LISTA VAZIA = MODO CRIAÇÃO
+        dialog.show(supportFragmentManager,"New List Dialog")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

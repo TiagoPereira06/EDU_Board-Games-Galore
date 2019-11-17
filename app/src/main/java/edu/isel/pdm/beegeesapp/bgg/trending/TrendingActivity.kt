@@ -3,12 +3,14 @@ package edu.isel.pdm.beegeesapp.bgg.trending
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.dialogs.AddToListDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
@@ -47,7 +49,6 @@ class TrendingActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (askedMoreData) return
@@ -57,23 +58,21 @@ class TrendingActivity : AppCompatActivity() {
                     indexToAskMoreData += requestType.limit
                     trendingGames.updateGames(this@TrendingActivity, requestType)
                 }
-
             }
         })
-
         // Get view model instance and add its contents to the recycler view
         trendingGames = getViewModel(GAMES_LIST_KEY) {
             savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
         }
         trending_recycler_view.adapter =
-            GameViewHolder.GamesListAdapter(trendingGames) { gameItem: GameInfo ->
-                gameItemClicked(gameItem)
-            }
+            GameViewHolder.GamesListAdapter(trendingGames, { gameItem: GameInfo -> gameItemClicked(gameItem)},
+                {gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
+
 
         trendingGames.content.observe(this, Observer<List<GameInfo>> {
-            trending_recycler_view.swapAdapter(GameViewHolder.GamesListAdapter(trendingGames) { gameItem: GameInfo ->
-                gameItemClicked(gameItem)
-            }, true)
+            trending_recycler_view.swapAdapter(GameViewHolder.GamesListAdapter(trendingGames , {gameItem: GameInfo ->
+                gameItemClicked(gameItem)},{gameItem: GameInfo -> addToCollectionItemClicked(gameItem)}),true)
+
             pullToRefresh.isRefreshing = false
         })
 
@@ -96,8 +95,11 @@ class TrendingActivity : AppCompatActivity() {
             )
         }
 
+
         pullToRefresh.isRefreshing = true
     }
+
+
 
     private fun changeCursorPosition(recyclerView: RecyclerView) {
         val layout = recyclerView.layoutManager as LinearLayoutManager
@@ -108,6 +110,11 @@ class TrendingActivity : AppCompatActivity() {
         val intent = Intent(this, DetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
+    }
+
+    private fun addToCollectionItemClicked(gameItem: GameInfo){
+        val dialog = AddToListDialog(mutableListOf()) //LISTA VAZIA = MODO CRIAÇÃO
+        dialog.show(supportFragmentManager,"New List Dialog")
     }
 
 

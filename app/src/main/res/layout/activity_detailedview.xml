@@ -83,46 +83,69 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ruleBookText" />
 
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/thumbGame"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:baseline="22dp"
+            android:baselineAlignBottom="true"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="2dp"
+            app:civ_shadow="false"
+            app:civ_shadow_color="@color/colorPrimary"
+            app:civ_shadow_radius="5"
+            android:contentDescription="gameThumb"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/thumb" />
+
+        <TextView
+            android:id="@+id/game_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/press_start_2p"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="Spirit Island"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/thumbGame" />
+
         <ImageView
-            android:id="@+id/ageIcon"
+            android:id="@+id/priceIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="ageIcon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeIcon"
-            app:srcCompat="@drawable/age" />
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="108dp"
+            android:contentDescription="priceicon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingIcon"
+            app:srcCompat="@drawable/pricetag" />
 
         <ImageView
             android:id="@+id/yearIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="133dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="108dp"
             android:contentDescription="yearicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/priceIcon"
             app:srcCompat="@drawable/calendarcolor" />
 
         <TextView
-            android:id="@+id/gameYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/biryani_bold"
-            android:gravity="center"
-            android:text="2015"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintStart_toEndOf="@+id/yearIcon"
-            app:layout_constraintTop_toTopOf="@+id/yearIcon" />
-
-        <TextView
             android:id="@+id/minAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="+3"
@@ -132,118 +155,21 @@
             app:layout_constraintTop_toTopOf="@+id/ageIcon" />
 
         <ImageView
-            android:id="@+id/thumbGame"
-            android:layout_width="221dp"
-            android:layout_height="283dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:contentDescription="gameThumb"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toTopOf="@+id/playerIcon"
-            app:layout_constraintEnd_toStartOf="@+id/game_Name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/thumb" />
-
-        <TextView
-            android:id="@+id/game_Name"
-            android:layout_width="178dp"
-            android:layout_height="284dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/press_start_2p"
-            android:gravity="center"
-            android:text="Spirit Island"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/ratingIcon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/thumbGame"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/priceText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/biryani_bold"
-            android:gravity="center"
-            android:text="25.65€"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintStart_toEndOf="@+id/priceIcon"
-            app:layout_constraintTop_toTopOf="@+id/priceIcon" />
-
-        <TextView
-            android:id="@+id/ratingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/biryani_bold"
-            android:gravity="center"
-            android:text="93/100"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintStart_toEndOf="@+id/ratingIcon"
-            app:layout_constraintTop_toTopOf="@+id/ratingIcon" />
-
-        <ImageView
-            android:id="@+id/priceIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="133dp"
-            android:contentDescription="priceicon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingIcon"
-            app:srcCompat="@drawable/pricetag" />
-
-        <ImageView
-            android:id="@+id/playerIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="timeicon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/thumbGame"
-            app:srcCompat="@drawable/players" />
-
-        <ImageView
             android:id="@+id/ratingIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="133dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="108dp"
             android:contentDescription="ratingicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_Name"
             app:srcCompat="@drawable/positivevotecolor" />
 
         <TextView
-            android:id="@+id/nPlayers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/biryani_bold"
-            android:gravity="center"
-            android:text="1-5"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintStart_toEndOf="@+id/playerIcon"
-            app:layout_constraintTop_toTopOf="@+id/playerIcon" />
-
-        <TextView
             android:id="@+id/playTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/biryani_bold"
             android:gravity="center"
             android:text="90-120 min"
@@ -256,20 +182,94 @@
             android:id="@+id/timeIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="timeIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerIcon"
             app:srcCompat="@drawable/clockcolor" />
 
         <TextView
+            android:id="@+id/ratingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/biryani_bold"
+            android:gravity="center"
+            android:text="93/100"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/ratingIcon"
+            app:layout_constraintTop_toTopOf="@+id/ratingIcon" />
+
+        <ImageView
+            android:id="@+id/ageIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="ageIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeIcon"
+            app:srcCompat="@drawable/age" />
+
+        <TextView
+            android:id="@+id/gameYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/biryani_bold"
+            android:gravity="center"
+            android:text="2015"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/yearIcon"
+            app:layout_constraintTop_toTopOf="@+id/yearIcon" />
+
+        <TextView
+            android:id="@+id/nPlayers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/biryani_bold"
+            android:gravity="center"
+            android:text="1-5"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/playerIcon"
+            app:layout_constraintTop_toTopOf="@+id/playerIcon" />
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/biryani_bold"
+            android:gravity="center"
+            android:text="25.65€"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/priceIcon"
+            app:layout_constraintTop_toTopOf="@+id/priceIcon" />
+
+        <ImageView
+            android:id="@+id/playerIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="24dp"
+            android:contentDescription="timeicon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/game_Name"
+            app:srcCompat="@drawable/players" />
+
+        <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="45dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/biryani"
             android:scrollbars="vertical"
             android:text="Powerful Spirits have existed on this isolated island for time immemorial. They are both part of the natural world and - at the same time - something beyond nature. Native Islanders, known as the Dahan, have learned how to co-exist with the spirits, but with a healthy dose of fear and reverence. However, now, the island has been &quot;discovered&quot; by invaders from a far-off land. These would-be colonists are taking over the land and upsetting the natural balance, destroying the presence of Spirits as they go. As Spirits, you must grow in power and work together to drive the invaders from your island... before it's too late!"
@@ -284,9 +284,7 @@
             android:id="@+id/creatorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
