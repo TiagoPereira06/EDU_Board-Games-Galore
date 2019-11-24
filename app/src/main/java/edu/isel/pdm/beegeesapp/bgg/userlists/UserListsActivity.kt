@@ -1,29 +1,36 @@
 package edu.isel.pdm.beegeesapp.bgg.userlists
 
+import android.content.Intent
+import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.ContextMenu
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.dialogs.AddToListDialog
-import edu.isel.pdm.beegeesapp.bgg.dialogs.IChosenListDialogListener
+import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
+import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.IChosenListDialogListener
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 import edu.isel.pdm.beegeesapp.bgg.userlists.view.ListsListAdapter
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_userlists.*
 
+@Parcelize
 class UserListsActivity : AppCompatActivity(),
-    IChosenListDialogListener {
+    IChosenListDialogListener, Parcelable {
+    companion object {
+        var listContainer = UserListContainer()
+    }
+    private lateinit var deleteIcon : Drawable
 
-    var listContainer = UserListContainer()
-    private var listsNames = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,19 +45,85 @@ class UserListsActivity : AppCompatActivity(),
         listContainer.addList("Keep Practising")
         listContainer.addList("Want to Try")
         listContainer.addList("Already Purchased")
-        listsNames = listContainer.getAllListsNames()
+
+        val gameList = mutableListOf<GameInfo>()
+           gameList.add(GameInfo("Teste1"))
+           gameList.add(GameInfo("Teste2"))
+           gameList.add(GameInfo("Teste3"))
+           gameList.add(GameInfo("Teste4"))
+           gameList.add(GameInfo("Teste5"))
+           gameList.add(GameInfo("Teste6"))
+           gameList.add(GameInfo("Teste7"))
+           gameList.add(GameInfo("Teste8"))
+           gameList.add(GameInfo("Teste9"))
+           gameList.add(GameInfo("Teste10"))
+           gameList.add(GameInfo("Teste11"))
+           gameList.add(GameInfo("Teste12"))
+           gameList.add(GameInfo("Teste13"))
+
+
+
+        listContainer.userLists[0].list = gameList
 
 
         supportActionBar?.title = getString(R.string.dash_userListsInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
+        deleteIcon = ContextCompat.getDrawable(this,R.drawable.deleteicon)!!
 
-        val favRv = findViewById<RecyclerView>(R.id.lists_recycler_view)
-        val myAdapter = ListsListAdapter(listContainer,this)
-        favRv.layoutManager = LinearLayoutManager(this)
-        favRv.adapter = myAdapter
+        val listRv = findViewById<RecyclerView>(R.id.lists_recycler_view)
+        val listRvAdapter = ListsListAdapter(listContainer,this) { listItem: CustomUserList ->
+            listItemClicked(listItem)}
+        listRv.layoutManager = LinearLayoutManager(this)
+        listRv.adapter = listRvAdapter
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
+                (listRv.adapter as ListsListAdapter).removeItem(viewHolder)
+
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+                val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
+
+                if (dX>0){
+                    deleteIcon.setBounds(itemView.left + iconMargin, itemView.top+iconMargin, itemView.left + iconMargin + deleteIcon.intrinsicWidth,itemView.bottom-iconMargin)
+                }
+                deleteIcon.draw(c)
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(listRv)
 
         addListButton.setOnClickListener {
-            val dialog = AddToListDialog(mutableListOf()) //LISTA VAZIA = MODO CRIAÇÃO
+            val dialog =
+                CreateNewListDialog()
             dialog.show(supportFragmentManager,"New List Dialog")
         }
 
@@ -63,26 +136,10 @@ class UserListsActivity : AppCompatActivity(),
         }else
             Toast.makeText(this,"List already exists",Toast.LENGTH_SHORT).show()
     }
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        menuInflater.inflate(R.menu.menu_longpress_list,menu)
 
-    }
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.delete ->{
-                //TODO(REAGIR INTERAÇÃO)
-                Toast.makeText(applicationContext,"Delete List",Toast.LENGTH_SHORT).show()
-            }
-            R.id.editName ->{
-                //TODO(REAGIR INTERAÇÃO)
-                Toast.makeText(applicationContext,"Edit List Name",Toast.LENGTH_SHORT).show()
-            }
-        }
-        return super.onContextItemSelected(item)
+    private fun listItemClicked(listItem: CustomUserList) {
+        val intent = Intent(this, ListDetailedViewActivity::class.java)
+        intent.putExtra("LIST_OBJECT", listItem)
+        startActivity(intent)
     }
 }

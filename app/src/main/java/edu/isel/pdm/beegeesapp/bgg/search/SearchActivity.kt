@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.dialogs.AddToListDialog
+import edu.isel.pdm.beegeesapp.bgg.GameDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
@@ -63,13 +63,14 @@ class SearchActivity : AppCompatActivity() {
         }
     }
     private fun gameItemClicked(gameItem: GameInfo) {
-        val intent = Intent(this, DetailedViewActivity::class.java)
+        val intent = Intent(this, GameDetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
     }
 
     private fun addToCollectionItemClicked(gameItem: GameInfo){
-        val dialog = AddToListDialog(mutableListOf()) //LISTA VAZIA = MODO CRIAÇÃO
+        val dialog =
+            CreateNewListDialog() //LISTA VAZIA = MODO CRIAÇÃO
         dialog.show(supportFragmentManager,"New List Dialog")
     }
 

@@ -3,18 +3,19 @@ package edu.isel.pdm.beegeesapp.bgg.trending
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.DetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.dialogs.AddToListDialog
+import edu.isel.pdm.beegeesapp.bgg.GameDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.chooselisttoadd.ChooseListToAddGameActivity
+import edu.isel.pdm.beegeesapp.bgg.dialogs.ErrorDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
+import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 import kotlinx.android.synthetic.main.activity_trending.*
 
@@ -22,8 +23,9 @@ private lateinit var trendingGames: GamesViewModel
 private const val GAMES_LIST_KEY = "trending_games_list"
 private const val IS_RECONFIGURING_KEY = "is_reconfiguring_flag"
 private val requestType = RequestInfo()
-private var indexToAskMoreData = 6
+private var INDEX_TO_ASK_MORE_DATA = 6
 private var askedMoreData = false
+private var lists = UserListsActivity.listContainer
 
 class TrendingActivity : AppCompatActivity() {
 
@@ -53,9 +55,9 @@ class TrendingActivity : AppCompatActivity() {
                 super.onScrolled(recyclerView, dx, dy)
                 if (askedMoreData) return
                 val layout = recyclerView.layoutManager as LinearLayoutManager
-                if (layout.findLastVisibleItemPosition() == indexToAskMoreData) {
+                if (layout.findLastVisibleItemPosition() == INDEX_TO_ASK_MORE_DATA) {
                     askedMoreData = true
-                    indexToAskMoreData += requestType.limit
+                    INDEX_TO_ASK_MORE_DATA += requestType.limit
                     trendingGames.updateGames(this@TrendingActivity, requestType)
                 }
             }
@@ -107,16 +109,25 @@ class TrendingActivity : AppCompatActivity() {
     }
 
     private fun gameItemClicked(gameItem: GameInfo) {
-        val intent = Intent(this, DetailedViewActivity::class.java)
+        val intent = Intent(this, GameDetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
     }
 
-    private fun addToCollectionItemClicked(gameItem: GameInfo){
-        val dialog = AddToListDialog(mutableListOf()) //LISTA VAZIA = MODO CRIAÇÃO
-        dialog.show(supportFragmentManager,"New List Dialog")
+    private fun addToCollectionItemClicked(gameItem: GameInfo) {
+        if (lists.userLists.isNullOrEmpty()) {
+            val dialog = ErrorDialog()
+            dialog.retainInstance = true
+            dialog.show(supportFragmentManager, "Error Dialog")
+        } else {
+            val intent = Intent(this, ChooseListToAddGameActivity::class.java)
+            intent.putExtra("GAME_INFO", gameItem)
+            startActivity(intent)
+            /* val dialog = ChooseListToAddGameDialog(gameItem)
+        dialog.retainInstance = true
+        dialog.show(supportFragmentManager,"Choose List Dialog")*/
+        }
     }
-
 
     /**
      * Callback method that handles view state preservation
@@ -129,5 +140,7 @@ class TrendingActivity : AppCompatActivity() {
             outState.putParcelable(GAMES_LIST_KEY, trendingGames)
         }
     }
+
+
 }
 

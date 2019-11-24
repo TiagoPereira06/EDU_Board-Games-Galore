@@ -16,16 +16,16 @@ import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
 import edu.isel.pdm.beegeesapp.bgg.search.Type
-import kotlinx.android.synthetic.main.activity_detailedview.*
+import kotlinx.android.synthetic.main.activity_detailedgameview.*
 
 
-class DetailedViewActivity : AppCompatActivity() {
+class GameDetailedViewActivity : AppCompatActivity() {
 
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detailedview)
+        setContentView(R.layout.activity_detailedgameview)
 
         if (intent.hasExtra("GAME_OBJECT")) {
             val currentGame = intent.getParcelableExtra("GAME_OBJECT") as GameInfo?

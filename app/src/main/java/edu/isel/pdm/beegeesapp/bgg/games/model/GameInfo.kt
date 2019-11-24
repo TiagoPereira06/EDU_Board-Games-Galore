@@ -31,5 +31,10 @@ data class GameInfo(
     @JsonProperty("url") val gameUrl: String = "",
     val price: String = "",
     val average_user_rating: Double = 0.0
-) : Parcelable
+) : Parcelable{
+    constructor(name : String) : this("",0,0,0,0,
+        "https://d2k4q26owzy373.cloudfront.net/40x40/games/uploaded/1559254941010-61PJxjjnbfL.jpg",0,
+        0,0,name,"","", emptyList(), emptyList(),"","","",0.0)
+
+}
 

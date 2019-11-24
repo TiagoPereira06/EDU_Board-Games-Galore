@@ -21,11 +21,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".bgg.about.AboutActivity"/>
-        <activity android:name=".bgg.DetailedViewActivity" />
+        <activity android:name=".bgg.GameDetailedViewActivity" />
         <activity android:name=".bgg.search.SearchActivity" />
         <activity android:name=".bgg.favourites.FavouritesActivity" />
         <activity android:name=".bgg.trending.TrendingActivity" />
         <activity android:name=".bgg.userlists.UserListsActivity" />
+        <activity android:name=".bgg.userlists.detaileduserlists.ListDetailedViewActivity" />
+        <activity android:name=".bgg.chooselisttoadd.ChooseListToAddGameActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

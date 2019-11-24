@@ -46,6 +46,7 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
         private val clickListener: (GameInfo) -> Unit,
         private val addToCollectionListener: (GameInfo) -> Unit
     ) : RecyclerView.Adapter<GameViewHolder>() {
+
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
             holder.bindTo(viewModel.content.value?.get(position)!!, clickListener,addToCollectionListener)
         }
