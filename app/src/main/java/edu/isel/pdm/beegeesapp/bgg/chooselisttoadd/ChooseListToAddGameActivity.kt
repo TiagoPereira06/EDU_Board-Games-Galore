@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 

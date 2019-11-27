@@ -7,11 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.chooselisttoadd.ChooseListToAddGameActivity
 import edu.isel.pdm.beegeesapp.bgg.dialogs.ErrorDialog
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
@@ -46,7 +47,7 @@ class TrendingActivity : AppCompatActivity() {
                 if (!recyclerView.canScrollVertically(1)) {
                     if (askedMoreData) {
                         askedMoreData = false
-                        trendingGames.updateModel()
+                        trendingGames.updateGames(application as BggApplication, RequestInfo())
                         changeCursorPosition(recyclerView)
                     }
                 }
@@ -58,7 +59,7 @@ class TrendingActivity : AppCompatActivity() {
                 if (layout.findLastVisibleItemPosition() == INDEX_TO_ASK_MORE_DATA) {
                     askedMoreData = true
                     INDEX_TO_ASK_MORE_DATA += requestType.limit
-                    trendingGames.updateGames(this@TrendingActivity, requestType)
+                    trendingGames.updateGames(application as BggApplication,requestType)
                 }
             }
         })
@@ -82,7 +83,7 @@ class TrendingActivity : AppCompatActivity() {
         if (savedInstanceState == null || !savedInstanceState.containsKey(GAMES_LIST_KEY)) {
             // No saved state? Lets fetch list from the server
             trendingGames.updateGames(
-                this,
+                application as BggApplication,
                 requestType
             )
         } else {
@@ -92,7 +93,7 @@ class TrendingActivity : AppCompatActivity() {
         // Setup ui event handlers
         pullToRefresh.setOnRefreshListener {
             trendingGames.updateGames(
-                this,
+                application as BggApplication,
                 requestType
             )
         }

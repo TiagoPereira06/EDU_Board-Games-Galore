@@ -11,10 +11,11 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
@@ -58,7 +59,7 @@ class SearchActivity : AppCompatActivity() {
                 gameItemClicked(gameItem)},{gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
         })
         if(initSearchWithValue){
-            searchGames.updateGames(this, searchType)
+            searchGames.updateGames(application as BggApplication,searchType)
             supportActionBar?.title = searchType.keyWord
         }
     }
@@ -101,10 +102,7 @@ class SearchActivity : AppCompatActivity() {
                 searchView!!.setQuery("", false)
                 searchType.keyWord=query
                 searchItem.collapseActionView()
-                searchGames.updateGames(
-                    this@SearchActivity,
-                    searchType
-                )
+                searchGames.updateGames(application as BggApplication,searchType)
                 supportActionBar?.title = searchType.keyWord
                 return true
             }

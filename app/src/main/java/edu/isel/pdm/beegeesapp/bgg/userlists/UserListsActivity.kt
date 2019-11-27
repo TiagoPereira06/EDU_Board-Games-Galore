@@ -16,7 +16,7 @@ import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.IChosenListDialogListener
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 import edu.isel.pdm.beegeesapp.bgg.userlists.view.ListsListAdapter

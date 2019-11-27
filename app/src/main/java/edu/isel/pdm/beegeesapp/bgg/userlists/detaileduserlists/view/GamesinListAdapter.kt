@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
 import kotlinx.android.parcel.Parcelize
@@ -71,12 +71,12 @@ class GamesinListAdapter(
     }
 
     fun removeItems(host : Activity){
-        var counter = 0
+        var deltaToTop = 0
 
         gamesToRemove.sortWith(compareBy {it.pos})
         gamesToRemove.forEach {
             listToShow.list.remove(it.game)
-               notifyItemRemoved(it.pos - (counter++))
+               notifyItemRemoved(it.pos - (deltaToTop++))
 
         }
         if(gamesToRemove.isNotEmpty()) {

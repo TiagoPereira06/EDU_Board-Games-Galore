@@ -1,0 +1,120 @@
+package edu.isel.pdm.beegeesapp.bgg
+
+import android.os.Parcelable
+import androidx.room.Database
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.android.parcel.Parcelize
+import java.util.Collections.emptyList
+
+@Parcelize
+data class GamesMapper(
+    val games: MutableList<GameInfo>
+) : Parcelable
+
+
+@Parcelize
+@Entity(tableName = "Games")
+data class GameInfo(
+    @PrimaryKey val id: String = "",
+    val min_playtime: Int = 0,
+    val max_playtime: Int = 0,
+    val min_players: Int = 0,
+    val max_players: Int = 0,
+    val thumb_url: String = "",
+    val min_age: Int = 0,
+    val num_user_ratings: Int = 0,
+    val year_published: Int = 0,
+    val name: String = "",
+    val description: String = "",
+    val primary_publisher: String? = "",
+    val publishers: List<String> = emptyList(),
+    val artists: List<String> = emptyList(),
+    val rules_url: String? = "",
+    @JsonProperty("url") val gameUrl: String = "",
+    val mechanics : List<Mechanic> = emptyList(),
+    val categories: List<Category> = emptyList(),
+    val price: String = "",
+    val average_user_rating: Double = 0.0
+) : Parcelable{
+    constructor(name : String) : this("",0,0,0,0,
+        "https://d2k4q26owzy373.cloudfront.net/40x40/games/uploaded/1559254941010-61PJxjjnbfL.jpg",0,
+        0,0,name,"","", emptyList(), emptyList(),"","",
+        listOf(Mechanic("")), listOf(
+            Category("")
+        ),"",0.0)
+
+}
+@Parcelize
+@Entity
+data class Category(
+    @PrimaryKey val id : String
+) : Parcelable
+
+@Parcelize
+@Entity
+data class Mechanic(
+    @PrimaryKey val id : String
+) : Parcelable
+
+@Parcelize
+@Entity
+data class UserList(
+    @PrimaryKey val listName : String,
+    val drawableResourceName : String
+) : Parcelable
+
+@Entity(tableName = "game_category_join",
+    primaryKeys = arrayOf("gameId","categoryId"),
+    foreignKeys = arrayOf(
+        ForeignKey(entity = GameInfo::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("gameId")),
+        ForeignKey(entity = Category::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("categoryId"))
+    )
+)
+
+data class GameCategoryJoin(
+    val gameId : String,
+    val categoryId : String
+)
+
+@Entity(tableName = "game_mechanic_join",
+    primaryKeys = arrayOf("gameId","mechanicId"),
+    foreignKeys = arrayOf(
+        ForeignKey(entity = GameInfo::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("gameId")),
+        ForeignKey(entity = Mechanic::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("mechanicId"))
+    )
+)
+
+data class GameMechanicJoin(
+    val gameId : String,
+    val mechanicId : String
+)
+
+@Entity(tableName = "game_userlist_join",
+    primaryKeys = arrayOf("gameId","listName"),
+    foreignKeys = arrayOf(
+        ForeignKey(entity = GameInfo::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("gameId")),
+        ForeignKey(entity = UserList::class,
+            parentColumns = arrayOf("listName"),
+            childColumns = arrayOf("listName"))
+    )
+)
+
+data class GameUserListJoin(
+    val gameId : String,
+    val listName : String
+)
+
+@Database(entities = [GameInfo::class, Mechanic::class, Category::class, UserList::class],version = 1)
