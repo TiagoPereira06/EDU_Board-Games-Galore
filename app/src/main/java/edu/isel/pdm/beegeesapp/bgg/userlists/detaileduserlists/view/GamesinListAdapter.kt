@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.card_gamelists.view.*
@@ -27,6 +28,9 @@ class GamesinListAdapter(
     private val gamesToRemove = mutableListOf<GamePosObj>()
     private lateinit var holder: GameinListHolder
 
+    private var removedPosition : Int = 0
+    private var removedGame : GameInfo? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameinListHolder {
         return GameinListHolder(
             LayoutInflater.from(parent.context)
@@ -39,12 +43,14 @@ class GamesinListAdapter(
     override fun onBindViewHolder(holder: GameinListHolder, position: Int) {
         this.holder = holder
         val currentGame = listToShow.list[position]
-        val obj = GamePosObj(holder.adapterPosition+1,currentGame)
+        val obj = GamePosObj(holder.adapterPosition,currentGame)
+        val check = holder.view.checkBox as CheckBox
+        check.isChecked = false
 
         if(editorMode) {
             holder.view.checkBox.visibility = View.VISIBLE
             val check = holder.view.checkBox as CheckBox
-            check.isChecked = false
+            //check.isChecked = false
             check.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked /*and (!gamesToRemove.contains(obj))*/) {
                     gamesToRemove.add(obj)
@@ -52,10 +58,6 @@ class GamesinListAdapter(
                     gamesToRemove.remove(obj)
                 }
             }
-            /*check.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) gamesToRemove.add(game)
-                else gamesToRemove.remove(game)
-            }*/
 
         }else holder.view.checkBox.visibility = View.INVISIBLE
 
@@ -71,6 +73,7 @@ class GamesinListAdapter(
     fun removeItems(host : Activity){
         var counter = 0
 
+        gamesToRemove.sortWith(compareBy {it.pos})
         gamesToRemove.forEach {
             listToShow.list.remove(it.game)
                notifyItemRemoved(it.pos - (counter++))
@@ -83,11 +86,27 @@ class GamesinListAdapter(
                         listToShow.list.add(undo.pos, undo.game)
                         notifyItemInserted(undo.pos)
                     }
+                    (host as ListDetailedViewActivity).deleteMenuItem.isVisible=true
                 }.setActionTextColor(ContextCompat.getColor(host, R.color.colorPrimary))
                 .show()
         }
 
 
+    }
+
+    fun removeItem(viewHolder: RecyclerView.ViewHolder,host : Activity) {
+        removedPosition=viewHolder.adapterPosition
+        removedGame=listToShow.list[viewHolder.adapterPosition]
+
+        listToShow.list.removeAt(viewHolder.adapterPosition)
+        notifyItemRemoved(viewHolder.adapterPosition)
+
+        Snackbar
+            .make(viewHolder.itemView, removedGame!!.name+" Deleted",Snackbar.LENGTH_LONG).setAction("UNDO") {
+                listToShow.list.add(removedPosition,removedGame!!)
+                notifyItemInserted(removedPosition)
+            }.setActionTextColor(ContextCompat.getColor(host,R.color.colorPrimary))
+            .show()
     }
 
 
@@ -97,6 +116,6 @@ class GamesinListAdapter(
 
 @Parcelize
 data class GamePosObj(
-    val pos : Int,
+    val pos : Int ,
     val game : GameInfo
 ) : Parcelable

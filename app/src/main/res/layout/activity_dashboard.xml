@@ -59,12 +59,14 @@
         <include
             android:id="@+id/aboutView"
             layout="@layout/card_dashboard"
-            android:layout_width="130dp"
-            android:layout_height="200dp"
+            android:layout_width="334dp"
+            android:layout_height="170dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchView" />
 

@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description"
-            app:srcCompat="@drawable/openbookcolor" />
+            app:srcCompat="@drawable/newiconbook" />
 
         <TextView
             android:id="@+id/companyText"
@@ -128,7 +128,7 @@
             android:contentDescription="priceicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingIcon"
-            app:srcCompat="@drawable/pricetag" />
+            app:srcCompat="@drawable/newiconprice" />
 
         <ImageView
             android:id="@+id/yearIcon"
@@ -139,7 +139,7 @@
             android:contentDescription="yearicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/priceIcon"
-            app:srcCompat="@drawable/calendarcolor" />
+            app:srcCompat="@drawable/newiconcalendar" />
 
         <TextView
             android:id="@+id/minAge"
@@ -163,7 +163,7 @@
             android:contentDescription="ratingicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_Name"
-            app:srcCompat="@drawable/positivevotecolor" />
+            app:srcCompat="@drawable/newiconthumbup" />
 
         <TextView
             android:id="@+id/playTime"
@@ -184,10 +184,9 @@
             android:layout_height="40dp"
             android:layout_marginStart="45dp"
             android:layout_marginTop="8dp"
-            android:contentDescription="timeIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerIcon"
-            app:srcCompat="@drawable/clockcolor" />
+            app:srcCompat="@drawable/newiconhourglass" />
 
         <TextView
             android:id="@+id/ratingText"
@@ -208,10 +207,9 @@
             android:layout_height="40dp"
             android:layout_marginStart="45dp"
             android:layout_marginTop="8dp"
-            android:contentDescription="ageIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeIcon"
-            app:srcCompat="@drawable/age" />
+            app:srcCompat="@drawable/newiconage" />
 
         <TextView
             android:id="@+id/gameYear"
@@ -258,10 +256,9 @@
             android:layout_height="40dp"
             android:layout_marginStart="45dp"
             android:layout_marginTop="24dp"
-            android:contentDescription="timeicon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_Name"
-            app:srcCompat="@drawable/players" />
+            app:srcCompat="@drawable/newiconplayers" />
 
         <TextView
             android:id="@+id/description"

@@ -29,6 +29,8 @@ class UserListsActivity : AppCompatActivity(),
     companion object {
         var listContainer = UserListContainer()
     }
+
+    private lateinit var listRvAdapter: ListsListAdapter
     private lateinit var deleteIcon : Drawable
 
 
@@ -71,7 +73,7 @@ class UserListsActivity : AppCompatActivity(),
         deleteIcon = ContextCompat.getDrawable(this,R.drawable.deleteicon)!!
 
         val listRv = findViewById<RecyclerView>(R.id.lists_recycler_view)
-        val listRvAdapter = ListsListAdapter(listContainer,this) { listItem: CustomUserList ->
+         listRvAdapter = ListsListAdapter(listContainer,this) { listItem: CustomUserList ->
             listItemClicked(listItem)}
         listRv.layoutManager = LinearLayoutManager(this)
         listRv.adapter = listRvAdapter
@@ -141,5 +143,10 @@ class UserListsActivity : AppCompatActivity(),
         val intent = Intent(this, ListDetailedViewActivity::class.java)
         intent.putExtra("LIST_OBJECT", listItem)
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        listRvAdapter.notifyDataSetChanged()
     }
 }
