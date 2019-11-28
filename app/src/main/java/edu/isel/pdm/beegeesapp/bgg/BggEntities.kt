@@ -1,7 +1,6 @@
 package edu.isel.pdm.beegeesapp.bgg
 
 import android.os.Parcelable
-import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -34,30 +33,42 @@ data class GameInfo(
     val artists: List<String> = emptyList(),
     val rules_url: String? = "",
     @JsonProperty("url") val gameUrl: String = "",
-    val mechanics : List<Mechanic> = emptyList(),
-    val categories: List<Category> = emptyList(),
+    val mechanics: List<Mechanics> = emptyList(),
+    val categories: List<Categories> = emptyList(),
     val price: String = "",
     val average_user_rating: Double = 0.0
 ) : Parcelable{
     constructor(name : String) : this("",0,0,0,0,
         "https://d2k4q26owzy373.cloudfront.net/40x40/games/uploaded/1559254941010-61PJxjjnbfL.jpg",0,
         0,0,name,"","", emptyList(), emptyList(),"","",
-        listOf(Mechanic("")), listOf(
-            Category("")
+        listOf(Mechanics("")), listOf(
+            Categories("")
         ),"",0.0)
 
 }
+
+
 @Parcelize
-@Entity
-data class Category(
-    @PrimaryKey val id : String
+data class Categories(
+    val id: String
 ) : Parcelable
 
 @Parcelize
+data class Mechanics(
+    val id: String
+) : Parcelable
+
+@Entity
+data class Category(
+    @PrimaryKey val id: String,
+    val name: String
+)
+
 @Entity
 data class Mechanic(
-    @PrimaryKey val id : String
-) : Parcelable
+    @PrimaryKey val id: String,
+    val name: String
+)
 
 @Parcelize
 @Entity
@@ -117,4 +128,3 @@ data class GameUserListJoin(
     val listName : String
 )
 
-@Database(entities = [GameInfo::class, Mechanic::class, Category::class, UserList::class],version = 1)

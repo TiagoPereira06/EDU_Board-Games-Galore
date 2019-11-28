@@ -1,5 +1,6 @@
 package edu.isel.pdm.beegeesapp.bgg
 import android.widget.Toast
+import androidx.room.Room
 import com.android.volley.Response
 import com.android.volley.toolbox.Volley
 import edu.isel.pdm.beegeesapp.BggApplication
@@ -8,6 +9,10 @@ import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.bgg.search.Type
 
 class GamesRepository(private val host: BggApplication) {
+
+    private val db = Room
+        .databaseBuilder(host, BggDataBase::class.java, "games-db")
+        .build()
 
     private val baseURL = "https://www.boardgameatlas.com/api/search?"
     private val clientId = "&client_id=77iiYwBhLL"
