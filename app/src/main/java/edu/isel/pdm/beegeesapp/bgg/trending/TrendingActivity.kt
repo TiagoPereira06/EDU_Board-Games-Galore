@@ -23,13 +23,15 @@ import kotlinx.android.synthetic.main.activity_trending.*
 private const val GAMES_LIST_KEY = "trending_games_list"
 private const val IS_RECONFIGURING_KEY = "is_reconfiguring_flag"
 private const val INITIAL_INDEX = 5
+private var askedMoreData: Boolean = false
+private var INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
 
-private lateinit var request: RequestInfo
+private val request: RequestInfo = RequestInfo()
 private lateinit var trendingGames: GamesViewModel
 
-private var INDEX_TO_ASK_MORE_DATA: Int = 0
 private var lists = UserListsActivity.listContainer
 
+@Suppress("DEPRECATION")
 class TrendingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +41,6 @@ class TrendingActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.dash_trendingInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
 
-        INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
-        request = RequestInfo()
-
         trending_recycler_view.layoutManager = LinearLayoutManager(this)
         trending_recycler_view.setHasFixedSize(true)
 
@@ -49,7 +48,8 @@ class TrendingActivity : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val layout = recyclerView.layoutManager as LinearLayoutManager
-                if (layout.findLastVisibleItemPosition() == INDEX_TO_ASK_MORE_DATA) {
+                if (!askedMoreData && layout.findLastVisibleItemPosition() >= INDEX_TO_ASK_MORE_DATA) {
+                    askedMoreData = true
                     INDEX_TO_ASK_MORE_DATA += request.limit
                     updateGames(application as BggApplication, request)
                 }
@@ -64,7 +64,7 @@ class TrendingActivity : AppCompatActivity() {
         trending_recycler_view.adapter = GameViewHolder.GamesListAdapter(
             trendingGames,
             { gameItem: GameInfo -> gameItemClicked(gameItem) },
-                {gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
+            { gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
 
         trendingGames.content.observe(this, Observer {
             trending_recycler_view.swapAdapter(GameViewHolder.GamesListAdapter(trendingGames,
@@ -75,8 +75,9 @@ class TrendingActivity : AppCompatActivity() {
         })
 
         // Should we refresh the data?
-        if (savedInstanceState == null || !savedInstanceState.containsKey(GAMES_LIST_KEY)) {
+        if (savedInstanceState == null) {
             // No saved state? Lets fetch list from the server
+            clearRequest()
             updateGames(
                 application as BggApplication,
                 request
@@ -106,6 +107,7 @@ class TrendingActivity : AppCompatActivity() {
                 it.value!!.size
             )
         }
+        askedMoreData = false
     }
 
     private fun clearRequest() {

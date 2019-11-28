@@ -3,10 +3,12 @@ package edu.isel.pdm.beegeesapp.bgg
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.fasterxml.jackson.annotation.JsonProperty
 import kotlinx.android.parcel.Parcelize
 import java.util.Collections.emptyList
+
 
 @Parcelize
 data class GamesMapper(
@@ -29,12 +31,12 @@ data class GameInfo(
     val name: String = "",
     val description: String = "",
     val primary_publisher: String? = "",
-    val publishers: List<String> = emptyList(),
-    val artists: List<String> = emptyList(),
+    /*@TypeConverters(StringConverter::class)*/val publishers: List<String> = emptyList(),
+    /*@TypeConverters(StringConverter::class)*/val artists: List<String> = emptyList(),
     val rules_url: String? = "",
     @JsonProperty("url") val gameUrl: String = "",
-    val mechanics: List<Mechanics> = emptyList(),
-    val categories: List<Categories> = emptyList(),
+    /*@TypeConverters(MechanicConverter::class)*/val mechanics: List<Mechanics> = emptyList(),
+    /*@TypeConverters(CategoriesConverter::class)*/val categories: List<Categories> = emptyList(),
     val price: String = "",
     val average_user_rating: Double = 0.0
 ) : Parcelable{
@@ -47,7 +49,6 @@ data class GameInfo(
 
 }
 
-
 @Parcelize
 data class Categories(
     val id: String
@@ -57,6 +58,7 @@ data class Categories(
 data class Mechanics(
     val id: String
 ) : Parcelable
+
 
 @Entity
 data class Category(
@@ -77,7 +79,8 @@ data class UserList(
     val drawableResourceName : String
 ) : Parcelable
 
-@Entity(tableName = "game_category_join",
+@Entity(
+    indices = arrayOf(Index("categoryId")), tableName = "game_category_join",
     primaryKeys = arrayOf("gameId","categoryId"),
     foreignKeys = arrayOf(
         ForeignKey(entity = GameInfo::class,
@@ -94,7 +97,8 @@ data class GameCategoryJoin(
     val categoryId : String
 )
 
-@Entity(tableName = "game_mechanic_join",
+@Entity(
+    indices = arrayOf(Index("mechanicId")), tableName = "game_mechanic_join",
     primaryKeys = arrayOf("gameId","mechanicId"),
     foreignKeys = arrayOf(
         ForeignKey(entity = GameInfo::class,
@@ -111,7 +115,8 @@ data class GameMechanicJoin(
     val mechanicId : String
 )
 
-@Entity(tableName = "game_userlist_join",
+@Entity(
+    indices = arrayOf(Index("listName")), tableName = "game_userlist_join",
     primaryKeys = arrayOf("gameId","listName"),
     foreignKeys = arrayOf(
         ForeignKey(entity = GameInfo::class,
