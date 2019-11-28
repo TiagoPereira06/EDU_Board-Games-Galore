@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.GameDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.chooselisttoadd.ChooseListToAddGameActivity
 import edu.isel.pdm.beegeesapp.bgg.dialogs.ErrorDialog
-import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
@@ -20,12 +20,14 @@ import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
 import edu.isel.pdm.beegeesapp.kotlinx.getViewModel
 import kotlinx.android.synthetic.main.activity_trending.*
 
-private lateinit var trendingGames: GamesViewModel
 private const val GAMES_LIST_KEY = "trending_games_list"
 private const val IS_RECONFIGURING_KEY = "is_reconfiguring_flag"
-private val requestType = RequestInfo()
-private var INDEX_TO_ASK_MORE_DATA = 6
-private var askedMoreData = false
+private const val INITIAL_INDEX = 5
+
+private lateinit var request: RequestInfo
+private lateinit var trendingGames: GamesViewModel
+
+private var INDEX_TO_ASK_MORE_DATA: Int = 0
 private var lists = UserListsActivity.listContainer
 
 class TrendingActivity : AppCompatActivity() {
@@ -37,76 +39,83 @@ class TrendingActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.dash_trendingInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
 
+        INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
+        request = RequestInfo()
+
         trending_recycler_view.layoutManager = LinearLayoutManager(this)
         trending_recycler_view.setHasFixedSize(true)
 
         trending_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    if (askedMoreData) {
-                        askedMoreData = false
-                        trendingGames.updateGames(application as BggApplication, RequestInfo())
-                        changeCursorPosition(recyclerView)
-                    }
-                }
-            }
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (askedMoreData) return
                 val layout = recyclerView.layoutManager as LinearLayoutManager
                 if (layout.findLastVisibleItemPosition() == INDEX_TO_ASK_MORE_DATA) {
-                    askedMoreData = true
-                    INDEX_TO_ASK_MORE_DATA += requestType.limit
-                    trendingGames.updateGames(application as BggApplication,requestType)
+                    INDEX_TO_ASK_MORE_DATA += request.limit
+                    updateGames(application as BggApplication, request)
                 }
             }
         })
+
         // Get view model instance and add its contents to the recycler view
         trendingGames = getViewModel(GAMES_LIST_KEY) {
             savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
         }
-        trending_recycler_view.adapter =
-            GameViewHolder.GamesListAdapter(trendingGames, { gameItem: GameInfo -> gameItemClicked(gameItem)},
+
+        trending_recycler_view.adapter = GameViewHolder.GamesListAdapter(
+            trendingGames,
+            { gameItem: GameInfo -> gameItemClicked(gameItem) },
                 {gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
 
-
-        trendingGames.content.observe(this, Observer<List<GameInfo>> {
-            trending_recycler_view.swapAdapter(GameViewHolder.GamesListAdapter(trendingGames , {gameItem: GameInfo ->
-                gameItemClicked(gameItem)},{gameItem: GameInfo -> addToCollectionItemClicked(gameItem)}),true)
-
+        trendingGames.content.observe(this, Observer {
+            trending_recycler_view.swapAdapter(GameViewHolder.GamesListAdapter(trendingGames,
+                { gameItem: GameInfo -> gameItemClicked(gameItem) },
+                { gameItem: GameInfo -> addToCollectionItemClicked(gameItem) }), true
+            )
             pullToRefresh.isRefreshing = false
         })
 
         // Should we refresh the data?
         if (savedInstanceState == null || !savedInstanceState.containsKey(GAMES_LIST_KEY)) {
             // No saved state? Lets fetch list from the server
-            trendingGames.updateGames(
+            updateGames(
                 application as BggApplication,
-                requestType
+                request
             )
         } else {
             savedInstanceState.remove(IS_RECONFIGURING_KEY)
         }
 
+
         // Setup ui event handlers
         pullToRefresh.setOnRefreshListener {
-            trendingGames.updateGames(
+            clearRequest()
+            clearLiveData()
+            updateGames(
                 application as BggApplication,
-                requestType
+                request
             )
+            pullToRefresh.isRefreshing = false
         }
-
-
         pullToRefresh.isRefreshing = true
     }
 
+    private fun updateGames(app: BggApplication, request: RequestInfo) {
+        trendingGames.getGames(app, request) {
+            trending_recycler_view.adapter?.notifyItemRangeInserted(
+                request.skip - request.limit,
+                it.value!!.size
+            )
+        }
+    }
 
+    private fun clearRequest() {
+        INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
+        request.clear()
+    }
 
-    private fun changeCursorPosition(recyclerView: RecyclerView) {
-        val layout = recyclerView.layoutManager as LinearLayoutManager
-        layout.scrollToPosition(requestType.skip - requestType.limit - 1)
+    private fun clearLiveData() {
+        trendingGames.getLiveData().value?.clear()
+        (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter).notifyDataSetChanged()
     }
 
     private fun gameItemClicked(gameItem: GameInfo) {

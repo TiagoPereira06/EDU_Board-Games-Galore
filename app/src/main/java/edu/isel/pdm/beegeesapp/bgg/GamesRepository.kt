@@ -2,7 +2,6 @@ package edu.isel.pdm.beegeesapp.bgg
 import android.widget.Toast
 import androidx.room.Room
 import com.android.volley.Response
-import com.android.volley.toolbox.Volley
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
@@ -18,11 +17,8 @@ class GamesRepository(private val host: BggApplication) {
     private val clientId = "&client_id=77iiYwBhLL"
     private val limitUrl = "&limit="
     private val skipUrl = "&skip="
-    private val queue = Volley.newRequestQueue(host)
 
-    //fun getUserContainer(success : ){}
-
-    fun updateGames (
+    fun requestDataFromAPI(
         mode: RequestInfo,
         success: (MutableList<GameInfo>) -> Unit
     ) {
@@ -45,10 +41,7 @@ class GamesRepository(private val host: BggApplication) {
                 Toast.makeText(host, "That didn't work!", Toast.LENGTH_SHORT)
                     .show()
             })
-
-        queue.add(request)
+        host.queue.add(request)
     }
-
-
 
 }

@@ -18,16 +18,21 @@ class GamesViewModel(
     val content: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
 ) : ViewModel(), Parcelable {
 
+    fun getLiveData(): MutableLiveData<MutableList<GameInfo>> = content
 
-    fun updateGames(app: BggApplication, mode: RequestInfo) {
-        app.repo.updateGames(mode) {
+    fun getGames(
+        app: BggApplication,
+        mode: RequestInfo,
+        onUpdate: (MutableLiveData<MutableList<GameInfo>>) -> Unit
+    ) {
+        app.repo.requestDataFromAPI(mode) {
             if (content.value == null) {
                 content.value = it
             } else {
                 content.value!!.addAll(it)
             }
+            onUpdate(content)
         }
-
     }
 
     object GamesViewModelParcelizer : Parceler<MutableLiveData<MutableList<GameInfo>>> {

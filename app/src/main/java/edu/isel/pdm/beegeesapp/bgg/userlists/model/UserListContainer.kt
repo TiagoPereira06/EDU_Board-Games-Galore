@@ -5,7 +5,6 @@ import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import kotlinx.android.parcel.Parcelize
 
 
-
 @Parcelize
 class UserListContainer : Parcelable {
 
