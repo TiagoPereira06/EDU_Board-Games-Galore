@@ -11,11 +11,10 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.GameDetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
@@ -41,6 +40,7 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = getString(R.string.dash_search)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
+
         setContentView(R.layout.activity_search)
         search_recycler_view.setHasFixedSize(true)
         search_recycler_view.layoutManager = LinearLayoutManager(this)
@@ -50,6 +50,7 @@ class SearchActivity : AppCompatActivity() {
         searchGames = getViewModel(GAMES_LIST_KEY) {
             savedInstanceState?.getParcelable(GAMES_LIST_KEY) ?: GamesViewModel()
         }
+
         search_recycler_view.adapter =
             GameViewHolder.GamesListAdapter(searchGames , { gameItem: GameInfo ->
                 gameItemClicked(gameItem)},{gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
@@ -58,10 +59,13 @@ class SearchActivity : AppCompatActivity() {
             search_recycler_view.adapter = GameViewHolder.GamesListAdapter(searchGames , { gameItem: GameInfo ->
                 gameItemClicked(gameItem)},{gameItem: GameInfo -> addToCollectionItemClicked(gameItem)})
         })
+
         if(initSearchWithValue){
-            searchGames.updateGames(application as BggApplication,searchType)
+            //TODO
+            //searchGames.getGames(application as BggApplication,searchType)
             supportActionBar?.title = searchType.keyWord
         }
+
     }
     private fun gameItemClicked(gameItem: GameInfo) {
         val intent = Intent(this, GameDetailedViewActivity::class.java)
@@ -102,7 +106,8 @@ class SearchActivity : AppCompatActivity() {
                 searchView!!.setQuery("", false)
                 searchType.keyWord=query
                 searchItem.collapseActionView()
-                searchGames.updateGames(application as BggApplication,searchType)
+                //TODO
+                //searchGames.getGames(application as BggApplication,searchType)
                 supportActionBar?.title = searchType.keyWord
                 return true
             }

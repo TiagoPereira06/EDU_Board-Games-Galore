@@ -15,7 +15,6 @@ import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 
 class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
-
     private val gameThumbnail: CircularImageView = view.findViewById(R.id.thumbGame)
     private val gameName: TextView = view.findViewById(R.id.game_Name)
     private val gamePublisher: TextView = view.findViewById(R.id.companyName)
@@ -31,13 +30,13 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
             .centerCrop()
             .into(gameThumbnail) // select the ImageView to load it into
         gameName.text = game.name
+
+        //TODO TRADUÇÃO -> reviews
         gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
         gamePublisher.text = game.primary_publisher
         gameRating.rating = game.average_user_rating.toFloat()
         collectionImage.setOnClickListener {addToCollectionListener(game) }
         cardLayout.setOnClickListener { clickListener(game) }
-
-
     }
 
 
@@ -48,7 +47,11 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
     ) : RecyclerView.Adapter<GameViewHolder>() {
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-            holder.bindTo(viewModel.content.value?.get(position)!!, clickListener,addToCollectionListener)
+            holder.bindTo(
+                viewModel.content.value?.get(position)!!,
+                clickListener,
+                addToCollectionListener
+            )
         }
 
         override fun getItemCount(): Int = viewModel.content.value?.size ?: 0

@@ -1,7 +1,6 @@
 package edu.isel.pdm.beegeesapp.bgg
 
 import android.os.Parcelable
-import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -117,4 +116,4 @@ data class GameUserListJoin(
     val listName : String
 )
 
-@Database(entities = [GameInfo::class, Mechanic::class, Category::class, UserList::class],version = 1)
+//@Database(entities = [GameInfo::class, Mechanic::class, Category::class, UserList::class],version = 1)
