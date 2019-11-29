@@ -7,7 +7,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
@@ -17,7 +19,8 @@ class ChooseListToAddGameActivity: AppCompatActivity() {
     private lateinit var listRv: RecyclerView
     private lateinit var listAdapter: ChooseListAdapter
     private lateinit var currentGame : GameInfo
-    private lateinit var listsContainer : UserListContainer
+    val repo = (application as BggApplication).repo
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +35,13 @@ class ChooseListToAddGameActivity: AppCompatActivity() {
         //else SAI DA ACTIVITY EXCEPÇÃO
 
         //--MUDAR?--
-        listsContainer = UserListsActivity.listContainer
 
 
         listRv = findViewById(R.id.listRecyclerView)
         listRv.layoutManager = LinearLayoutManager(this)
         listAdapter =
             ChooseListAdapter(
-                listsContainer,
+                repo.getAllCustomUserLists(),
                 this,
                 currentGame
             )
@@ -56,15 +58,13 @@ class ChooseListToAddGameActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        listAdapter.listsNamesToAddTheGame.forEach { listAdd ->
-            val aux = listsContainer.userLists.find { it.listName == listAdd }
-            aux!!.list.add(currentGame)
+        listAdapter.listsNamesToAddTheGame.forEach { listNameToAddGame ->
+            repo.addGameToCustomUserList(listNameToAddGame,currentGame)
         }
 
         //REMOVE
-        listAdapter.listsNamesToRemoveTheGame.forEach { listRemove ->
-            val aux = listsContainer.userLists.find { it.listName == listRemove }
-            aux!!.list.remove(currentGame)
+        listAdapter.listsNamesToRemoveTheGame.forEach { listNameToRemoveGame ->
+            repo.removeGameFromCustomUserList(listNameToRemoveGame,currentGame)
         }
         onBackPressed()
         return super.onOptionsItemSelected(item)

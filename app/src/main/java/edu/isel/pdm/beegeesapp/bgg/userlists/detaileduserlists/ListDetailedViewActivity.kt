@@ -12,22 +12,22 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
+import edu.isel.pdm.beegeesapp.bgg.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.view.GamesinListAdapter
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
 
 class ListDetailedViewActivity: AppCompatActivity() {
 
     private  lateinit var gamesRvAdapter: GamesinListAdapter
     private lateinit var currentList : CustomUserList
     private var editMode = false
-    private var userListContainer = UserListsActivity.listContainer
     private lateinit var gamesRv : RecyclerView
-     lateinit var deleteMenuItem : MenuItem
+    lateinit var deleteMenuItem : MenuItem
     private lateinit var saveMenuItem : MenuItem
     private lateinit var editMenuItem : FloatingActionButton
     private lateinit var deleteIcon : Drawable
+    private var repo = (application as BggApplication).repo
 
 
 
@@ -35,8 +35,7 @@ class ListDetailedViewActivity: AppCompatActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
         setContentView(R.layout.activity_detailedlistview)
         if (intent.hasExtra("LIST_OBJECT")) {
-            currentList = intent.getParcelableExtra("LIST_OBJECT") as CustomUserList
-            currentList = userListContainer.userLists.find { it.listName == currentList.listName }!!
+            currentList = intent.getParcelableExtra("LIST_OBJECT")!!
             supportActionBar?.title =currentList.listName
             deleteIcon = ContextCompat.getDrawable(this,R.drawable.deleteicon)!!
 

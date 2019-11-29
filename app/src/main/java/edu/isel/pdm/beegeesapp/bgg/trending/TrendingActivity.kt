@@ -29,8 +29,6 @@ private var INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
 private val request: RequestInfo = RequestInfo()
 private lateinit var trendingGames: GamesViewModel
 
-private var lists = UserListsActivity.listContainer
-
 @Suppress("DEPRECATION")
 class TrendingActivity : AppCompatActivity() {
 
@@ -51,7 +49,7 @@ class TrendingActivity : AppCompatActivity() {
                 if (!askedMoreData && layout.findLastVisibleItemPosition() >= INDEX_TO_ASK_MORE_DATA) {
                     askedMoreData = true
                     INDEX_TO_ASK_MORE_DATA += request.limit
-                    updateGames(application as BggApplication, request)
+                    updateGames(request)
                 }
             }
         })
@@ -79,7 +77,6 @@ class TrendingActivity : AppCompatActivity() {
             // No saved state? Lets fetch list from the server
             clearRequest()
             updateGames(
-                application as BggApplication,
                 request
             )
         } else {
@@ -92,7 +89,6 @@ class TrendingActivity : AppCompatActivity() {
             clearRequest()
             clearLiveData()
             updateGames(
-                application as BggApplication,
                 request
             )
             pullToRefresh.isRefreshing = false
@@ -100,8 +96,8 @@ class TrendingActivity : AppCompatActivity() {
         pullToRefresh.isRefreshing = true
     }
 
-    private fun updateGames(app: BggApplication, request: RequestInfo) {
-        trendingGames.getGames(app, request) {
+    private fun updateGames(request: RequestInfo) {
+        trendingGames.getGames(request) {
             trending_recycler_view.adapter?.notifyItemRangeInserted(
                 request.skip - request.limit,
                 it.value!!.size
@@ -127,7 +123,7 @@ class TrendingActivity : AppCompatActivity() {
     }
 
     private fun addToCollectionItemClicked(gameItem: GameInfo) {
-        if (lists.userLists.isNullOrEmpty()) {
+        if (trendingGames.getCustomUserListFromRepo().isNullOrEmpty()) {
             val dialog = ErrorDialog()
             dialog.retainInstance = true
             dialog.show(supportFragmentManager, "Error Dialog")

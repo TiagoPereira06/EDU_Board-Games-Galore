@@ -32,8 +32,16 @@ data class Mechanic(
 
 @Parcelize
 @Entity
-data class UserList(
+data class CustomUserList(
     @PrimaryKey val listName : String,
-    val gameInfo : MutableList<GameInfo>
-) : Parcelable
+    var gamesList : MutableList<GameInfo>,
+    val drawableResourceName : String
+) : Parcelable{
+    constructor(name : String) : this(name, mutableListOf<GameInfo>(), genRandomThumbnailImage())
+}
 
+private fun genRandomThumbnailImage() : String{
+    val prefix = "samplegameicons"
+    val randomPos = 1 + (Math.random() * ((33 - 1) + 1)).toInt()
+    return prefix+randomPos
+}

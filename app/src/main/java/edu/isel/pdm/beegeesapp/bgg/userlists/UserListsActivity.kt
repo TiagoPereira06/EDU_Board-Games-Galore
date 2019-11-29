@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.IChosenListDialogListener
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.UserList
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 import edu.isel.pdm.beegeesapp.bgg.userlists.view.ListsListAdapter
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_userlists.*
@@ -28,9 +26,9 @@ import kotlinx.android.synthetic.main.activity_userlists.*
 @Parcelize
 class UserListsActivity : AppCompatActivity(),
     IChosenListDialogListener, Parcelable {
-    companion object {
-        var listContainer = UserListContainer()
-    }
+
+    val repo = (application as BggApplication).repo
+
 
     private lateinit var listRvAdapter: ListsListAdapter
     private lateinit var deleteIcon : Drawable
@@ -39,41 +37,33 @@ class UserListsActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_userlists)
-        listContainer.addList("Black Friday")
-        listContainer.addList("Wish List")
-        listContainer.addList("Joe's Fav")
-        listContainer.addList("Family Night")
-        listContainer.addList("Worse Games")
-        listContainer.addList("Marta's Fav")
-        listContainer.addList("Home Alone")
-        listContainer.addList("Keep Practising")
-        listContainer.addList("Want to Try")
-        listContainer.addList("Already Purchased")
+        repo.addCustomUserList("TesteLista")
+        repo.addCustomUserList("Black Friday")
+        repo.addCustomUserList("Wish List")
+        repo.addCustomUserList("Joe's Fav")
+        repo.addCustomUserList("Family Night")
+        repo.addCustomUserList("Worse Games")
+        repo.addCustomUserList("Marta's Fav")
+        repo.addCustomUserList("Home Alone")
+        repo.addCustomUserList("Keep Practising")
+        repo.addCustomUserList("Want to Try")
+        repo.addCustomUserList("Already Purchased")
 
-        val gameList = mutableListOf<GameInfo>()
-           gameList.add(GameInfo("Teste1"))
-           gameList.add(GameInfo("Teste2"))
-           gameList.add(GameInfo("Teste3"))
-           gameList.add(GameInfo("Teste4"))
-           gameList.add(GameInfo("Teste5"))
-           gameList.add(GameInfo("Teste6"))
-           gameList.add(GameInfo("Teste7"))
-           gameList.add(GameInfo("Teste8"))
-           gameList.add(GameInfo("Teste9"))
-           gameList.add(GameInfo("Teste10"))
-           gameList.add(GameInfo("Teste11"))
-           gameList.add(GameInfo("Teste12"))
-           gameList.add(GameInfo("Teste13"))
-
-
-
-        listContainer.userLists[0].list = gameList
-
-        (application as BggApplication).repo.clearAllLists()
-        val a = UserList("Teste",gameList)
-        (application as BggApplication).repo.addList(a)
-        val b = (application as BggApplication).repo.getList("Teste")
-        println(b)
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste1"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste2"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste3"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste4"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste5"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste6"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste7"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste8"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste9"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste10"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste11"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste12"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste13"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste14"))
+        repo.addGameToCustomUserList("TesteList",GameInfo("Teste15"))
 
 
 
@@ -82,7 +72,7 @@ class UserListsActivity : AppCompatActivity(),
         deleteIcon = ContextCompat.getDrawable(this,R.drawable.deleteicon)!!
 
         val listRv = findViewById<RecyclerView>(R.id.lists_recycler_view)
-         listRvAdapter = ListsListAdapter(listContainer,this) { listItem: CustomUserList ->
+        listRvAdapter = ListsListAdapter(this) { listItem: CustomUserList ->
             listItemClicked(listItem)}
         listRv.layoutManager = LinearLayoutManager(this)
         listRv.adapter = listRvAdapter
@@ -140,17 +130,16 @@ class UserListsActivity : AppCompatActivity(),
 
     }
     override fun chosenListName(name: String) {
-        if(listContainer.userLists.find { it.listName == name }==null) {
-            listContainer.addList(name)
+        if (repo.addCustomUserList(name)) {
             Toast.makeText(this, "List created", Toast.LENGTH_SHORT).show()
 
-        }else
-            Toast.makeText(this,"List already exists",Toast.LENGTH_SHORT).show()
+        } else
+            Toast.makeText(this, "List already exists", Toast.LENGTH_SHORT).show()
     }
 
-    private fun listItemClicked(listItem: CustomUserList) {
+    private fun listItemClicked(customUserList : CustomUserList) {
         val intent = Intent(this, ListDetailedViewActivity::class.java)
-        intent.putExtra("LIST_OBJECT", listItem)
+        intent.putExtra("LIST_OBJECT", customUserList)
         startActivity(intent)
     }
 

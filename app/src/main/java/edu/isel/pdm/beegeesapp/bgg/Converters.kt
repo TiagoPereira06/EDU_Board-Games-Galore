@@ -12,7 +12,7 @@ class StringConverter {
 
         @TypeConverter
         @JvmStatic
-        fun stringToList(data: String?): List<String> {
+        fun stringToList(data: String?): MutableList<String> {
             if (data == null) {
                 return Collections.emptyList()
             }
@@ -26,7 +26,7 @@ class StringConverter {
 
         @TypeConverter
         @JvmStatic
-        fun listToString(someObjects: List<String>): String {
+        fun listToString(someObjects: MutableList<String>): String {
             return Gson().toJson(someObjects)
         }
     }
@@ -37,12 +37,12 @@ class MechanicConverter {
 
         @TypeConverter
         @JvmStatic
-        fun stringToMechanicsList(data: String?): List<Mechanics> {
+        fun stringToMechanicsList(data: String?): MutableList<Mechanics> {
             if (data == null) {
                 return Collections.emptyList()
             }
 
-            val listType = object : TypeToken<List<Mechanics>>() {
+            val listType = object : TypeToken<MutableList<Mechanics>>() {
 
             }.type
 
@@ -51,7 +51,7 @@ class MechanicConverter {
 
         @TypeConverter
         @JvmStatic
-        fun mechanicsListToString(mechanics: List<Mechanics>): String {
+        fun mechanicsListToString(mechanics: MutableList<Mechanics>): String {
             return Gson().toJson(mechanics)
         }
     }
@@ -62,12 +62,12 @@ class CategoriesConverter {
 
         @TypeConverter
         @JvmStatic
-        fun stringToCategoriesList(data: String?): List<Categories> {
+        fun stringToCategoriesList(data: String?): MutableList<Categories> {
             if (data == null) {
                 return Collections.emptyList()
             }
 
-            val listType = object : TypeToken<List<Categories>>() {
+            val listType = object : TypeToken<MutableList<Categories>>() {
 
             }.type
 
@@ -76,7 +76,7 @@ class CategoriesConverter {
 
         @TypeConverter
         @JvmStatic
-        fun CategoriesListToString(categories: List<Categories>): String {
+        fun CategoriesListToString(categories: MutableList<Categories>): String {
             return Gson().toJson(categories)
         }
     }
@@ -88,12 +88,12 @@ class GameInfoConverter {
 
         @TypeConverter
         @JvmStatic
-        fun stringToGameInfo(data: String?): List<GameInfo> {
+        fun stringToGameInfo(data: String?): MutableList<GameInfo> {
             if (data == null) {
                 return Collections.emptyList()
             }
 
-            val listType = object : TypeToken<List<GameInfo>>() {
+            val listType = object : TypeToken<MutableList<GameInfo>>() {
 
             }.type
 
@@ -102,7 +102,7 @@ class GameInfoConverter {
 
         @TypeConverter
         @JvmStatic
-        fun GameInfoToString(someObjects: List<GameInfo>): String {
+        fun GameInfoToString(someObjects: MutableList<GameInfo>): String {
             return Gson().toJson(someObjects)
         }
     }

@@ -46,17 +46,55 @@ class GamesRepository(private val host: BggApplication) {
         host.queue.add(request)
     }
 
-    fun addList(userList :UserList){
-        var a = db.userListDAO().insertList(userList)
+    fun addCustomUserList(newListName :String) : Boolean{
+        if ((db.userListDAO().findListByName(newListName).gamesList.isNullOrEmpty())) {
+            db.userListDAO().insertList(CustomUserList(newListName))
+            return true
+        }
+        return false
     }
 
-    fun getList(name : String) : List<GameInfo>{
-       return db.userListDAO().findListByName(name).gameInfo
+    fun getCustomUserList(name : String) : MutableList<GameInfo>{
+       return db.userListDAO().findListByName(name).gamesList
 
     }
 
-    fun clearAllLists(){
+    fun clearAllCustomUserLists(){
         db.userListDAO().nukeTable()
+    }
+
+    fun getAllCustomUserLists(): MutableList<CustomUserList> {
+        return db.userListDAO().getAllLists()
+
+    }
+
+    fun addGameToCustomUserList(listName: String, currentGame: GameInfo) {
+        val list = db.userListDAO().findListByName(listName)
+        list.gamesList.add(currentGame)
+        db.userListDAO().updateList(list)
+
+
+    }
+
+    fun removeGameFromCustomUserList(listName: String, currentGame: GameInfo) {
+        val list = db.userListDAO().findListByName(listName)
+        list.gamesList.remove(currentGame)
+        db.userListDAO().updateList(list)
+
+    }
+
+    fun removeCustomUserListAt(position: Int) {
+       val allList = db.userListDAO().getAllLists()
+        allList.removeAt(position)
+        db.userListDAO().nukeTable()
+        allList.forEach { db.userListDAO().insertList(it) }
+    }
+
+    fun addCustomUserListAt(userList: CustomUserList, position: Int) {
+        val allList = db.userListDAO().getAllLists()
+        allList.add(position,userList)
+        db.userListDAO().nukeTable()
+        allList.forEach { db.userListDAO().insertList(it) }
     }
 
 }

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 import kotlinx.android.synthetic.main.card_chooselisttoadd.view.*
 import kotlinx.android.synthetic.main.card_chooselisttoadd.view.listName
 import kotlinx.android.synthetic.main.card_chooselisttoadd.view.listSize
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.card_chooselisttoadd.view.thumbList
 
 
 class ChooseListAdapter(
-    private val userListContainer: UserListContainer,
+    private val allCustomUserLists: MutableList<CustomUserList>,
     private val host: Activity,
     private val currentGame: GameInfo
 
@@ -33,18 +33,18 @@ class ChooseListAdapter(
         )
     }
 
-    override fun getItemCount() = userListContainer.userLists.size
+    override fun getItemCount() = allCustomUserLists.size
 
 
     override fun onBindViewHolder(holder: ChooseListViewHolder, position: Int) {
-        val list = userListContainer.userLists[position]
+        val list = allCustomUserLists[position]
         holder.view.listName.text = list.listName
-        holder.view.listSize.text = "(" + list.list.size.toString() + " games)"
+        holder.view.listSize.text = "(" + list.gamesList.size.toString() + " games)"
         val drawableResourceId: Int =
             host.resources.getIdentifier(list.drawableResourceName, "drawable", host.packageName)
         holder.view.thumbList.setImageResource(drawableResourceId)
         val check = holder.view.chechBoxtoAdd
-        check.isChecked = list.list.contains(currentGame)
+        check.isChecked = list.gamesList.contains(currentGame)
         check.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked and (!listsNamesToAddTheGame.contains(list.listName))) {
                 listsNamesToAddTheGame.add(list.listName)

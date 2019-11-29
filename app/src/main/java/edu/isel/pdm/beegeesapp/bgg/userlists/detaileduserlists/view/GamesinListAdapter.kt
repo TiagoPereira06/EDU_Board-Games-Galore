@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.card_gamelists.view.*
 
@@ -38,11 +38,11 @@ class GamesinListAdapter(
         )
     }
 
-    override fun getItemCount() = listToShow.list.size
+    override fun getItemCount() = listToShow.gamesList.size
 
     override fun onBindViewHolder(holder: GameinListHolder, position: Int) {
         this.holder = holder
-        val currentGame = listToShow.list[position]
+        val currentGame = listToShow.gamesList[position]
         val obj = GamePosObj(holder.adapterPosition,currentGame)
         val check = holder.view.checkBox as CheckBox
         check.isChecked = false
@@ -75,7 +75,7 @@ class GamesinListAdapter(
 
         gamesToRemove.sortWith(compareBy {it.pos})
         gamesToRemove.forEach {
-            listToShow.list.remove(it.game)
+            listToShow.gamesList.remove(it.game)
                notifyItemRemoved(it.pos - (deltaToTop++))
 
         }
@@ -83,7 +83,7 @@ class GamesinListAdapter(
             Snackbar
                 .make(holder.itemView, "Item(s) removed", Snackbar.LENGTH_LONG).setAction("UNDO") {
                     gamesToRemove.forEach { undo ->
-                        listToShow.list.add(undo.pos, undo.game)
+                        listToShow.gamesList.add(undo.pos, undo.game)
                         notifyItemInserted(undo.pos)
                     }
                     (host as ListDetailedViewActivity).deleteMenuItem.isVisible=true
@@ -96,14 +96,14 @@ class GamesinListAdapter(
 
     fun removeItem(viewHolder: RecyclerView.ViewHolder,host : Activity) {
         removedPosition=viewHolder.adapterPosition
-        removedGame=listToShow.list[viewHolder.adapterPosition]
+        removedGame=listToShow.gamesList[viewHolder.adapterPosition]
 
-        listToShow.list.removeAt(viewHolder.adapterPosition)
+        listToShow.gamesList.removeAt(viewHolder.adapterPosition)
         notifyItemRemoved(viewHolder.adapterPosition)
 
         Snackbar
             .make(viewHolder.itemView, removedGame!!.name+" Deleted",Snackbar.LENGTH_LONG).setAction("UNDO") {
-                listToShow.list.add(removedPosition,removedGame!!)
+                listToShow.gamesList.add(removedPosition,removedGame!!)
                 notifyItemInserted(removedPosition)
             }.setActionTextColor(ContextCompat.getColor(host,R.color.colorPrimary))
             .show()

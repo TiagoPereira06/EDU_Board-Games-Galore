@@ -8,19 +8,20 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
+import edu.isel.pdm.beegeesapp.bgg.CustomUserList
+import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
 import kotlinx.android.synthetic.main.card_list.view.*
 
 
 class ListsListAdapter(
-    private val userListContainer : UserListContainer,
     private val host : AppCompatActivity,
     private val listClickListener : (CustomUserList) -> Unit
 
     ):RecyclerView.Adapter<ListsListAdapter.ListViewHolder>() {
 
 
+    private var repo = (host as UserListsActivity).repo
+    private val allCustomUserLists : MutableList<CustomUserList> = repo.getAllCustomUserLists()
     private var removedPosition : Int = 0
     private var removedList : CustomUserList? = null
 
@@ -32,12 +33,12 @@ class ListsListAdapter(
         )
     }
 
-    override fun getItemCount() = userListContainer.userLists.size
+    override fun getItemCount() = allCustomUserLists.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val list = userListContainer.userLists[position]
+        val list = allCustomUserLists[position]
         holder.view.listName.text = list.listName
-        holder.view.listSize.text = "(" + list.list.size.toString() + " games)"
+        holder.view.listSize.text = "(" + list.gamesList.size.toString() + " games)"
         val drawableResourceId: Int = host.resources.getIdentifier(list.drawableResourceName, "drawable", host.packageName)
         holder.view.thumbList.setImageResource(drawableResourceId)
         holder.view.setOnClickListener{
@@ -47,14 +48,18 @@ class ListsListAdapter(
 
     fun removeItem(viewHolder: RecyclerView.ViewHolder) {
         removedPosition=viewHolder.adapterPosition
-        removedList=userListContainer.userLists[viewHolder.adapterPosition]
+        removedList=allCustomUserLists[viewHolder.adapterPosition]
 
-        userListContainer.userLists.removeAt(viewHolder.adapterPosition)
+        repo.removeCustomUserListAt(viewHolder.adapterPosition)
+/*
+        allCustomUserLists.userLists.removeAt(viewHolder.adapterPosition)
+*/
         notifyItemRemoved(viewHolder.adapterPosition)
 
         Snackbar
             .make(viewHolder.itemView, removedList!!.listName+" Deleted",Snackbar.LENGTH_LONG).setAction("UNDO") {
-                userListContainer.addListAt(removedList!!, removedPosition)
+                repo.addCustomUserListAt(removedList!!,removedPosition)
+                //allCustomUserLists.addListAt(removedList!!, removedPosition)
                 notifyItemInserted(removedPosition)
             }.setActionTextColor(ContextCompat.getColor(host,R.color.colorPrimary))
             .show()

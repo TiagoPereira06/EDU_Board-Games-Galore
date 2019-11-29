@@ -21,7 +21,7 @@ interface CategoriesDAO {
 interface MechanicsDAO {
 
     @Query("SELECT * FROM Mechanic")
-    fun getAllMechanics(): List<Mechanic>
+    fun getAllMechanics(): MutableList<Mechanic>
 
     @Query("SELECT M.name FROM Mechanic AS M WHERE id = :mechanicId")
     fun findMechanicNameById(mechanicId: String): String
@@ -30,17 +30,20 @@ interface MechanicsDAO {
 @Dao
 interface UserListDAO {
 
-    @Query("DELETE FROM UserList")
+    @Query("DELETE FROM CustomUserList")
     fun nukeTable()
 
-    @Query("SELECT * FROM UserList")
-    fun getAllLists(): List<UserList>
+    @Query("SELECT * FROM CustomUserList")
+    fun getAllLists(): MutableList<CustomUserList>
 
-    @Query("SELECT * FROM UserList AS U WHERE U.listName = :listName")
-    fun findListByName(listName: String): UserList
+    @Query("SELECT * FROM CustomUserList AS U WHERE U.listName = :listName")
+    fun findListByName(listName: String): CustomUserList
 
     @Insert
-    fun insertList(userList: UserList)
+    fun insertList(customUserList: CustomUserList)
+
+    @Update
+    fun updateList(customUserList: CustomUserList)
 
 
 }
@@ -49,7 +52,7 @@ interface UserListDAO {
     entities = [
         Mechanic::class,
         Category::class,
-        UserList::class
+        CustomUserList::class
     ], version = 1
 )
 @TypeConverters(StringConverter::class, MechanicConverter::class, CategoriesConverter::class,GameInfoConverter::class)

@@ -1,15 +1,15 @@
 package edu.isel.pdm.beegeesapp.bgg.games.model
 
+import android.app.Activity
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.isel.pdm.beegeesapp.BggApplication
+import edu.isel.pdm.beegeesapp.bgg.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.kotlinx.CreatorProxy
-import kotlinx.android.parcel.Parceler
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.TypeParceler
+import kotlinx.android.parcel.*
 
 @Parcelize
 @TypeParceler<MutableLiveData<MutableList<GameInfo>>, GamesViewModel.GamesViewModelParcelizer>
@@ -17,14 +17,15 @@ class GamesViewModel(
     val content: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
 ) : ViewModel(), Parcelable {
 
+    private var repo = (application as BggApplication).repo
+
     fun getLiveData(): MutableLiveData<MutableList<GameInfo>> = content
 
     fun getGames(
-        app: BggApplication,
         mode: RequestInfo,
         onUpdate: (MutableLiveData<MutableList<GameInfo>>) -> Unit
     ) {
-        app.repo.requestDataFromAPI(mode) {
+        repo.requestDataFromAPI(mode) {
             if (content.value == null) {
                 content.value = it
             } else {
@@ -32,6 +33,11 @@ class GamesViewModel(
             }
             onUpdate(content)
         }
+    }
+
+    fun getCustomUserListFromRepo(): MutableList<CustomUserList> {
+        return repo.getAllCustomUserLists()
+
     }
 
     object GamesViewModelParcelizer : Parceler<MutableLiveData<MutableList<GameInfo>>> {
