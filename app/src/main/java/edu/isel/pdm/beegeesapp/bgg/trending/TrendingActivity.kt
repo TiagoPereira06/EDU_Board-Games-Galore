@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.GameDetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.chooselisttoadd.ChooseListToAddGameActivity
 import edu.isel.pdm.beegeesapp.bgg.dialogs.ErrorDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel

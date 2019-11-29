@@ -5,7 +5,6 @@ import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.isel.pdm.beegeesapp.BggApplication
-import edu.isel.pdm.beegeesapp.bgg.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.kotlinx.CreatorProxy
 import kotlinx.android.parcel.Parceler

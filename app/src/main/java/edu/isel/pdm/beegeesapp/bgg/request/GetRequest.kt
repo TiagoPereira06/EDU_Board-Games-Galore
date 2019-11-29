@@ -6,7 +6,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonRequest
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import edu.isel.pdm.beegeesapp.bgg.GamesMapper
+import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
 
 class GetRequest(
     url: String,

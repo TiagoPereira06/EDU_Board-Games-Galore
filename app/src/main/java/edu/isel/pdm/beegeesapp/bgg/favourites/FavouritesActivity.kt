@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.favourites.view.FavouritesListAdapter
-import edu.isel.pdm.beegeesapp.bgg.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 
 
 class FavouritesActivity : AppCompatActivity() {

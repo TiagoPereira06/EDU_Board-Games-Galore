@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 import kotlinx.android.synthetic.main.card_chooselisttoadd.view.*
 import kotlinx.android.synthetic.main.card_chooselisttoadd.view.listName

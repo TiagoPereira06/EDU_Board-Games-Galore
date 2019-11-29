@@ -3,6 +3,7 @@ import android.widget.Toast
 import androidx.room.Room
 import com.android.volley.Response
 import edu.isel.pdm.beegeesapp.BggApplication
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.bgg.search.Type
@@ -11,6 +12,7 @@ class GamesRepository(private val host: BggApplication) {
 
     private val db = Room
         .databaseBuilder(host, BggDataBase::class.java, "games-db")
+        .allowMainThreadQueries()
         .build()
 
     private val baseURL = "https://www.boardgameatlas.com/api/search?"
@@ -42,6 +44,19 @@ class GamesRepository(private val host: BggApplication) {
                     .show()
             })
         host.queue.add(request)
+    }
+
+    fun addList(userList :UserList){
+        var a = db.userListDAO().insertList(userList)
+    }
+
+    fun getList(name : String) : List<GameInfo>{
+       return db.userListDAO().findListByName(name).gameInfo
+
+    }
+
+    fun clearAllLists(){
+        db.userListDAO().nukeTable()
     }
 
 }

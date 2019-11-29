@@ -12,11 +12,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.IChosenListDialogListener
-import edu.isel.pdm.beegeesapp.bgg.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.UserList
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 import edu.isel.pdm.beegeesapp.bgg.userlists.view.ListsListAdapter
@@ -66,6 +68,13 @@ class UserListsActivity : AppCompatActivity(),
 
 
         listContainer.userLists[0].list = gameList
+
+        (application as BggApplication).repo.clearAllLists()
+        val a = UserList("Teste",gameList)
+        (application as BggApplication).repo.addList(a)
+        val b = (application as BggApplication).repo.getList("Teste")
+        println(b)
+
 
 
         supportActionBar?.title = getString(R.string.dash_userListsInfo)

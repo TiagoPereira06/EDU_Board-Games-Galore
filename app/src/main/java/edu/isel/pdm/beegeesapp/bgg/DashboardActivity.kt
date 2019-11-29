@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.about.AboutActivity
 import edu.isel.pdm.beegeesapp.bgg.favourites.FavouritesActivity
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.search.SearchActivity
 import edu.isel.pdm.beegeesapp.bgg.trending.TrendingActivity
 import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity

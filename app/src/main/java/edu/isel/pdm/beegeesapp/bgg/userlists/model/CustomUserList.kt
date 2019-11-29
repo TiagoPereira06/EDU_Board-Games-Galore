@@ -3,7 +3,7 @@ package edu.isel.pdm.beegeesapp.bgg.userlists.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.TypeConverter
-import edu.isel.pdm.beegeesapp.bgg.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import kotlinx.android.parcel.Parcelize
 
 
