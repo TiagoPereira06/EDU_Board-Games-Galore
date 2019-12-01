@@ -7,12 +7,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class RequestInfo(
     var mode: Type,
-    var keyWord: String?,
+    var keyWord: String? = null,
     var limit: Int = 10,
     var skip: Int = 0
 ) : Parcelable {
-    //TODO - tirar o Trending do construtor..
-    constructor() : this(Type.Trending, null, 10, 0)
 
     fun clear() {
         limit = 10

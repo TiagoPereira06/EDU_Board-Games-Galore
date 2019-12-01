@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.CustomUserList
+import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.view.GamesinListAdapter
 
 class ListDetailedViewActivity: AppCompatActivity() {
@@ -27,16 +28,18 @@ class ListDetailedViewActivity: AppCompatActivity() {
     private lateinit var saveMenuItem : MenuItem
     private lateinit var editMenuItem : FloatingActionButton
     private lateinit var deleteIcon : Drawable
-    private var repo = (application as BggApplication).repo
+    private lateinit var repoGamesRepository: GamesRepository
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
         setContentView(R.layout.activity_detailedlistview)
+
+        repoGamesRepository = (application as BggApplication).repo
         if (intent.hasExtra("LIST_OBJECT")) {
             currentList = intent.getParcelableExtra("LIST_OBJECT")!!
-            supportActionBar?.title =currentList.listName
+            supportActionBar?.title = currentList.listName
             deleteIcon = ContextCompat.getDrawable(this,R.drawable.deleteicon)!!
 
             //val drawableResourceId: Int = resources.getIdentifier(currentList.drawableResourceName, "drawable", packageName)
@@ -70,8 +73,7 @@ class ListDetailedViewActivity: AppCompatActivity() {
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
-                    (gamesRv.adapter as GamesinListAdapter).removeItem(viewHolder,this@ListDetailedViewActivity)
-
+                    gamesRvAdapter.removeItem(viewHolder, this@ListDetailedViewActivity)
                 }
 
                 override fun onChildDraw(
@@ -104,9 +106,6 @@ class ListDetailedViewActivity: AppCompatActivity() {
 
             val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
             itemTouchHelper.attachToRecyclerView(gamesRv)
-
-
-
         }
 
         super.onCreate(savedInstanceState)

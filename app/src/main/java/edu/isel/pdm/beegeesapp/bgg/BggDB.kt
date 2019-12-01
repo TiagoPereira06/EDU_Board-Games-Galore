@@ -37,7 +37,7 @@ interface UserListDAO {
     fun getAllLists(): MutableList<CustomUserList>
 
     @Query("SELECT * FROM CustomUserList AS U WHERE U.listName = :listName")
-    fun findListByName(listName: String): CustomUserList
+    fun findListByName(listName: String): CustomUserList?
 
     @Insert
     fun insertList(customUserList: CustomUserList)

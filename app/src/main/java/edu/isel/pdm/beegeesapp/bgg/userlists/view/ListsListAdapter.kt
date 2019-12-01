@@ -3,24 +3,22 @@ package edu.isel.pdm.beegeesapp.bgg.userlists.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
+import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
 import kotlinx.android.synthetic.main.card_list.view.*
 
 
 class ListsListAdapter(
-    private val host : AppCompatActivity,
+    private val host: BggApplication,
+    //private val allCustomUserLists : MutableList<CustomUserList>,
     private val listClickListener : (CustomUserList) -> Unit
 
     ):RecyclerView.Adapter<ListsListAdapter.ListViewHolder>() {
 
 
-    private var repo = (host as UserListsActivity).repo
+    private var repo = host.repo
     private val allCustomUserLists : MutableList<CustomUserList> = repo.getAllCustomUserLists()
     private var removedPosition : Int = 0
     private var removedList : CustomUserList? = null
@@ -47,6 +45,8 @@ class ListsListAdapter(
     }
 
     fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+        //TODO
+        /*
         removedPosition=viewHolder.adapterPosition
         removedList=allCustomUserLists[viewHolder.adapterPosition]
 
@@ -63,9 +63,7 @@ class ListsListAdapter(
                 notifyItemInserted(removedPosition)
             }.setActionTextColor(ContextCompat.getColor(host,R.color.colorPrimary))
             .show()
-
-
-
+        */
     }
 
     class ListViewHolder(val view: View) : RecyclerView.ViewHolder(view)

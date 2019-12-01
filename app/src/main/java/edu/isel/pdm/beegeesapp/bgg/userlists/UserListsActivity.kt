@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.dialogs.createnewlist.IChosenListDialogListener
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.userlists.detaileduserlists.ListDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.userlists.view.ListsListAdapter
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_userlists.*
@@ -27,55 +27,30 @@ import kotlinx.android.synthetic.main.activity_userlists.*
 class UserListsActivity : AppCompatActivity(),
     IChosenListDialogListener, Parcelable {
 
-    val repo = (application as BggApplication).repo
-
 
     private lateinit var listRvAdapter: ListsListAdapter
     private lateinit var deleteIcon : Drawable
-
+    private lateinit var repo: GamesRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        repo = (application as BggApplication).repo
+
         setContentView(R.layout.activity_userlists)
-        repo.addCustomUserList("TesteLista")
-        repo.addCustomUserList("Black Friday")
-        repo.addCustomUserList("Wish List")
-        repo.addCustomUserList("Joe's Fav")
-        repo.addCustomUserList("Family Night")
-        repo.addCustomUserList("Worse Games")
-        repo.addCustomUserList("Marta's Fav")
-        repo.addCustomUserList("Home Alone")
-        repo.addCustomUserList("Keep Practising")
-        repo.addCustomUserList("Want to Try")
-        repo.addCustomUserList("Already Purchased")
-
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste1"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste2"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste3"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste4"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste5"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste6"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste7"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste8"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste9"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste10"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste11"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste12"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste13"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste14"))
-        repo.addGameToCustomUserList("TesteList",GameInfo("Teste15"))
-
-
-
         supportActionBar?.title = getString(R.string.dash_userListsInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
         deleteIcon = ContextCompat.getDrawable(this,R.drawable.deleteicon)!!
 
+        //repo.clearAllCustomUserLists()
+
         val listRv = findViewById<RecyclerView>(R.id.lists_recycler_view)
-        listRvAdapter = ListsListAdapter(this) { listItem: CustomUserList ->
+        listRvAdapter =
+            ListsListAdapter(application as BggApplication/*, repo.getAllCustomUserLists()*/) { listItem: CustomUserList ->
             listItemClicked(listItem)}
         listRv.layoutManager = LinearLayoutManager(this)
         listRv.adapter = listRvAdapter
+
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
             override fun onMove(
@@ -88,7 +63,6 @@ class UserListsActivity : AppCompatActivity(),
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
                 (listRv.adapter as ListsListAdapter).removeItem(viewHolder)
-
             }
 
             override fun onChildDraw(
@@ -132,6 +106,7 @@ class UserListsActivity : AppCompatActivity(),
     override fun chosenListName(name: String) {
         if (repo.addCustomUserList(name)) {
             Toast.makeText(this, "List created", Toast.LENGTH_SHORT).show()
+            listRvAdapter.notifyDataSetChanged()
 
         } else
             Toast.makeText(this, "List already exists", Toast.LENGTH_SHORT).show()

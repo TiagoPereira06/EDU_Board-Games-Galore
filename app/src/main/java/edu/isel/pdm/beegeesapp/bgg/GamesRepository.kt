@@ -4,11 +4,13 @@ import androidx.room.Room
 import com.android.volley.Response
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
 import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.bgg.search.Type
 
 class GamesRepository(private val host: BggApplication) {
+
 
     private val db = Room
         .databaseBuilder(host, BggDataBase::class.java, "games-db")
@@ -22,7 +24,7 @@ class GamesRepository(private val host: BggApplication) {
 
     fun requestDataFromAPI(
         mode: RequestInfo,
-        success: (MutableList<GameInfo>) -> Unit
+        success: (GamesMapper) -> Unit
     ) {
         val typeURL:String = when(mode.mode){
             Type.Trending -> ("order_by=popularity")
@@ -32,12 +34,11 @@ class GamesRepository(private val host: BggApplication) {
         }
         val url = baseURL + typeURL + skipUrl + mode.skip + limitUrl + mode.limit + clientId
 
-        mode.skip = mode.skip + mode.limit
-
         val request = GetRequest(
             url,
             Response.Listener {
-                success(it.games)
+                mode.skip = mode.skip + mode.limit
+                success(it)
             },
             Response.ErrorListener {
                 Toast.makeText(host, "That didn't work!", Toast.LENGTH_SHORT)
@@ -47,7 +48,7 @@ class GamesRepository(private val host: BggApplication) {
     }
 
     fun addCustomUserList(newListName :String) : Boolean{
-        if ((db.userListDAO().findListByName(newListName).gamesList.isNullOrEmpty())) {
+        if (db.userListDAO().findListByName(newListName) == null) {
             db.userListDAO().insertList(CustomUserList(newListName))
             return true
         }
@@ -55,7 +56,7 @@ class GamesRepository(private val host: BggApplication) {
     }
 
     fun getCustomUserList(name : String) : MutableList<GameInfo>{
-       return db.userListDAO().findListByName(name).gamesList
+        return db.userListDAO().findListByName(name)!!.gamesList
 
     }
 
@@ -70,16 +71,20 @@ class GamesRepository(private val host: BggApplication) {
 
     fun addGameToCustomUserList(listName: String, currentGame: GameInfo) {
         val list = db.userListDAO().findListByName(listName)
-        list.gamesList.add(currentGame)
-        db.userListDAO().updateList(list)
+        list?.gamesList?.add(currentGame)
+        if (list != null) {
+            db.userListDAO().updateList(list)
+        }
 
 
     }
 
     fun removeGameFromCustomUserList(listName: String, currentGame: GameInfo) {
         val list = db.userListDAO().findListByName(listName)
-        list.gamesList.remove(currentGame)
-        db.userListDAO().updateList(list)
+        list?.gamesList?.remove(currentGame)
+        if (list != null) {
+            db.userListDAO().updateList(list)
+        }
 
     }
 

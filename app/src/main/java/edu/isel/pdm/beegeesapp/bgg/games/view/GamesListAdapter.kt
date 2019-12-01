@@ -15,6 +15,7 @@ import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 
 class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
+
     private val gameThumbnail: CircularImageView = view.findViewById(R.id.thumbGame)
     private val gameName: TextView = view.findViewById(R.id.game_Name)
     private val gamePublisher: TextView = view.findViewById(R.id.companyName)
@@ -23,20 +24,26 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
     private val cardLayout: ConstraintLayout = view.findViewById(R.id.card_constraintlayout)
     private val collectionImage: ImageView = view.findViewById(R.id.addToCollectionsImage)
 
-    fun bindTo(game: GameInfo, clickListener: (GameInfo) -> Unit, addToCollectionListener: (GameInfo) -> Unit) {
-        Picasso.get()
-            .load(Uri.parse(game.thumb_url)) // load the image
-            .fit()
-            .centerCrop()
-            .into(gameThumbnail) // select the ImageView to load it into
-        gameName.text = game.name
+    fun bindTo(
+        game: GameInfo?,
+        clickListener: (GameInfo) -> Unit,
+        addToCollectionListener: (GameInfo) -> Unit
+    ) {
+        if (game != null) {
+            Picasso.get()
+                .load(Uri.parse(game.thumb_url)) // load the image
+                .fit()
+                .centerCrop()
+                .into(gameThumbnail) // select the ImageView to load it into
+            gameName.text = game.name
 
-        //TODO TRADUÇÃO -> reviews
-        gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
-        gamePublisher.text = game.primary_publisher
-        gameRating.rating = game.average_user_rating.toFloat()
-        collectionImage.setOnClickListener {addToCollectionListener(game) }
-        cardLayout.setOnClickListener { clickListener(game) }
+            //TODO TRADUÇÃO -> reviews, resource string
+            gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
+            gamePublisher.text = game.primary_publisher
+            gameRating.rating = game.average_user_rating.toFloat()
+            collectionImage.setOnClickListener { addToCollectionListener(game) }
+            cardLayout.setOnClickListener { clickListener(game) }
+        }
     }
 
 
@@ -48,13 +55,13 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
             holder.bindTo(
-                viewModel.content.value?.get(position)!!,
+                viewModel.getLiveData().value?.get(position),
                 clickListener,
                 addToCollectionListener
             )
         }
 
-        override fun getItemCount(): Int = viewModel.content.value?.size ?: 0
+        override fun getItemCount(): Int = viewModel.getLiveData().value?.size ?: 0
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
             GameViewHolder(

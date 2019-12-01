@@ -1,55 +1,77 @@
 package edu.isel.pdm.beegeesapp.bgg.games.model
 
-import android.app.Activity
-import android.os.Parcel
-import android.os.Parcelable
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.CustomUserList
+import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
-import edu.isel.pdm.beegeesapp.kotlinx.CreatorProxy
-import kotlinx.android.parcel.*
 
-@Parcelize
-@TypeParceler<MutableLiveData<MutableList<GameInfo>>, GamesViewModel.GamesViewModelParcelizer>
+/**
+ * Initial index, correspondent to card position, to know when to ask for more data
+ */
+private const val INITIAL_INDEX = 5
+
+/**
+ * Flag to check if call to API has already been made or not
+ */
+private var waitingForData: Boolean = false
+
+/**
+ * Index, correspondent to card position, to know when to ask for more data
+ */
+private var INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
+
 class GamesViewModel(
-    val content: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
-) : ViewModel(), Parcelable {
+    private val request: RequestInfo,
+    val app: BggApplication
+) : AndroidViewModel(app) {
 
-    private var repo = (application as BggApplication).repo
+    private val repo: GamesRepository = app.repo
+    private val content: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
+
+
+    fun clearSearch() {
+        waitingForData = false
+        INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
+    }
+
+    fun clear() {
+        clearSearch()
+        request.clear()
+        content.value?.clear()
+    }
+
+    fun getFirstInsertPosition() = request.skip - request.limit
 
     fun getLiveData(): MutableLiveData<MutableList<GameInfo>> = content
 
+    fun getLiveDataSize() = content.value?.size ?: 0
+
+    fun checkIfDataIsNeeded(positionReached: Int, onSuccess: () -> Unit) {
+        if (!waitingForData && positionReached >= INDEX_TO_ASK_MORE_DATA) {
+            waitingForData = true
+            INDEX_TO_ASK_MORE_DATA += request.limit
+            onSuccess()
+        }
+    }
+
     fun getGames(
-        mode: RequestInfo,
         onUpdate: (MutableLiveData<MutableList<GameInfo>>) -> Unit
     ) {
-        repo.requestDataFromAPI(mode) {
+        repo.requestDataFromAPI(request) {
             if (content.value == null) {
-                content.value = it
+                content.value = it.games
             } else {
-                content.value!!.addAll(it)
+                content.value!!.addAll(it.games)
             }
             onUpdate(content)
+            waitingForData = false
         }
     }
 
     fun getCustomUserListFromRepo(): MutableList<CustomUserList> {
         return repo.getAllCustomUserLists()
-
-    }
-
-    object GamesViewModelParcelizer : Parceler<MutableLiveData<MutableList<GameInfo>>> {
-        override fun create(parcel: Parcel): MutableLiveData<MutableList<GameInfo>> {
-            val contents = mutableListOf<GameInfo>()
-            parcel.readTypedList<GameInfo>(contents, CreatorProxy.getChallengeInfoCreator())
-            return MutableLiveData(contents)
-        }
-
-        override fun MutableLiveData<MutableList<GameInfo>>.write(parcel: Parcel, flags: Int) {
-            parcel.writeTypedList(value)
-        }
     }
 
 }

@@ -9,19 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.CustomUserList
+import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.userlists.UserListsActivity
-import edu.isel.pdm.beegeesapp.bgg.userlists.model.UserListContainer
 
 class ChooseListToAddGameActivity: AppCompatActivity() {
 
     private lateinit var listRv: RecyclerView
     private lateinit var listAdapter: ChooseListAdapter
     private lateinit var currentGame : GameInfo
-    val repo = (application as BggApplication).repo
-
-
+    private lateinit var repo: GamesRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.title = "Your Collection"
@@ -36,6 +32,8 @@ class ChooseListToAddGameActivity: AppCompatActivity() {
 
         //--MUDAR?--
 
+
+        repo = (application as BggApplication).repo
 
         listRv = findViewById(R.id.listRecyclerView)
         listRv.layoutManager = LinearLayoutManager(this)
@@ -59,12 +57,12 @@ class ChooseListToAddGameActivity: AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         listAdapter.listsNamesToAddTheGame.forEach { listNameToAddGame ->
-            repo.addGameToCustomUserList(listNameToAddGame,currentGame)
+            repo.addGameToCustomUserList(listNameToAddGame, currentGame)
         }
 
         //REMOVE
         listAdapter.listsNamesToRemoveTheGame.forEach { listNameToRemoveGame ->
-            repo.removeGameFromCustomUserList(listNameToRemoveGame,currentGame)
+            repo.removeGameFromCustomUserList(listNameToRemoveGame, currentGame)
         }
         onBackPressed()
         return super.onOptionsItemSelected(item)

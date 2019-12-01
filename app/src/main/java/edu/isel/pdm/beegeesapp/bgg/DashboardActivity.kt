@@ -21,8 +21,8 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
         setContentView(R.layout.activity_dashboard)
+        supportActionBar?.hide()
         val trend = findViewById<CardView>(R.id.trendingView)
         val fav = findViewById<CardView>(R.id.favouritesView)
         val search = findViewById<CardView>(R.id.searchView)
