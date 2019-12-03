@@ -2,8 +2,8 @@ package edu.isel.pdm.beegeesapp.bgg.games.model
 
 import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
-import edu.isel.pdm.beegeesapp.bgg.Categories
-import edu.isel.pdm.beegeesapp.bgg.Mechanics
+import edu.isel.pdm.beegeesapp.bgg.databaseUtils.Categories
+import edu.isel.pdm.beegeesapp.bgg.databaseUtils.Mechanics
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 

@@ -1,7 +1,7 @@
 package edu.isel.pdm.beegeesapp.bgg.request
 
 import android.os.Parcelable
-import edu.isel.pdm.beegeesapp.bgg.search.Type
+import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
