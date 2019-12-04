@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_trending.*
 
 class TrendingActivity : AppCompatActivity() {
 
+    //todo repetição
     private fun getViewModelFactory(request: RequestInfo) = object : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -67,32 +69,42 @@ class TrendingActivity : AppCompatActivity() {
 
         trending_recycler_view.adapter = getGamesAdapter()
 
+        gamesViewModel.content.observe(this, Observer {
+            pullToRefresh.isRefreshing = false
+            refreshAdapter()
+        })
+
         // First time calling onCreate
         if (savedInstanceState == null) {
-            pullToRefresh.isRefreshing = true
-            gamesViewModel.clearSearch()
-            gamesViewModel.getGames {
-                notifyDataChanged() // notify all items
-                pullToRefresh.isRefreshing = false
-            }
+            gamesViewModel.clear()
+            updateGames()
         }
 
-        // Setup ui event handlers
+        // On Refresh listener
         pullToRefresh.setOnRefreshListener {
-            pullToRefresh.isRefreshing = true
             gamesViewModel.clear()
-            gamesViewModel.getGames {
-                notifyDataChanged() //notify all items
-                pullToRefresh.isRefreshing = false
-            }
+            updateGames()
         }
     }
 
     private fun updateGames() {
+        pullToRefresh.isRefreshing = true
         gamesViewModel.getGames {
-            val size = gamesViewModel.getLiveDataSize()
-            val position = gamesViewModel.getFirstInsertPosition()
-            notifyItemRangeInserted(position, size - position) // notify only inserted items
+            refreshAdapter()
+        }
+    }
+
+    private fun refreshAdapter() {
+        val position = gamesViewModel.getInsertPosition()
+        val size = gamesViewModel.getLiveDataSize()
+        if (position == 0) { // position = 0 <=> LiveData is empty/cleared, no old items present
+            // notify all items ->
+            (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                .notifyDataSetChanged()
+        } else {
+            // notify only inserted items
+            (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                .notifyItemRangeInserted(position, size - position)
         }
     }
 
@@ -102,23 +114,13 @@ class TrendingActivity : AppCompatActivity() {
             { gameItem: GameInfo -> gameItemClicked(gameItem) },
             { gameItem: GameInfo -> addToCollectionItemClicked(gameItem) })
 
-    private fun notifyDataChanged() {
-        (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter).notifyDataSetChanged()
-    }
-
-    private fun notifyItemRangeInserted(position: Int, itemsCount: Int) {
-        (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter).notifyItemRangeInserted(
-            position,
-            itemsCount
-        )
-    }
-
     private fun gameItemClicked(gameItem: GameInfo) {
         val intent = Intent(this, GameDetailedViewActivity::class.java)
         intent.putExtra("GAME_OBJECT", gameItem)
         startActivity(intent)
     }
 
+    //TODO - CASO EMPTY..
     private fun addToCollectionItemClicked(gameItem: GameInfo) {
         if (gamesViewModel.getCustomUserListFromRepo().isNullOrEmpty()) {
             val dialog = ErrorDialog()

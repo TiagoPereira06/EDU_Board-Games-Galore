@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -26,8 +27,8 @@ import kotlinx.android.synthetic.main.activity_search.*
 
 private lateinit var searchType: RequestInfo
 private lateinit var searchGames: GamesViewModel
-private var lastItemClicked : MenuItem? = null
-private var initSearchWithValue = false
+private var lastItemClicked: MenuItem? = null
+private var initialSearch = false
 
 class SearchActivity : AppCompatActivity() {
     var searchView: androidx.appcompat.widget.SearchView? = null
@@ -39,13 +40,9 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
-
-        initSearchWithValue = false
 
         setContentView(R.layout.activity_search)
         search_recycler_view.setHasFixedSize(true)
@@ -55,7 +52,7 @@ class SearchActivity : AppCompatActivity() {
             search_recycler_view.layoutManager as LinearLayoutManager
 
         if (intent.hasExtra("SEARCH_KEYWORD")) {
-            initSearchWithValue = true
+            initialSearch = true
             searchType = intent.getParcelableExtra("SEARCH_KEYWORD") as RequestInfo
         } else {
             supportActionBar?.title = getString(R.string.dash_search)
@@ -70,52 +67,54 @@ class SearchActivity : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 searchGames.checkIfDataIsNeeded(layoutManager.findLastVisibleItemPosition()) {
-                    search()
+                    updateGames(false)
                 }
             }
         })
 
         search_recycler_view.adapter = getGamesAdapter()
 
-        if(initSearchWithValue){
+        searchGames.content.observe(this, Observer {
+            searchSwipeLayout.isRefreshing = false
+            refreshAdapter()
+        })
+
+        if (initialSearch) {
+            initialSearch = false
             supportActionBar?.title = searchType.keyWord
-            searchSwipeLayout.isRefreshing = true
             searchGames.clear()
-            searchGames.getGames {
-                notifyDataChanged()
-                searchSwipeLayout.isRefreshing = false
-            }
+            updateGames(false)
         }
 
         searchSwipeLayout.setOnRefreshListener {
-            searchSwipeLayout.isRefreshing = true
             searchGames.clear()
+            updateGames(true)
+        }
+    }
+
+    private fun updateGames(queryCheck: Boolean) {
+        if (queryCheck && !searchGames.isValidRequest()) {
+            searchSwipeLayout.isRefreshing = false
+        } else {
+            searchSwipeLayout.isRefreshing = true
             searchGames.getGames {
-                notifyDataChanged()
-                searchSwipeLayout.isRefreshing = false
+                refreshAdapter()
             }
         }
-
     }
 
-    private fun search() {
-        searchGames.getGames {
-            val size = searchGames.getLiveDataSize()
-            val position = searchGames.getFirstInsertPosition()
-            notifyItemRangeInserted(position, size - position) // notify only inserted items
+    private fun refreshAdapter() {
+        val position = searchGames.getInsertPosition()
+        val size = searchGames.getLiveDataSize()
+        if (position == 0) { // position = 0 <=> LiveData is empty/cleared, no old items present
+            // notify all items ->
+            (search_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                .notifyDataSetChanged()
+        } else {
+            // notify only inserted items
+            (search_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                .notifyItemRangeInserted(position, size - position)
         }
-    }
-
-
-    private fun notifyDataChanged() {
-        (search_recycler_view.adapter as GameViewHolder.GamesListAdapter).notifyDataSetChanged()
-    }
-
-    private fun notifyItemRangeInserted(position: Int, itemsCount: Int) {
-        (search_recycler_view.adapter as GameViewHolder.GamesListAdapter).notifyItemRangeInserted(
-            position,
-            itemsCount
-        )
     }
 
     private fun getGamesAdapter(): GameViewHolder.GamesListAdapter =
@@ -130,17 +129,17 @@ class SearchActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun addToCollectionItemClicked(gameItem: GameInfo){
+    private fun addToCollectionItemClicked(gameItem: GameInfo) {
         val dialog =
             CreateNewListDialog() //LISTA VAZIA = MODO CRIAÇÃO
-        dialog.show(supportFragmentManager,"New List Dialog")
+        dialog.show(supportFragmentManager, "New List Dialog")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.top_searchbar, menu)
 
-        lastItemClicked = if(initSearchWithValue) {
+        lastItemClicked = if (initialSearch) {
             when (searchType.mode) {
                 Type.Artist -> menu?.findItem(R.id.search_artist)
                 Type.Publisher -> menu?.findItem(R.id.search_publisher)
@@ -163,16 +162,12 @@ class SearchActivity : AppCompatActivity() {
                 searchView!!.setQuery("", false)
                 searchType.keyWord = query
                 searchItem.collapseActionView()
-                //search()
-                searchSwipeLayout.isRefreshing = true
-                searchGames.clear()
-                searchGames.getGames {
-                    notifyDataChanged()
-                    searchSwipeLayout.isRefreshing = false
-                }
                 supportActionBar?.title = searchType.keyWord
+                searchGames.clear()
+                updateGames(true)
                 return true
             }
+
             override fun onQueryTextChange(newtext: String?): Boolean {
                 return false
             }

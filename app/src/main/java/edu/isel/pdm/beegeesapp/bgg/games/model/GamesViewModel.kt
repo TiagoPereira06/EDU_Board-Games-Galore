@@ -6,6 +6,7 @@ import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
+import edu.isel.pdm.beegeesapp.bgg.search.Type
 
 /**
  * Initial index, correspondent to card position, to know when to ask for more data
@@ -15,7 +16,9 @@ private const val INITIAL_INDEX = 5
 /**
  * Flag to check if call to API has already been made or not
  */
-private var waitingForData: Boolean = false
+private var readyForMoreData: Boolean = true
+
+private var insert = 0
 
 /**
  * Index, correspondent to card position, to know when to ask for more data
@@ -28,45 +31,43 @@ class GamesViewModel(
 ) : AndroidViewModel(app) {
 
     private val repo: GamesRepository = app.repo
-    private val content: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
-
-
-    fun clearSearch() {
-        waitingForData = false
-        INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
-    }
+    val content: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
 
     fun clear() {
-        clearSearch()
+        readyForMoreData = true
+        INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
         request.clear()
         content.value?.clear()
     }
 
-    fun getFirstInsertPosition() = request.skip - request.limit
+    fun getInsertPosition() = insert
 
     fun getLiveData(): MutableLiveData<MutableList<GameInfo>> = content
 
     fun getLiveDataSize() = content.value?.size ?: 0
 
+    fun isValidRequest(): Boolean = (request.keyWord != null || request.mode == Type.Trending)
+
     fun checkIfDataIsNeeded(positionReached: Int, onSuccess: () -> Unit) {
-        if (!waitingForData && positionReached >= INDEX_TO_ASK_MORE_DATA) {
-            waitingForData = true
+        if (readyForMoreData && positionReached >= INDEX_TO_ASK_MORE_DATA) {
+            readyForMoreData = false
             INDEX_TO_ASK_MORE_DATA += request.limit
             onSuccess()
         }
     }
 
-    fun getGames(
-        onUpdate: (MutableLiveData<MutableList<GameInfo>>) -> Unit
-    ) {
+    fun getGames(onUpdate: (MutableLiveData<MutableList<GameInfo>>) -> Unit) {
         repo.requestDataFromAPI(request) {
+            insert = request.skip
+            request.skip += it.games.size
             if (content.value == null) {
                 content.value = it.games
             } else {
                 content.value!!.addAll(it.games)
+                content.value = content.value //trigger observe
             }
             onUpdate(content)
-            waitingForData = false
+            readyForMoreData = true
         }
     }
 

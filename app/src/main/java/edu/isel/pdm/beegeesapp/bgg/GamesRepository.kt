@@ -11,7 +11,6 @@ import edu.isel.pdm.beegeesapp.bgg.search.Type
 
 class GamesRepository(private val host: BggApplication) {
 
-
     private val db = Room
         .databaseBuilder(host, BggDataBase::class.java, "games-db")
         .allowMainThreadQueries()
@@ -37,7 +36,6 @@ class GamesRepository(private val host: BggApplication) {
         val request = GetRequest(
             url,
             Response.Listener {
-                mode.skip = mode.skip + mode.limit
                 success(it)
             },
             Response.ErrorListener {
@@ -75,7 +73,6 @@ class GamesRepository(private val host: BggApplication) {
         if (list != null) {
             db.userListDAO().updateList(list)
         }
-
 
     }
 
