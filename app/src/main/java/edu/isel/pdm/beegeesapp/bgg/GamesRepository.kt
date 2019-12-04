@@ -8,9 +8,9 @@ import edu.isel.pdm.beegeesapp.bgg.databaseUtils.BggDataBase
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
+import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
 import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
 import edu.isel.pdm.beegeesapp.kotlinx.runAsync
 
 class GamesRepository(private val host: BggApplication) {
@@ -41,7 +41,6 @@ class GamesRepository(private val host: BggApplication) {
         val request = GetRequest(
             url,
             Response.Listener {
-                mode.skip = mode.skip + mode.limit
                 success(it)
             },
             Response.ErrorListener {

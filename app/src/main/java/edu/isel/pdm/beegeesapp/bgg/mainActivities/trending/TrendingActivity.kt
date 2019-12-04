@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -13,15 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.chooselisttoadd.ChooseListToAddGameActivity
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.ErrorDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
-import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
+import edu.isel.pdm.beegeesapp.bgg.mainActivities.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import kotlinx.android.synthetic.main.activity_trending.*
 
 class TrendingActivity : AppCompatActivity() {
@@ -39,8 +40,8 @@ class TrendingActivity : AppCompatActivity() {
      */
     private lateinit var gamesViewModel: GamesViewModel
     private val CODE = 15
-    private lateinit var lastGameClicked : GameInfo
-    private lateinit var repo : GamesRepository
+    private lateinit var lastGameClicked: GameInfo
+    private lateinit var repo: GamesRepository
     private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,9 +108,15 @@ class TrendingActivity : AppCompatActivity() {
             (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter)
                 .notifyDataSetChanged()
         } else {
-            // notify only inserted items
-            (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter)
-                .notifyItemRangeInserted(position, size - position)
+            val gamesNumber = size - position
+            if (gamesNumber == 0) {
+                //TODO - tradução
+                Toast.makeText(applicationContext, "No more games found!", Toast.LENGTH_SHORT)
+                    .show()
+            } else { // notify only inserted items
+                (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                    .notifyItemRangeInserted(position, gamesNumber)
+            }
         }
     }
 
@@ -127,7 +134,7 @@ class TrendingActivity : AppCompatActivity() {
 
     //TODO - CASO EMPTY..
     private fun addToCollectionItemClicked(gameItem: GameInfo) {
-        lastGameClicked=gameItem
+        lastGameClicked = gameItem
         if (gamesViewModel.getCustomUserListFromRepo().isNullOrEmpty()) {
             val dialog = ErrorDialog()
             dialog.retainInstance = true
@@ -135,7 +142,7 @@ class TrendingActivity : AppCompatActivity() {
         } else {
             val intent = Intent(this, ChooseListToAddGameActivity::class.java)
             intent.putExtra("GAME_INFO", gameItem)
-            startActivityForResult(intent,CODE)
+            startActivityForResult(intent, CODE)
         }
     }
 

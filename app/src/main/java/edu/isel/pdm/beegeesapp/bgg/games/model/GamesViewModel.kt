@@ -3,10 +3,10 @@ package edu.isel.pdm.beegeesapp.bgg.games.model
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.BggApplication
-import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
+import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
+import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
-import edu.isel.pdm.beegeesapp.bgg.search.Type
 
 /**
  * Initial index, correspondent to card position, to know when to ask for more data

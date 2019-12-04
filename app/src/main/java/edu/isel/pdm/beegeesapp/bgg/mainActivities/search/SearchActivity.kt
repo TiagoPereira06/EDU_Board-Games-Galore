@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -17,11 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
+import edu.isel.pdm.beegeesapp.bgg.mainActivities.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import kotlinx.android.synthetic.main.activity_search.*
 
@@ -96,7 +97,7 @@ class SearchActivity : AppCompatActivity() {
         if (queryCheck && !searchGames.isValidRequest()) {
             searchSwipeLayout.isRefreshing = false
         } else {
-            searchSwipeLayout.isRefreshing = true
+            if (!searchSwipeLayout.isRefreshing) searchSwipeLayout.isRefreshing = true
             searchGames.getGames {
                 refreshAdapter()
             }
@@ -106,14 +107,26 @@ class SearchActivity : AppCompatActivity() {
     private fun refreshAdapter() {
         val position = searchGames.getInsertPosition()
         val size = searchGames.getLiveDataSize()
-        if (position == 0) { // position = 0 <=> LiveData is empty/cleared, no old items present
-            // notify all items ->
-            (search_recycler_view.adapter as GameViewHolder.GamesListAdapter)
-                .notifyDataSetChanged()
+        val numberOfGames = size - position
+
+        if (numberOfGames == 0) {
+            if (position == 0) {
+                //TODO - tradução
+                Toast.makeText(applicationContext, "No games found!", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                //TODO - tradução
+                Toast.makeText(applicationContext, "No more games found!", Toast.LENGTH_SHORT)
+                    .show()
+            }
         } else {
-            // notify only inserted items
-            (search_recycler_view.adapter as GameViewHolder.GamesListAdapter)
-                .notifyItemRangeInserted(position, size - position)
+            if (position == 0) { // position = 0 <=> LiveData is empty/cleared, no old items present
+                (search_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                    .notifyDataSetChanged()
+            } else { // notify only inserted items
+                (search_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                    .notifyItemRangeInserted(position, numberOfGames)
+            }
         }
     }
 
