@@ -15,21 +15,21 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".bgg.DashboardActivity">
+        <activity android:name=".bgg.mainActivities.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".bgg.about.AboutActivity"/>
-        <activity android:name=".bgg.GameDetailedViewActivity" />
-        <activity android:name=".bgg.search.SearchActivity" />
-        <activity android:name=".bgg.favourites.FavouritesActivity" />
-        <activity android:name=".bgg.trending.TrendingActivity" />
-        <activity android:name=".bgg.userlists.UserListsActivity" />
-        <activity android:name=".bgg.userlists.detaileduserlists.ListDetailedViewActivity" />
-        <activity android:name=".bgg.chooselisttoadd.ChooseListToAddGameActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.about.AboutActivity"/>
+        <activity android:name=".bgg.mainActivities.GameDetailedViewActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.search.SearchActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.favourites.FavouritesActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.trending.TrendingActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.UserListsActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.detaileduserlists.ListDetailedViewActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.chooselisttoadd.ChooseListToAddGameActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -3,7 +3,7 @@ package edu.isel.pdm.beegeesapp.bgg.games.model
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.BggApplication
-import edu.isel.pdm.beegeesapp.bgg.CustomUserList
+import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.bgg.search.Type

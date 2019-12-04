@@ -1,15 +1,20 @@
 package edu.isel.pdm.beegeesapp.bgg
+import android.util.Log
 import android.widget.Toast
 import androidx.room.Room
 import com.android.volley.Response
 import edu.isel.pdm.beegeesapp.BggApplication
+import edu.isel.pdm.beegeesapp.bgg.databaseUtils.BggDataBase
+import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
 import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
-import edu.isel.pdm.beegeesapp.bgg.search.Type
+import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
+import edu.isel.pdm.beegeesapp.kotlinx.runAsync
 
 class GamesRepository(private val host: BggApplication) {
+
 
     private val db = Room
         .databaseBuilder(host, BggDataBase::class.java, "games-db")
@@ -36,10 +41,11 @@ class GamesRepository(private val host: BggApplication) {
         val request = GetRequest(
             url,
             Response.Listener {
+                mode.skip = mode.skip + mode.limit
                 success(it)
             },
             Response.ErrorListener {
-                Toast.makeText(host, "That didn't work!", Toast.LENGTH_SHORT)
+                Toast.makeText(host, "Check your Internet Connection!", Toast.LENGTH_SHORT)
                     .show()
             })
         host.queue.add(request)
@@ -47,7 +53,11 @@ class GamesRepository(private val host: BggApplication) {
 
     fun addCustomUserList(newListName :String) : Boolean{
         if (db.userListDAO().findListByName(newListName) == null) {
-            db.userListDAO().insertList(CustomUserList(newListName))
+            db.userListDAO().insertList(
+                CustomUserList(
+                    newListName
+                )
+            )
             return true
         }
         return false
@@ -63,20 +73,26 @@ class GamesRepository(private val host: BggApplication) {
     }
 
     fun getAllCustomUserLists(): MutableList<CustomUserList> {
+        Log.v("DEBUG",Thread.currentThread().toString())
         return db.userListDAO().getAllLists()
 
     }
 
-    fun addGameToCustomUserList(listName: String, currentGame: GameInfo) {
-        val list = db.userListDAO().findListByName(listName)
-        list?.gamesList?.add(currentGame)
-        if (list != null) {
-            db.userListDAO().updateList(list)
-        }
 
+    fun addGameToCustomUserList(listName: String, currentGame: GameInfo) {
+        runAsync {
+            Log.v("DEBUG",Thread.currentThread().toString())
+            val list = db.userListDAO().findListByName(listName)
+            list?.gamesList?.add(currentGame)
+            if (list != null) {
+                db.userListDAO().updateList(list)
+            }
+
+        }
     }
 
     fun removeGameFromCustomUserList(listName: String, currentGame: GameInfo) {
+        runAsync {
         val list = db.userListDAO().findListByName(listName)
         list?.gamesList?.remove(currentGame)
         if (list != null) {
@@ -84,19 +100,29 @@ class GamesRepository(private val host: BggApplication) {
         }
 
     }
+    }
 
     fun removeCustomUserListAt(position: Int) {
-       val allList = db.userListDAO().getAllLists()
+        runAsync {
+        val allList = db.userListDAO().getAllLists()
         allList.removeAt(position)
         db.userListDAO().nukeTable()
         allList.forEach { db.userListDAO().insertList(it) }
     }
-
-    fun addCustomUserListAt(userList: CustomUserList, position: Int) {
-        val allList = db.userListDAO().getAllLists()
-        allList.add(position,userList)
-        db.userListDAO().nukeTable()
-        allList.forEach { db.userListDAO().insertList(it) }
     }
 
+    fun addCustomUserListAt(userList: CustomUserList, position: Int) {
+        runAsync {
+            val allList = db.userListDAO().getAllLists()
+            allList.add(position, userList)
+            db.userListDAO().nukeTable()
+            allList.forEach { db.userListDAO().insertList(it) }
+        }
+    }
+
+    fun updateCustomUserList(listToUpdate: CustomUserList?) {
+        runAsync {
+            db.userListDAO().updateList(listToUpdate!!)
+        }
+    }
 }

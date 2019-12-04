@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context=".bgg.GameDetailedViewActivity">
+    tools:context=".bgg.mainActivities.GameDetailedViewActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -23,7 +23,7 @@
         android:paddingEnd="5dp"
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
-        tools:context=".bgg.GameDetailedViewActivity">
+        tools:context=".bgg.mainActivities.GameDetailedViewActivity">
 
         <ImageView
             android:id="@+id/linkIcon"
