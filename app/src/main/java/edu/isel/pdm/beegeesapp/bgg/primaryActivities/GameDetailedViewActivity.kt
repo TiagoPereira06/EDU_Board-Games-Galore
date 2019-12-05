@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -14,8 +14,8 @@ import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.SearchActivity
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
 import kotlinx.android.synthetic.main.activity_detailedgameview.*
 
 

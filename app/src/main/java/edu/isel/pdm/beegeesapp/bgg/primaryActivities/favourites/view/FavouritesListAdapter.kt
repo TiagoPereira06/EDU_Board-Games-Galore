@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.favourites.view
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.view
 
 
 import android.net.Uri

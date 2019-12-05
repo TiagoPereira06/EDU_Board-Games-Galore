@@ -15,20 +15,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".bgg.mainActivities.DashboardActivity">
+        <activity android:name=".bgg.primaryActivities.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.about.AboutActivity"/>
-        <activity android:name=".bgg.mainActivities.GameDetailedViewActivity" />
-        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.search.SearchActivity" />
-        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.favourites.FavouritesActivity" />
-        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.trending.TrendingActivity" />
-        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.UserListsActivity" />
-        <activity android:name="edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.detaileduserlists.ListDetailedViewActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.about.AboutActivity"/>
+        <activity android:name=".bgg.primaryActivities.GameDetailedViewActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.FavouritesActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.trending.TrendingActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.UserListsActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists.ListDetailedViewActivity" />
         <activity android:name="edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.chooselisttoadd.ChooseListToAddGameActivity" />
 
         <meta-data

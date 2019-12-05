@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.detaileduserlists.view
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists.view
 
 import android.app.Activity
 import android.net.Uri
@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.detaileduserlists.ListDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists.ListDetailedViewActivity
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.card_gamelists.view.*
 

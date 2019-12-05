@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.trending
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.trending
 
 import android.app.Activity
 import android.content.Intent
@@ -20,8 +20,8 @@ import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.ErrorDialog
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.GameDetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.GameDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import kotlinx.android.synthetic.main.activity_trending.*
 
@@ -153,11 +153,10 @@ class TrendingActivity : AppCompatActivity() {
             val arrayOfNamesToAdd = data!!.getStringArrayExtra("RETURN_ARRAYTOADD")
             val arrayOfNamesToRemove = data.getStringArrayExtra("RETURN_ARRAYTOREMOVE")
             arrayOfNamesToAdd.forEach { listNameToAddGame ->
-                repo.addGameToCustomUserList(listNameToAddGame, lastGameClicked)
+                gamesViewModel.addGameToCustomUserList(listNameToAddGame, lastGameClicked)
             }
-
             arrayOfNamesToRemove.forEach { listNameToRemoveGame ->
-                repo.removeGameFromCustomUserList(listNameToRemoveGame, lastGameClicked)
+                gamesViewModel.removeGameFromCustomUserList(listNameToRemoveGame, lastGameClicked)
             }
         }
     }

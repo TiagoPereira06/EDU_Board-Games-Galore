@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context=".bgg.mainActivities.GameDetailedViewActivity">
+    tools:context=".bgg.primaryActivities.GameDetailedViewActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -23,7 +23,7 @@
         android:paddingEnd="5dp"
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
-        tools:context=".bgg.mainActivities.GameDetailedViewActivity">
+        tools:context=".bgg.primaryActivities.GameDetailedViewActivity">
 
         <ImageView
             android:id="@+id/linkIcon"
@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description"
-            app:srcCompat="@drawable/newiconbook" />
+            app:srcCompat="@drawable/openbookcolor" />
 
         <TextView
             android:id="@+id/companyText"
@@ -128,7 +128,7 @@
             android:contentDescription="priceicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingIcon"
-            app:srcCompat="@drawable/newiconprice" />
+            app:srcCompat="@drawable/pricetag" />
 
         <ImageView
             android:id="@+id/yearIcon"
@@ -139,7 +139,7 @@
             android:contentDescription="yearicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/priceIcon"
-            app:srcCompat="@drawable/newiconcalendar" />
+            app:srcCompat="@drawable/calendarcolor" />
 
         <TextView
             android:id="@+id/minAge"
@@ -163,7 +163,7 @@
             android:contentDescription="ratingicon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_Name"
-            app:srcCompat="@drawable/newiconthumbup" />
+            app:srcCompat="@drawable/positivevotecolor" />
 
         <TextView
             android:id="@+id/playTime"
@@ -186,7 +186,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerIcon"
-            app:srcCompat="@drawable/newiconhourglass" />
+            app:srcCompat="@drawable/clockcolor" />
 
         <TextView
             android:id="@+id/ratingText"
@@ -209,7 +209,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeIcon"
-            app:srcCompat="@drawable/newiconage" />
+            app:srcCompat="@drawable/age" />
 
         <TextView
             android:id="@+id/gameYear"
@@ -258,7 +258,7 @@
             android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_Name"
-            app:srcCompat="@drawable/newiconplayers" />
+            app:srcCompat="@drawable/players" />
 
         <TextView
             android:id="@+id/description"

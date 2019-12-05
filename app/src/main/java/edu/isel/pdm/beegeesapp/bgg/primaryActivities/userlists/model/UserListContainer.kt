@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.model
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.model
 
 import android.os.Parcelable
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList

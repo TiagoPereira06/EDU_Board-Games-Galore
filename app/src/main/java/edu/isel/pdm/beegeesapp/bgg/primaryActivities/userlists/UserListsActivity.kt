@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists
 
 import android.app.Activity
 import android.content.Intent
@@ -19,8 +19,8 @@ import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.createnewlist.CreateNewListDialog
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.createnewlist.IChosenListDialogListener
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.detaileduserlists.ListDetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.view.ListsListAdapter
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists.ListDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.view.ListsListAdapter
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_userlists.*
 
@@ -33,11 +33,12 @@ class UserListsActivity : AppCompatActivity(),
     private lateinit var listRvAdapter: ListsListAdapter
     private lateinit var deleteIcon : Drawable
     private lateinit var repo: GamesRepository
+    private lateinit var currentCustomUserLists: MutableList<CustomUserList>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         repo = (application as BggApplication).repo
+        currentCustomUserLists = repo.getAllCustomUserLists()
         setContentView(R.layout.activity_userlists)
         supportActionBar?.title = getString(R.string.dash_userListsInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
@@ -47,7 +48,7 @@ class UserListsActivity : AppCompatActivity(),
 
         val listRv = findViewById<RecyclerView>(R.id.lists_recycler_view)
         listRvAdapter =
-            ListsListAdapter(application as BggApplication/*, repo.getAllCustomUserLists()*/) { listItem: CustomUserList ->
+            ListsListAdapter(application as BggApplication, currentCustomUserLists) { listItem: CustomUserList ->
             listItemClicked(listItem)}
         listRv.layoutManager = LinearLayoutManager(this)
         listRv.adapter = listRvAdapter
@@ -93,7 +94,6 @@ class UserListsActivity : AppCompatActivity(),
                 )
             }
         }
-
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(listRv)
 
@@ -105,9 +105,10 @@ class UserListsActivity : AppCompatActivity(),
 
     }
     override fun chosenListName(name: String) {
-        if (repo.addCustomUserList(name)) {
-            Toast.makeText(this, "List created", Toast.LENGTH_SHORT).show()
+        if (currentCustomUserLists.find{it.listName == name }==null) {
+            currentCustomUserLists.add(CustomUserList(name))
             listRvAdapter.notifyDataSetChanged()
+            Toast.makeText(this, "List created", Toast.LENGTH_SHORT).show()
 
         } else
             Toast.makeText(this, "List already exists", Toast.LENGTH_SHORT).show()
@@ -123,12 +124,27 @@ class UserListsActivity : AppCompatActivity(),
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             val listToUpdate = data!!.getParcelableExtra<CustomUserList>("RETURN_LIST")
-            repo.updateCustomUserList(listToUpdate)
+            //ALTERAR currentList?
+            //repo.updateCustomUserList(listToUpdate)
+            val aux = currentCustomUserLists.find {it.listName == listToUpdate.listName}
+            val positionOfListReceived = currentCustomUserLists.indexOf(aux)
+            currentCustomUserLists.removeAt(positionOfListReceived)
+            currentCustomUserLists.add(positionOfListReceived, listToUpdate)
         }
+        listRvAdapter.notifyDataSetChanged()
     }
 
     override fun onResume() {
         super.onResume()
         listRvAdapter.notifyDataSetChanged()
+    }
+
+    override fun onPause() {
+        //BOA ALTURA PARA GUARDAR ALTERAÇÕES?
+        repo.clearAllCustomUserLists()
+        currentCustomUserLists.forEach {
+            repo.addCustomUserList(it)
+        }
+        super.onPause()
     }
 }

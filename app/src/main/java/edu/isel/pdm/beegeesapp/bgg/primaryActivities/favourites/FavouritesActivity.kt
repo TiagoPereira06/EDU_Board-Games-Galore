@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.favourites
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.favourites.view.FavouritesListAdapter
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.view.FavouritesListAdapter
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 
 

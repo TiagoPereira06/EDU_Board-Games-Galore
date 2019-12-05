@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.detaileduserlists
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists
 
 import android.app.Activity
 import android.content.Intent
@@ -17,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.detaileduserlists.view.GamesinListAdapter
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists.view.GamesinListAdapter
 
 class ListDetailedViewActivity: AppCompatActivity() {
 

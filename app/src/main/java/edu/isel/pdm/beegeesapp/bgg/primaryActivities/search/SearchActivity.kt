@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.search
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.search
 
 import android.app.SearchManager
 import android.content.Context
@@ -22,7 +22,7 @@ import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.createnewlist.Cre
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.GameDetailedViewActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import kotlinx.android.synthetic.main.activity_search.*
 

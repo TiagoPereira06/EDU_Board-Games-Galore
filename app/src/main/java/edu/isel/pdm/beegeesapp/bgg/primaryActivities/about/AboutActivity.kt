@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities.about
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities.about
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable

@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.mainActivities
+package edu.isel.pdm.beegeesapp.bgg.primaryActivities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,17 +7,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.about.AboutActivity
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.favourites.FavouritesActivity
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.SearchActivity
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.trending.TrendingActivity
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.userlists.UserListsActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.about.AboutActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.FavouritesActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.trending.TrendingActivity
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.UserListsActivity
 
 
 class DashboardActivity : AppCompatActivity() {
-
-    private val favGames: List<GameInfo> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

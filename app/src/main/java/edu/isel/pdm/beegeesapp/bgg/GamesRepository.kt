@@ -8,7 +8,7 @@ import edu.isel.pdm.beegeesapp.bgg.databaseUtils.BggDataBase
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
 import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.kotlinx.runAsync
@@ -62,6 +62,12 @@ class GamesRepository(private val host: BggApplication) {
         return false
     }
 
+    fun addCustomUserList(newList :CustomUserList){
+        db.userListDAO().insertList(newList)
+    }
+
+
+
     fun getCustomUserList(name : String) : MutableList<GameInfo>{
         return db.userListDAO().findListByName(name)!!.gamesList
 
@@ -92,22 +98,22 @@ class GamesRepository(private val host: BggApplication) {
 
     fun removeGameFromCustomUserList(listName: String, currentGame: GameInfo) {
         runAsync {
-        val list = db.userListDAO().findListByName(listName)
-        list?.gamesList?.remove(currentGame)
-        if (list != null) {
-            db.userListDAO().updateList(list)
-        }
+            val list = db.userListDAO().findListByName(listName)
+            list?.gamesList?.remove(currentGame)
+            if (list != null) {
+                db.userListDAO().updateList(list)
+            }
 
-    }
+        }
     }
 
     fun removeCustomUserListAt(position: Int) {
         runAsync {
-        val allList = db.userListDAO().getAllLists()
-        allList.removeAt(position)
-        db.userListDAO().nukeTable()
-        allList.forEach { db.userListDAO().insertList(it) }
-    }
+            val allList = db.userListDAO().getAllLists()
+            allList.removeAt(position)
+            db.userListDAO().nukeTable()
+            allList.forEach { db.userListDAO().insertList(it) }
+        }
     }
 
     fun addCustomUserListAt(userList: CustomUserList, position: Int) {
@@ -124,4 +130,5 @@ class GamesRepository(private val host: BggApplication) {
             db.userListDAO().updateList(listToUpdate!!)
         }
     }
+
 }

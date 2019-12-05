@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.mainActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 
 /**
@@ -73,6 +73,15 @@ class GamesViewModel(
 
     fun getCustomUserListFromRepo(): MutableList<CustomUserList> {
         return repo.getAllCustomUserLists()
+    }
+
+    fun addGameToCustomUserList(listNameToAddGame: String, lastGameClicked: GameInfo) {
+        repo.addGameToCustomUserList(listNameToAddGame, lastGameClicked)
+    }
+
+    fun removeGameFromCustomUserList(listNameToRemoveGame: String, lastGameClicked: GameInfo) {
+        repo.removeGameFromCustomUserList(listNameToRemoveGame, lastGameClicked)
+
     }
 
 }
