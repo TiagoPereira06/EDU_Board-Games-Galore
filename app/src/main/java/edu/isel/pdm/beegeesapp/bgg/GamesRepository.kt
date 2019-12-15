@@ -8,8 +8,9 @@ import edu.isel.pdm.beegeesapp.bgg.databaseUtils.BggDataBase
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.model.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
-import edu.isel.pdm.beegeesapp.bgg.request.GetRequest
+import edu.isel.pdm.beegeesapp.bgg.request.GetGamesRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.kotlinx.runAsync
 
@@ -38,7 +39,7 @@ class GamesRepository(private val host: BggApplication) {
         }
         val url = baseURL + typeURL + skipUrl + mode.skip + limitUrl + mode.limit + clientId
 
-        val request = GetRequest(
+        val request = GetGamesRequest(
             url,
             Response.Listener {
                 success(it)
@@ -129,6 +130,10 @@ class GamesRepository(private val host: BggApplication) {
         runAsync {
             db.userListDAO().updateList(listToUpdate!!)
         }
+    }
+
+    fun getAllGameProfilesList(): MutableList<GameProfile> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

@@ -7,28 +7,20 @@ import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import kotlinx.android.parcel.Parcelize
 
 
-@Parcelize
-data class Categories(
-    val id: String
-) : Parcelable
 
 @Parcelize
-data class Mechanics(
-    val id: String
-) : Parcelable
-
-
 @Entity
 data class Category(
     @PrimaryKey val id: String,
     val name: String
-)
+) : Parcelable
 
+@Parcelize
 @Entity
 data class Mechanic(
     @PrimaryKey val id: String,
     val name: String
-)
+) : Parcelable
 
 @Parcelize
 @Entity

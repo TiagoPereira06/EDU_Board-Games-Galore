@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.chooselistthumnail
+package edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import edu.isel.pdm.beegeesapp.R
-import kotlinx.android.synthetic.main.dialog_chooselistthumb.*
+import kotlinx.android.synthetic.main.dialog_choosethumb.*
 
-class ChooseListThumbDialog : AppCompatDialogFragment() {
+class ChooseThumbDialog : AppCompatDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,7 +21,7 @@ class ChooseListThumbDialog : AppCompatDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view: View = activity!!.layoutInflater.inflate(R.layout.dialog_chooselistthumb, null)
+        val view: View = activity!!.layoutInflater.inflate(R.layout.dialog_choosethumb, null)
 
         table
 

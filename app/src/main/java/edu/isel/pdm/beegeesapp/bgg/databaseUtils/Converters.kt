@@ -3,7 +3,9 @@ package edu.isel.pdm.beegeesapp.bgg.databaseUtils
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameCategories
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameMechanics
 import java.util.*
 
 class StringConverter {
@@ -37,12 +39,12 @@ class MechanicConverter {
 
         @TypeConverter
         @JvmStatic
-        fun stringToMechanicsList(data: String?): MutableList<Mechanics> {
+        fun stringToMechanicsList(data: String?): MutableList<GameMechanics> {
             if (data == null) {
                 return Collections.emptyList()
             }
 
-            val listType = object : TypeToken<MutableList<Mechanics>>() {
+            val listType = object : TypeToken<MutableList<GameMechanics>>() {
 
             }.type
 
@@ -51,7 +53,7 @@ class MechanicConverter {
 
         @TypeConverter
         @JvmStatic
-        fun mechanicsListToString(mechanics: MutableList<Mechanics>): String {
+        fun mechanicsListToString(mechanics: MutableList<GameMechanics>): String {
             return Gson().toJson(mechanics)
         }
     }
@@ -62,12 +64,12 @@ class CategoriesConverter {
 
         @TypeConverter
         @JvmStatic
-        fun stringToCategoriesList(data: String?): MutableList<Categories> {
+        fun stringToCategoriesList(data: String?): MutableList<GameCategories> {
             if (data == null) {
                 return Collections.emptyList()
             }
 
-            val listType = object : TypeToken<MutableList<Categories>>() {
+            val listType = object : TypeToken<MutableList<GameCategories>>() {
 
             }.type
 
@@ -76,7 +78,7 @@ class CategoriesConverter {
 
         @TypeConverter
         @JvmStatic
-        fun CategoriesListToString(categories: MutableList<Categories>): String {
+        fun CategoriesListToString(categories: MutableList<GameCategories>): String {
             return Gson().toJson(categories)
         }
     }

@@ -44,7 +44,7 @@ class ChooseListToAddGameActivity: AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.top_addgametolist, menu)
+        inflater.inflate(R.menu.top_savechanges, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

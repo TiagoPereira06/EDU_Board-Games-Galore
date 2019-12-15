@@ -7,13 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import edu.isel.pdm.beegeesapp.R
 
 class CreateNewListDialog : AppCompatDialogFragment() {
 
-    private lateinit var chooseListView : AutoCompleteTextView
+    private lateinit var chooseListView : EditText
     private lateinit var addB : TextView
     private lateinit var cancelB : TextView
 

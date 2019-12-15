@@ -2,8 +2,6 @@ package edu.isel.pdm.beegeesapp.bgg.games.model
 
 import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
-import edu.isel.pdm.beegeesapp.bgg.databaseUtils.Categories
-import edu.isel.pdm.beegeesapp.bgg.databaseUtils.Mechanics
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -31,16 +29,26 @@ data class GameInfo(
     val artists: List<String> = Collections.emptyList(),
     val rules_url: String? = "",
     @JsonProperty("url") val gameUrl: String = "",
-    val mechanics: List<Mechanics> = Collections.emptyList(),
-    val categories: List<Categories> = Collections.emptyList(),
+    val mechanics: List<GameMechanics> = Collections.emptyList(),
+    val categories: List<GameCategories> = Collections.emptyList(),
     val price: String = "",
     val average_user_rating: Double = 0.0
 ) : Parcelable {
     constructor(name : String) : this("",0,0,0,0,
         "https://d2k4q26owzy373.cloudfront.net/40x40/games/uploaded/1559254941010-61PJxjjnbfL.jpg",0,
         0,0,name,"","", Collections.emptyList(), Collections.emptyList(),"","",
-        listOf(Mechanics("")), listOf(
-            Categories("")
+        listOf(GameMechanics("")), listOf(
+            GameCategories("")
         ),"",0.0)
 
 }
+
+@Parcelize
+data class GameCategories(
+    val id: String
+) : Parcelable
+
+@Parcelize
+data class GameMechanics(
+    val id: String
+) : Parcelable
