@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchType
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 
 /**
@@ -46,7 +46,7 @@ class GamesViewModel(
 
     fun getLiveDataSize() = content.value?.size ?: 0
 
-    fun isValidRequest(): Boolean = (request.keyWord != null || request.mode == Type.Trending)
+    fun isValidRequest(): Boolean = (request.keyWord != null || request.mode == SearchType.Trending)
 
     fun checkIfDataIsNeeded(positionReached: Int, onSuccess: () -> Unit) {
         if (readyForMoreData && positionReached >= INDEX_TO_ASK_MORE_DATA) {

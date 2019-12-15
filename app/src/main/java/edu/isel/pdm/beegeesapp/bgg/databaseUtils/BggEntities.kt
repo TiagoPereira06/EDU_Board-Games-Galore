@@ -34,7 +34,7 @@ data class CustomUserList(
     )
 }
 
-private fun genRandomThumbnailImage() : String{
+fun genRandomThumbnailImage() : String{
     val prefix = "samplegameicons"
     val randomPos = 1 + (Math.random() * ((33 - 1) + 1)).toInt()
     return prefix+randomPos

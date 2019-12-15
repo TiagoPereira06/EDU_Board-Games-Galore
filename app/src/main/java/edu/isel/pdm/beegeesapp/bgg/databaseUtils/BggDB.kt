@@ -1,6 +1,7 @@
 package edu.isel.pdm.beegeesapp.bgg.databaseUtils
 
 import androidx.room.*
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.model.GameProfile
 
 @Dao
 interface CategoriesDAO {
@@ -45,14 +46,28 @@ interface UserListDAO {
     @Update
     fun updateList(customUserList: CustomUserList)
 
-
 }
+
+@Dao
+interface GameProfileDAO{
+    @Query("DELETE FROM GameProfile")
+    fun nukeTable()
+
+    @Query("SELECT * FROM GameProfile")
+    fun getAllGameProfiles() : MutableList<GameProfile>
+
+    @Insert
+    fun insertGameProfile(profile: GameProfile)
+}
+
+
 
 @Database(
     entities = [
         Mechanic::class,
         Category::class,
-        CustomUserList::class
+        CustomUserList::class,
+        GameProfile::class
     ], version = 1
 )
 @TypeConverters(
@@ -62,5 +77,6 @@ abstract class BggDataBase : RoomDatabase() {
     abstract fun categoriesDAO(): CategoriesDAO
     abstract fun mechanicsDAO(): MechanicsDAO
     abstract fun userListDAO(): UserListDAO
+    abstract fun gameProfileDAO(): GameProfileDAO
 
 }

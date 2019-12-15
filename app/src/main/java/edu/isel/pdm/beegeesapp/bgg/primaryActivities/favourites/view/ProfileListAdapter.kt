@@ -31,7 +31,7 @@ class ProfileListAdapter(
         //val list = repo.getAllCustomUserLists()[position]
         val gameProfile = allProfilesList[position]
         holder.view.profileName.text = gameProfile.name
-        val drawableResourceId: Int = host.resources.getIdentifier(gameProfile.iconString, "drawable", host.packageName)
+        val drawableResourceId: Int = host.resources.getIdentifier(gameProfile.drawableResourceName, "drawable", host.packageName)
         holder.view.thumbProfile.setImageResource(drawableResourceId)
         holder.view.categoryChip.text = gameProfile.categoryName
         holder.view.mechanicChip.text = gameProfile.mechanicName

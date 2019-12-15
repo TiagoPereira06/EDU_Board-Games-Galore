@@ -9,7 +9,7 @@ import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
 import edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.model.GameProfile
-import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchType
 import edu.isel.pdm.beegeesapp.bgg.request.GetGamesRequest
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.kotlinx.runAsync
@@ -32,10 +32,10 @@ class GamesRepository(private val host: BggApplication) {
         success: (GamesMapper) -> Unit
     ) {
         val typeURL:String = when(mode.mode){
-            Type.Trending -> ("order_by=popularity")
-            Type.Artist -> ("artist=" + mode.keyWord)
-            Type.Publisher -> ("publisher=" + mode.keyWord)
-            Type.Name -> ("name=" + mode.keyWord)
+            SearchType.Trending -> ("order_by=popularity")
+            SearchType.Artist -> ("artist=" + mode.keyWord)
+            SearchType.Publisher -> ("publisher=" + mode.keyWord)
+            SearchType.Name -> ("name=" + mode.keyWord)
         }
         val url = baseURL + typeURL + skipUrl + mode.skip + limitUrl + mode.limit + clientId
 
@@ -133,7 +133,11 @@ class GamesRepository(private val host: BggApplication) {
     }
 
     fun getAllGameProfilesList(): MutableList<GameProfile> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return db.gameProfileDAO().getAllGameProfiles()
+    }
+
+    fun addGameProfile(profile : GameProfile){
+        db.gameProfileDAO().insertGameProfile(profile)
     }
 
 }

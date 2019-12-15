@@ -31,6 +31,7 @@
         <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists.ListDetailedViewActivity" />
         <activity android:name="edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.chooselisttoadd.ChooseListToAddGameActivity" />
         <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.NewGameProfileActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.ProfileGames" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -1,12 +1,12 @@
 package edu.isel.pdm.beegeesapp.bgg.request
 
 import android.os.Parcelable
-import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchType
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RequestInfo(
-    var mode: Type,
+    var mode: SearchType,
     var keyWord: String? = null,
     var limit: Int = 10,
     var skip: Int = 0

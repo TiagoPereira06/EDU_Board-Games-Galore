@@ -1,5 +1,5 @@
 package edu.isel.pdm.beegeesapp.bgg.primaryActivities.search
 
-enum class Type {
+enum class SearchType {
     Artist, Publisher, Name, Trending
 }

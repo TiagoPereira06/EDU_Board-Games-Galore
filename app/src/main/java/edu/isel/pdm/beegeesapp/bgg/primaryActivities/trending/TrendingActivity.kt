@@ -21,9 +21,9 @@ import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GameViewHolder
 import edu.isel.pdm.beegeesapp.bgg.primaryActivities.GameDetailedViewActivity
-import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchType
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
-import kotlinx.android.synthetic.main.activity_trending.*
+import kotlinx.android.synthetic.main.activity_showgameslist.*
 
 class TrendingActivity : AppCompatActivity() {
 
@@ -47,20 +47,20 @@ class TrendingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repo = (application as BggApplication).repo
-        setContentView(R.layout.activity_trending)
+        setContentView(R.layout.activity_showgameslist)
 
         supportActionBar?.title = getString(R.string.dash_trendingInfo)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
 
-        trending_recycler_view.layoutManager = LinearLayoutManager(this)
-        trending_recycler_view.setHasFixedSize(true)
+        games_recycler_view.layoutManager = LinearLayoutManager(this)
+        games_recycler_view.setHasFixedSize(true)
 
-        layoutManager = trending_recycler_view.layoutManager as LinearLayoutManager
+        layoutManager = games_recycler_view.layoutManager as LinearLayoutManager
 
         /**
          * On scroll listener
          */
-        trending_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        games_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 gamesViewModel.checkIfDataIsNeeded(layoutManager.findLastVisibleItemPosition()) {
@@ -70,10 +70,10 @@ class TrendingActivity : AppCompatActivity() {
         })
 
         gamesViewModel = ViewModelProviders
-            .of(this, getViewModelFactory(RequestInfo(Type.Trending)))
+            .of(this, getViewModelFactory(RequestInfo(SearchType.Trending)))
             .get(GamesViewModel::class.java)
 
-        trending_recycler_view.adapter = getGamesAdapter()
+        games_recycler_view.adapter = getGamesAdapter()
 
         gamesViewModel.content.observe(this, Observer {
             pullToRefresh.isRefreshing = false
@@ -105,7 +105,7 @@ class TrendingActivity : AppCompatActivity() {
         val size = gamesViewModel.getLiveDataSize()
         if (position == 0) { // position = 0 <=> LiveData is empty/cleared, no old items present
             // notify all items ->
-            (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+            (games_recycler_view.adapter as GameViewHolder.GamesListAdapter)
                 .notifyDataSetChanged()
         } else {
             val gamesNumber = size - position
@@ -114,7 +114,7 @@ class TrendingActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "No more games found!", Toast.LENGTH_SHORT)
                     .show()
             } else { // notify only inserted items
-                (trending_recycler_view.adapter as GameViewHolder.GamesListAdapter)
+                (games_recycler_view.adapter as GameViewHolder.GamesListAdapter)
                     .notifyItemRangeInserted(position, gamesNumber)
             }
         }

@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,8 +17,9 @@ import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.GamesRepository
+import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.DialogType
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.createnewlist.CreateNewListDialog
-import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.createnewlist.IChosenListDialogListener
+import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.createnewlist.IChosenStringDialogListener
 import edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.detaileduserlists.ListDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.primaryActivities.userlists.view.ListsListAdapter
 import kotlinx.android.parcel.Parcelize
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_userlists.*
 
 @Parcelize
 class UserListsActivity : AppCompatActivity(),
-    IChosenListDialogListener, Parcelable {
+    IChosenStringDialogListener, Parcelable {
 
 
     private val REQUEST_CODE = 12
@@ -105,7 +105,7 @@ class UserListsActivity : AppCompatActivity(),
         }
 
     }
-    override fun chosenListName(name: String) {
+    override fun chosenName(name: String, type : DialogType) {
         if (currentCustomUserLists.find{it.listName == name }==null) {
             currentCustomUserLists.add(CustomUserList(name))
             listRvAdapter.notifyDataSetChanged()

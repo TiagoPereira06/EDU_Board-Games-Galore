@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.DialogType
 
 class CreateNewListDialog : AppCompatDialogFragment() {
 
@@ -39,7 +39,7 @@ class CreateNewListDialog : AppCompatDialogFragment() {
         alert.setView(view)
 
         this.addB.setOnClickListener {
-            (activity as (IChosenListDialogListener)).chosenListName(this.chooseListView.text.toString())
+            (activity as (IChosenStringDialogListener)).chosenName(this.chooseListView.text.toString(),DialogType.NewList)
             dismiss()
         }
 

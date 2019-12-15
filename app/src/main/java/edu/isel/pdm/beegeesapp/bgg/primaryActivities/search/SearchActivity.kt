@@ -57,7 +57,7 @@ class SearchActivity : AppCompatActivity() {
             searchType = intent.getParcelableExtra("SEARCH_KEYWORD") as RequestInfo
         } else {
             supportActionBar?.title = getString(R.string.dash_search)
-            searchType = RequestInfo(Type.Name, null)
+            searchType = RequestInfo(SearchType.Name, null)
         }
 
         searchGames = ViewModelProviders
@@ -154,8 +154,8 @@ class SearchActivity : AppCompatActivity() {
 
         lastItemClicked = if (initialSearch) {
             when (searchType.mode) {
-                Type.Artist -> menu?.findItem(R.id.search_artist)
-                Type.Publisher -> menu?.findItem(R.id.search_publisher)
+                SearchType.Artist -> menu?.findItem(R.id.search_artist)
+                SearchType.Publisher -> menu?.findItem(R.id.search_publisher)
                 else -> menu?.findItem(R.id.search_name)
             }
 
@@ -192,13 +192,13 @@ class SearchActivity : AppCompatActivity() {
         lastItemClicked?.isChecked = false
         when (item.itemId) {
             R.id.search_artist -> {
-                searchType.mode = Type.Artist
+                searchType.mode = SearchType.Artist
             }
             R.id.search_publisher -> {
-                searchType.mode = Type.Publisher
+                searchType.mode = SearchType.Publisher
             }
             R.id.search_name -> {
-                searchType.mode = Type.Name
+                searchType.mode = SearchType.Name
             }
         }
         searchView?.queryHint = "Search by ${searchType.mode}"

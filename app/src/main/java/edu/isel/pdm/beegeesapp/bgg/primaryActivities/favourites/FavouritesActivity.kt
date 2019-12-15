@@ -1,5 +1,6 @@
 package edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -38,14 +39,22 @@ class FavouritesActivity : AppCompatActivity() {
         val profileRv = findViewById<RecyclerView>(R.id.profiles_recycler_view)
         profileRv.layoutManager = LinearLayoutManager(this)
 
-        currentGameProfilesLists = mutableListOf<GameProfile>()
+        //currentGameProfilesLists = mutableListOf<GameProfile>()
+        currentGameProfilesLists = repo.getAllGameProfilesList()
 
+/*
         currentGameProfilesLists.add(GameProfile("Teste 1"))
         currentGameProfilesLists.add(GameProfile("Teste 2"))
         currentGameProfilesLists.add(GameProfile("Teste 3"))
         currentGameProfilesLists.add(GameProfile("Teste 4"))
         currentGameProfilesLists.add(GameProfile("Teste 5"))
         currentGameProfilesLists.add(GameProfile("Teste 6"))
+
+        currentGameProfilesLists.forEach {
+            repo.addGameProfile(it)
+        }
+*/
+
 
         profileRv.adapter = ProfileListAdapter(application as BggApplication,currentGameProfilesLists)
 
@@ -56,6 +65,16 @@ class FavouritesActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+          val newGameProfile = data!!.getParcelableExtra<GameProfile>("RETURN_NEWGAMEPROFILE")
+            //GUARDAR NO REPO!
+            currentGameProfilesLists.add(newGameProfile)
+            profiles_recycler_view.swapAdapter(ProfileListAdapter(application as BggApplication,currentGameProfilesLists),false)
+        }
     }
+}
 
 

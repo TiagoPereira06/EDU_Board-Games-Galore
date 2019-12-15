@@ -15,7 +15,7 @@ import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchActivity
-import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.Type
+import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchType
 import kotlinx.android.synthetic.main.activity_detailedgameview.*
 
 
@@ -57,7 +57,7 @@ class GameDetailedViewActivity : AppCompatActivity() {
                     a1.typeface = ResourcesCompat.getFont(this,R.font.biryani)
                     a1.setOnClickListener {
                         val info = RequestInfo(
-                            Type.Artist,
+                            SearchType.Artist,
                             a1.text as String
                         )
                         val intent = Intent(this, SearchActivity::class.java)
@@ -80,7 +80,7 @@ class GameDetailedViewActivity : AppCompatActivity() {
                 }
                 companyText.setOnClickListener {
                     val info = RequestInfo(
-                        Type.Publisher,
+                        SearchType.Publisher,
                         companyText.text as String
                     )
                     val intent = Intent(this, SearchActivity::class.java)
