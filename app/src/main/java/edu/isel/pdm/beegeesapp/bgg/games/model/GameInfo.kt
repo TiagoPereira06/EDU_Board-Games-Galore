@@ -29,26 +29,19 @@ data class GameInfo(
     val artists: List<String> = Collections.emptyList(),
     val rules_url: String? = "",
     @JsonProperty("url") val gameUrl: String = "",
-    val mechanics: List<GameMechanics> = Collections.emptyList(),
-    val categories: List<GameCategories> = Collections.emptyList(),
+    val mechanics: List<GameMechanic> = Collections.emptyList(),
+    val categories: List<GameCategory> = Collections.emptyList(),
     val price: String = "",
     val average_user_rating: Double = 0.0
-) : Parcelable {
-    constructor(name : String) : this("",0,0,0,0,
-        "https://d2k4q26owzy373.cloudfront.net/40x40/games/uploaded/1559254941010-61PJxjjnbfL.jpg",0,
-        0,0,name,"","", Collections.emptyList(), Collections.emptyList(),"","",
-        listOf(GameMechanics("")), listOf(
-            GameCategories("")
-        ),"",0.0)
+) : Parcelable
 
-}
 
 @Parcelize
-data class GameCategories(
+data class GameCategory(
     val id: String
 ) : Parcelable
 
 @Parcelize
-data class GameMechanics(
+data class GameMechanic(
     val id: String
 ) : Parcelable

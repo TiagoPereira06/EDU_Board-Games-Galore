@@ -24,7 +24,7 @@ class ListDetailedViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             .into(view.thumbGameinList)
 
         view.gameinList_Name.text = game.name
-        view.game_in_list_card.setOnClickListener{ clickListener(game) }
+        view.setOnClickListener { clickListener(game) }
     }
 }
 

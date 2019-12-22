@@ -9,12 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.database.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.userLists.model.UserListsViewModel
 
 class ChooseListViewHolder(val view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
-    private val checkBox: CheckBox = view.findViewById(R.id.chechBoxToAdd)
+    private val checkBox: CheckBox = view.findViewById(R.id.chechBoxtoAdd)
     private val listName: TextView = view.findViewById(R.id.listName)
     private val listSize: TextView = view.findViewById(R.id.listSize)
     private val image: ImageView = view.findViewById(R.id.thumbList)

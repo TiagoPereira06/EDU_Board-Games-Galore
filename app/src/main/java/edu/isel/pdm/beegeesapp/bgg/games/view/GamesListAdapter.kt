@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.GamesInterface
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
-import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 
 class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
@@ -35,9 +35,9 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
                 .fit()
                 .centerCrop()
                 .into(gameThumbnail) // select the ImageView to load it into
-            gameName.text = game.name
 
-            //TODO TRADUÇÃO -> reviews, resource string
+            gameName.text = game.name
+            //TODO TRADUÇÃO & PLACEHOLDERS
             gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
             gamePublisher.text = game.primary_publisher
             gameRating.rating = game.average_user_rating.toFloat()
@@ -45,23 +45,23 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
             cardLayout.setOnClickListener { clickListener(game) }
         }
     }
-
+}
 
     class GamesListAdapter(
-        private val viewModel: GamesViewModel,
+        private val games: GamesInterface,
         private val clickListener: (GameInfo) -> Unit,
         private val addToCollectionListener: (GameInfo) -> Unit
     ) : RecyclerView.Adapter<GameViewHolder>() {
 
         override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
             holder.bindTo(
-                viewModel.getLiveData().value?.get(position),
+                games.getGames()[position],
                 clickListener,
                 addToCollectionListener
             )
         }
 
-        override fun getItemCount(): Int = viewModel.getLiveData().value?.size ?: 0
+        override fun getItemCount(): Int = games.getNumberOfGames()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
             GameViewHolder(
@@ -70,4 +70,3 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
                     .inflate(R.layout.card_game, parent, false) as ViewGroup
             )
     }
-}

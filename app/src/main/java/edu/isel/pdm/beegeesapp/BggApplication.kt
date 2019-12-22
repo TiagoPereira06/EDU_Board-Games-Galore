@@ -8,31 +8,31 @@ import android.os.Build
 import androidx.work.*
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
-import edu.isel.pdm.beegeesapp.bgg.GamesRepository
+import edu.isel.pdm.beegeesapp.bgg.Repository
 import java.util.concurrent.TimeUnit
 
 class BggApplication : Application() {
+
     val PROFILE_NOTIFICATION_CHANNEL_ID: String = "ProfileNotificationChannelId"
     val DB_UPDATE_JOB_ID : String = "DB_UPDATE_JOB_ID"
 
-    lateinit var repo : GamesRepository
+    lateinit var repo: Repository
     lateinit var queue: RequestQueue
     lateinit var workManager: WorkManager
 
-
     override fun onCreate() {
         super.onCreate()
-        repo = GamesRepository(this)
+        repo = Repository(this)
         queue = Volley.newRequestQueue(this)
-        workManager = WorkManager.getInstance()
-        repo.initSettingsConfig()
-        scheduleUpdate()
-        createNotificationChannels()
 
+        workManager = WorkManager.getInstance()
+        scheduleGamesProfileUpdate()
+        createNotificationChannels()
     }
 
-    private fun scheduleUpdate() {
-        val settings = repo.getCurrentNotificationSettings()
+
+    private fun scheduleGamesProfileUpdate() {
+        //todo -> settings guardadas -> val settings = repo.getCurrentNotificationSettings()
 
         val updateRequest = PeriodicWorkRequestBuilder<UpdateGameProfileWorker>(
             1, TimeUnit.DAYS)

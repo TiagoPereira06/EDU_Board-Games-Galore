@@ -3,9 +3,8 @@ package edu.isel.pdm.beegeesapp.bgg.games.model
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.BggApplication
-import edu.isel.pdm.beegeesapp.bgg.GamesRepository
-import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.primaryActivities.search.SearchType
+import edu.isel.pdm.beegeesapp.bgg.GamesInterface
+import edu.isel.pdm.beegeesapp.bgg.Repository
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 
 /**
@@ -16,7 +15,7 @@ private const val INITIAL_INDEX = 5
 /**
  * Flag to check if call to API has already been made or not
  */
-private var readyForMoreData: Boolean = true
+private var readyForMoreData = true
 
 private var insert = 0
 
@@ -25,28 +24,38 @@ private var insert = 0
  */
 private var INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
 
-class GamesViewModel(
-    private val request: RequestInfo,
-    val app: BggApplication
-) : AndroidViewModel(app) {
+class GamesViewModel(val app: BggApplication) : AndroidViewModel(app), GamesInterface {
 
-    private val repo: GamesRepository = app.repo
-    val content: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
+    lateinit var request: RequestInfo
+
+    private val repo: Repository = app.repo
+
+    val games: MutableLiveData<MutableList<GameInfo>> = MutableLiveData()
+
+    fun init(req: RequestInfo): GamesViewModel {
+        request = req
+        return this
+    }
 
     fun clear() {
+        clearSearch()
+        request.clear()
+        games.value?.clear()
+    }
+
+    fun clearSearch() {
         readyForMoreData = true
         INDEX_TO_ASK_MORE_DATA = INITIAL_INDEX
-        request.clear()
-        content.value?.clear()
     }
 
     fun getInsertPosition() = insert
 
-    fun getLiveData(): MutableLiveData<MutableList<GameInfo>> = content
+    fun getLiveData(): MutableLiveData<MutableList<GameInfo>> = games
 
-    fun getLiveDataSize() = content.value?.size ?: 0
+    fun getLiveDataSize() = games.value?.size ?: 0
 
-    fun isValidRequest(): Boolean = (request.keyWord != null || request.mode == SearchType.Trending)
+    fun isValidRequest(): Boolean =
+        (request.keyWord != null || request.searchType == SearchType.Trending)
 
     fun checkIfDataIsNeeded(positionReached: Int, onSuccess: () -> Unit) {
         if (readyForMoreData && positionReached >= INDEX_TO_ASK_MORE_DATA) {
@@ -56,32 +65,32 @@ class GamesViewModel(
         }
     }
 
-    fun getGames(onUpdate: (MutableLiveData<MutableList<GameInfo>>) -> Unit) {
-        repo.requestDataFromAPI(request) {
+    fun getGames(onFail: () -> Unit) {
+        repo.getGames(request, {
+            //On Success
             insert = request.skip
             request.skip += it.games.size
-            if (content.value == null) {
-                content.value = it.games
+
+            if (games.value == null) {
+                games.value = it.games
             } else {
-                content.value!!.addAll(it.games)
-                content.value = content.value //trigger observe
+                games.value!!.addAll(it.games)
+                games.value = games.value //trigger observe
             }
-            onUpdate(content)
             readyForMoreData = true
-        }
+        },
+            {
+                //On Fail
+                onFail()
+            })
     }
 
-    fun getCustomUserListFromRepo(): MutableList<CustomUserList> {
-        return repo.getAllCustomUserLists()
+    override fun getGames(): MutableList<GameInfo> {
+        return games.value!!
     }
 
-    fun addGameToCustomUserList(listNameToAddGame: String, lastGameClicked: GameInfo) {
-        repo.addGameToCustomUserList(listNameToAddGame, lastGameClicked)
-    }
-
-    fun removeGameFromCustomUserList(listNameToRemoveGame: String, lastGameClicked: GameInfo) {
-        repo.removeGameFromCustomUserList(listNameToRemoveGame, lastGameClicked)
-
+    override fun getNumberOfGames(): Int {
+        return getLiveDataSize()
     }
 
 }
