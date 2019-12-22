@@ -145,4 +145,15 @@ class GamesRepository(private val host: BggApplication) {
         return db.notificationSettingsDAO().getNotificationSetings()
     }
 
+    fun updateCurrentNotificationSettings(newSettings: NotificationSettings){
+        db.notificationSettingsDAO().deleteSettings()
+        db.notificationSettingsDAO().updateSettings(newSettings)
+    }
+
+    fun initSettingsConfig() {
+        if(db.notificationSettingsDAO().getNotificationSetings().isEmpty()){
+            db.notificationSettingsDAO().updateSettings(NotificationSettings(1,0,1))
+        }
+    }
+
 }

@@ -25,10 +25,13 @@ class BggApplication : Application() {
         repo = GamesRepository(this)
         queue = Volley.newRequestQueue(this)
         workManager = WorkManager.getInstance()
+        repo.initSettingsConfig()
+        scheduleUpdate()
+        createNotificationChannels()
 
     }
 
-    private fun scheduleDBUpdate() {
+    private fun scheduleUpdate() {
         val settings = repo.getCurrentNotificationSettings()
 
         val updateRequest = PeriodicWorkRequestBuilder<UpdateGameProfileWorker>(

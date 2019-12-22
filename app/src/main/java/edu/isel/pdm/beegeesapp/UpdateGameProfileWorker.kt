@@ -42,13 +42,13 @@ class UpdateGameProfileWorker(context : Context, params : WorkerParameters)
     override fun doWork(): Result {
         return try {
             val app = applicationContext as BggApplication
-            val quotes = syncFetchTodayQuotes(app)
-            syncSaveTodayQuotesFromDTO(app, app.db, quotes)
+            //val quotes = syncFetchTodayQuotes(app)
+            //syncSaveTodayQuotesFromDTO(app, app.db, quotes)
             sendNotification(app)
-            Result.SUCCESS
+            Result.success()
         }
         catch (error: VolleyError) {
-            if (canRecover(error)) Result.RETRY else Result.FAILURE
+            if (canRecover(error)) Result.retry() else Result.failure()
         }
     }
 }

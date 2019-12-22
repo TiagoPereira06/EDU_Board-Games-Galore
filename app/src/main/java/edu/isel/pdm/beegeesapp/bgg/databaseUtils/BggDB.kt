@@ -65,6 +65,12 @@ interface GameProfileDAO{
 interface NotificationSettingsDAO{
     @Query("SELECT * FROM NotificationSettings")
     fun getNotificationSetings() : List<NotificationSettings>
+
+    @Insert
+    fun updateSettings(newSettings: NotificationSettings)
+
+    @Query("DELETE FROM NotificationSettings")
+    fun deleteSettings()
 }
 
 

@@ -9,14 +9,13 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 
 class NotificationSettingsActivity : AppCompatActivity() {
-    private var PRIVATE_MODE = 0
     private lateinit var freqSpinner: Spinner
     private lateinit var batSpinner: Spinner
     private lateinit var metSpinner: Spinner
-    private val choices = mutableListOf<Int>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +37,12 @@ class NotificationSettingsActivity : AppCompatActivity() {
     }
 
     private fun setSpinnersConfig() {
-/*       val settings = repo.getCurrentSetings
-        freqSpinner.setSelection(settings[0])
-        batSpinner.setSelection(settings[1])
-        metSpinner.setSelection(settings[2])*/
-
+        val settings = (application as BggApplication).repo.getCurrentNotificationSettings()
+        if(settings.isNotEmpty()) {
+            freqSpinner.setSelection(settings[0].frequency)
+            batSpinner.setSelection(settings[0].chargingRequired)
+            metSpinner.setSelection(settings[0].meteredConnection)
+        }
     }
 
 
@@ -59,12 +59,12 @@ class NotificationSettingsActivity : AppCompatActivity() {
     }
 
     private fun saveSpinnersSelection() {
-        var saveSettings = NotificationSettings(
+        val saveSettings = NotificationSettings(
             freqSpinner.selectedItemPosition,
             batSpinner.selectedItemPosition,
             metSpinner.selectedItemPosition
             )
-        //repo.updateNotificationSettings(saveSettings)
+        (application as BggApplication).repo.updateCurrentNotificationSettings(saveSettings)
     }
 
     private fun attachAdapterBinary(spinner: Spinner) {
