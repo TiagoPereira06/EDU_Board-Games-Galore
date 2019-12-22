@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--TODO -> TRADUCOES -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground">
+
+    <TextView
+        android:id="@+id/title3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/biryani_bold"
+        android:text="Choose List Thumbnail"
+        android:textAllCaps="true"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title3">
+
+        <TableRow
+            android:id="@+id/row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/sample1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons1" />
+
+            <ImageView
+                android:id="@+id/sample"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons2" />
+
+            <ImageView
+                android:id="@+id/sample2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons3" />
+
+            <ImageView
+                android:id="@+id/sample3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons4" />
+
+            <ImageView
+                android:id="@+id/sample4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons5" />
+
+            <ImageView
+                android:id="@+id/sample5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons6" />
+
+            <ImageView
+                android:id="@+id/sample6"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons7" />
+
+            <ImageView
+                android:id="@+id/sample7"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons8" />
+
+            <ImageView
+                android:id="@+id/sample8"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons9" />
+
+            <ImageView
+                android:id="@+id/sample9"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/samplegameicons10" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/sample11"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons11" />
+
+            <ImageView
+                android:id="@+id/sample12"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons12" />
+
+            <ImageView
+                android:id="@+id/sample13"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons13" />
+
+            <ImageView
+                android:id="@+id/sample14"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons14" />
+
+            <ImageView
+                android:id="@+id/sample15"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons15" />
+
+            <ImageView
+                android:id="@+id/sample16"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons16" />
+
+            <ImageView
+                android:id="@+id/sample17"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons17" />
+
+            <ImageView
+                android:id="@+id/sample18"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons18" />
+
+            <ImageView
+                android:id="@+id/sample19"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons19" />
+
+            <ImageView
+                android:id="@+id/sample20"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons20" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/sample21"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons21" />
+
+            <ImageView
+                android:id="@+id/sample22"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons22" />
+
+            <ImageView
+                android:id="@+id/sample23"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons23" />
+
+            <ImageView
+                android:id="@+id/sample24"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons24" />
+
+            <ImageView
+                android:id="@+id/sample25"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons25" />
+
+            <ImageView
+                android:id="@+id/sample26"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons26" />
+
+            <ImageView
+                android:id="@+id/sample27"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons27" />
+
+            <ImageView
+                android:id="@+id/sample28"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons28" />
+
+            <ImageView
+                android:id="@+id/sample29"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons29" />
+
+            <ImageView
+                android:id="@+id/sample30"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons30" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/sample31"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons31" />
+
+
+            <ImageView
+                android:id="@+id/sample32"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons32" />
+
+
+            <ImageView
+                android:id="@+id/sample33"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@drawable/samplegameicons33" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/cncelButton"
+        android:layout_width="182dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:breakStrategy="simple"
+        android:clickable="true"
+        android:fontFamily="@font/biryani_bold"
+        android:gravity="center"
+        android:text="CANCEL"
+        android:textAlignment="center"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/table"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/applyButton"
+        android:layout_width="185dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:fontFamily="@font/biryani_bold"
+        android:gravity="center"
+        android:text="APPLY"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/table" />
+</androidx.constraintlayout.widget.ConstraintLayout>
