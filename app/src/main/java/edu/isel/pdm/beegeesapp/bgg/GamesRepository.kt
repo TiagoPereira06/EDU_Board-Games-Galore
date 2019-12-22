@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.room.Room
 import com.android.volley.Response
 import edu.isel.pdm.beegeesapp.BggApplication
+import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.NotificationSettings
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.BggDataBase
 import edu.isel.pdm.beegeesapp.bgg.databaseUtils.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
@@ -138,6 +139,10 @@ class GamesRepository(private val host: BggApplication) {
 
     fun addGameProfile(profile : GameProfile){
         db.gameProfileDAO().insertGameProfile(profile)
+    }
+
+    fun getCurrentNotificationSettings():List<NotificationSettings> {
+        return db.notificationSettingsDAO().getNotificationSetings()
     }
 
 }

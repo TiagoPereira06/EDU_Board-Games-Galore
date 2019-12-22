@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.view.get
@@ -26,11 +27,7 @@ class ChooseFavMechanic : AppCompatDialogFragment() {
     private lateinit var mechanicsChipGroup : ChipGroup
     private lateinit var letterChip : Chip
     private lateinit var mechanicChip : Chip
-    private lateinit var applyB : TextView
-    private lateinit var cancelB : TextView
-
-
-
+    private lateinit var applyB : ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,21 +43,18 @@ class ChooseFavMechanic : AppCompatDialogFragment() {
 
         lettersChipGroup = view.findViewById(R.id.letters)
         mechanicsChipGroup = view.findViewById(R.id.mechanics)
-        applyB = view.findViewById(R.id.applyButton3)
+        applyB = view.findViewById(R.id.saveB)
         applyB.setOnClickListener {
-            //TODO:(MELHORAR)
-            val selectedChip = mechanicsChipGroup.findViewById(mechanicsChipGroup.checkedChipId) as Chip
-            if(selectedChip != null) {
+            val checkedId = mechanicsChipGroup.checkedChipId
+            if(checkedId!=-1){
+                val selectedChip = mechanicsChipGroup.findViewById(checkedId) as Chip
                 (activity as (IChosenStringDialogListener)).chosenName(
                     selectedChip.text.toString(),
                     DialogType.NewMechanic
                 )
                 dismiss()
+
             }
-        }
-        cancelB = view.findViewById(R.id.cancelButton)
-        cancelB.setOnClickListener {
-            dismiss()
         }
 
         letterChip=view.findViewById(R.id.letterChipExample)
@@ -127,7 +121,7 @@ class ChooseFavMechanic : AppCompatDialogFragment() {
             }
             lettersChipGroup.addView(chip)
         }
-        lettersChipGroup.check(1)//A
+        lettersChipGroup.check(1)
         lastLetterClicked = lettersChipGroup[1] as CompoundButton
     }
 

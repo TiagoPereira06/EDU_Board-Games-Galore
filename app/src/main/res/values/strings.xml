@@ -22,4 +22,18 @@
     <string name="dash_userLists">Collections</string>
     <string name="dash_userListsInfo">Your games lists</string>
 
+    <string-array name="notificationFreq_Array">
+        <item>Hourly</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+
+    <string-array name="notificationBinaray_Array">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
+
+
+
 </resources>

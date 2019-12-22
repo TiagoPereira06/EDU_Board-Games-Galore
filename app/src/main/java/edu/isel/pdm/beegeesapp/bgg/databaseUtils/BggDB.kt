@@ -1,6 +1,7 @@
 package edu.isel.pdm.beegeesapp.bgg.databaseUtils
 
 import androidx.room.*
+import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.NotificationSettings
 import edu.isel.pdm.beegeesapp.bgg.primaryActivities.favourites.model.GameProfile
 
 @Dao
@@ -60,6 +61,12 @@ interface GameProfileDAO{
     fun insertGameProfile(profile: GameProfile)
 }
 
+@Dao
+interface NotificationSettingsDAO{
+    @Query("SELECT * FROM NotificationSettings")
+    fun getNotificationSetings() : List<NotificationSettings>
+}
+
 
 
 @Database(
@@ -67,7 +74,8 @@ interface GameProfileDAO{
         Mechanic::class,
         Category::class,
         CustomUserList::class,
-        GameProfile::class
+        GameProfile::class,
+        NotificationSettings::class
     ], version = 1
 )
 @TypeConverters(
@@ -78,5 +86,5 @@ abstract class BggDataBase : RoomDatabase() {
     abstract fun mechanicsDAO(): MechanicsDAO
     abstract fun userListDAO(): UserListDAO
     abstract fun gameProfileDAO(): GameProfileDAO
-
+    abstract fun notificationSettingsDAO(): NotificationSettingsDAO
 }

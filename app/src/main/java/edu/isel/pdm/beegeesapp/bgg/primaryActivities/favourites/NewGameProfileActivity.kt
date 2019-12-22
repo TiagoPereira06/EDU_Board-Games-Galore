@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import edu.isel.pdm.beegeesapp.R
-import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.ChooseThumbDialog
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.DialogType
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.choosefavmecandcat.ChooseFavCategory
 import edu.isel.pdm.beegeesapp.bgg.auxiliaryActivities.dialogs.choosefavmecandcat.ChooseFavMechanic
@@ -35,14 +34,12 @@ class NewGameProfileActivity : AppCompatActivity(),IChosenStringDialogListener {
 
         catButton.setOnClickListener {
             val dialog =  ChooseFavCategory()
-            dialog.retainInstance = true
             dialog.show(supportFragmentManager, "Category Dialog")
 
         }
 
         mecButton.setOnClickListener {
             val dialog =  ChooseFavMechanic()
-            dialog.retainInstance = true
             dialog.show(supportFragmentManager, "Mechanic Dialog")
         }
 

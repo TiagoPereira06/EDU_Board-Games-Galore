@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.view.get
 import com.google.android.material.chip.Chip
@@ -26,8 +26,7 @@ class ChooseFavCategory : AppCompatDialogFragment() {
     private lateinit var categoryChipGroup : ChipGroup
     private lateinit var letterChip : Chip
     private lateinit var categoryChip : Chip
-    private lateinit var applyB : TextView
-    private lateinit var cancelB : TextView
+    private lateinit var applyB : ImageView
 
 
 
@@ -46,16 +45,17 @@ class ChooseFavCategory : AppCompatDialogFragment() {
 
         lettersChipGroup = view.findViewById(R.id.letters1)
         categoryChipGroup = view.findViewById(R.id.categories)
-        applyB = view.findViewById(R.id.applyButton4)
+        applyB = view.findViewById(R.id.saveB2)
         applyB.setOnClickListener {
-            val selectedChip = categoryChipGroup.findViewById(categoryChipGroup.checkedChipId) as Chip
-            (activity as (IChosenStringDialogListener)).chosenName(selectedChip.text.toString(),
-                DialogType.NewCategory)
-            dismiss()
-        }
-        cancelB = view.findViewById(R.id.cancelButton4)
-        cancelB.setOnClickListener {
-            dismiss()
+            val checkedId = categoryChipGroup.checkedChipId
+            if(checkedId!=-1) {
+                val selectedChip = categoryChipGroup.findViewById(checkedId) as Chip
+                (activity as (IChosenStringDialogListener)).chosenName(
+                    selectedChip.text.toString(),
+                    DialogType.NewCategory
+                )
+                dismiss()
+            }
         }
 
         letterChip=view.findViewById(R.id.letter1ChipExample)
@@ -82,7 +82,7 @@ class ChooseFavCategory : AppCompatDialogFragment() {
         val alert = AlertDialog.Builder(activity)
         alert.setView(view)
 
-    return alert.create()
+        return alert.create()
     }
 
     private fun fillMap(mecList: MutableList<Category>) {

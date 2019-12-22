@@ -50,12 +50,14 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.0'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.10.0'
     implementation 'androidx.core:core:1.1.0'
-    implementation "androidx.room:room-runtime:2.2.2"
-    kapt "androidx.room:room-compiler:2.2.2"
+    implementation "androidx.room:room-runtime:2.2.3"
+    kapt "androidx.room:room-compiler:2.2.3"
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'com.google.android.material:material:1.0.0'
+    implementation "android.arch.work:work-runtime-ktx:1.0.1"
+    implementation "android.arch.work:work-firebase:1.0.0-alpha11"
 
 
 
