@@ -4,13 +4,11 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.view.get
@@ -137,9 +135,9 @@ class ChooseFavCategory : AppCompatDialogFragment() {
     private fun updateCategories(map : Map<Char, List<String>>, categoryLetter: Char) {
         categoriesChipGroup.removeAllViews()
 
-        for (category in map[categoryLetter]!!) {
+        for (category in map.getValue(categoryLetter)) {
             val chip = Chip(context)
-            chip.chipBackgroundColor = resources.getColorStateList(R.color.colorPrimaryDark)
+            chip.chipBackgroundColor = resources.getColorStateList(R.color.colorPrimary)
             chip.highlightColor = categoryChip.highlightColor
             chip.typeface = categoryChip.typeface
             chip.fontFeatureSettings = categoryChip.fontFeatureSettings

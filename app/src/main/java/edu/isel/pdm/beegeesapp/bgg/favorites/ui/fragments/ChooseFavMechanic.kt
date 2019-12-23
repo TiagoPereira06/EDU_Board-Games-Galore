@@ -4,13 +4,11 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.view.get
@@ -68,13 +66,11 @@ class ChooseFavMechanic : AppCompatDialogFragment() {
                 val selectedChip = mechanicsChipGroup.findViewById(chipId) as Chip
                 (activity as (IChosenStringDialogListener)).chosenName(
                     selectedChip.text.toString(),
-                    DialogType.NewCategory
+                    DialogType.NewMechanic
                 )
                 dismiss()
             }
         }
-
-
         letterChip = view.findViewById(R.id.letterChipExample)
         letterChip.visibility = View.GONE
         mechanicChip = view.findViewById(R.id.mechanicChipExample)
@@ -88,7 +84,11 @@ class ChooseFavMechanic : AppCompatDialogFragment() {
         mechanics.mechanics.observe(this, Observer {
             val map = getMapOfMechanics(mechanics.mechanics.value!!)
             initMechanicsChips(map)
+
         })
+
+
+
 
         if (savedInstanceState == null) {
             mechanics.getMechanics {

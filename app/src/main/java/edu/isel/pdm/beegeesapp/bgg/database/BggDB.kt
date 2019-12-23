@@ -17,6 +17,9 @@ interface CategoriesDAO {
     @Insert
     fun insertAll(vararg categories : Category)
 
+    @Query("SELECT C.id FROM Category AS C WHERE name = :categoryName")
+    fun findCategoryIdByName(categoryName: String): String
+
 
 }
 
@@ -31,6 +34,10 @@ interface MechanicsDAO {
 
     @Insert
     fun insertAll(vararg mechanics : Mechanic)
+
+    @Query("SELECT M.id FROM Mechanic AS M WHERE name = :mechanicName")
+    fun findMechanicIdByName(mechanicName: String): String
+
 }
 
 @Dao

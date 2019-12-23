@@ -221,8 +221,8 @@ class Repository(private val host: BggApplication) {
         val future: RequestFuture<GamesMapper> = RequestFuture.newFuture()
         var searchQuery = "&"
         if (gameProfile.designer != "") searchQuery += "designer=$gameProfile.designer&"
-        if (gameProfile.categoryName != "") searchQuery += "category=${gameProfile.categoryName}&"
-        if (gameProfile.mechanicName != "") searchQuery += "mechanic=${gameProfile.mechanicName}&"
+        if (gameProfile.categoryName != "") searchQuery += "categories=${getCategoryId(gameProfile.categoryName)}&"
+        if (gameProfile.mechanicName != "") searchQuery += "mechanics=${getMechanicId(gameProfile.mechanicName)}&"
         if (gameProfile.publisher != "") searchQuery += "publisher=${gameProfile.publisher}&"
 
         val url = baseUrl + searchUrl + trending
@@ -230,6 +230,14 @@ class Repository(private val host: BggApplication) {
         Log.v("DEBUG", query)
         host.queue.add(GetRequest(query, future, future))
         return future.get().games
+    }
+
+    private fun getMechanicId(mechanicName: String): String {
+        return db.mechanicsDAO().findMechanicIdByName(mechanicName)
+    }
+
+    private fun getCategoryId(categoryName: String): String {
+        return db.categoriesDAO().findCategoryIdByName(categoryName)
     }
 
     fun updateGameProfile(gameProfile: GameProfile) {

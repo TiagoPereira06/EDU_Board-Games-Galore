@@ -35,7 +35,8 @@ class BggApplication : Application() {
         //todo -> settings guardadas -> val settings = repo.getCurrentNotificationSettings()
 
         val updateRequest = PeriodicWorkRequestBuilder<UpdateGameProfileWorker>(
-            1, TimeUnit.DAYS)
+            1, TimeUnit.SECONDS
+        )
             .setConstraints(
                 Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.UNMETERED)

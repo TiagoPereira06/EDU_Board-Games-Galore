@@ -29,10 +29,21 @@ class ProfileListAdapter(
         holder.view.profileName.text = gameProfile.name
         val drawableResourceId: Int = host.resources.getIdentifier(gameProfile.drawableResourceName, "drawable", host.packageName)
         holder.view.thumbProfile.setImageResource(drawableResourceId)
-        holder.view.categoryChip.text = gameProfile.categoryName
-        holder.view.mechanicChip.text = gameProfile.mechanicName
-        holder.view.artistNameProfile.text = "Artist: " + gameProfile.designer
-        holder.view.publisherNameProfile.text = "Publisher: "+gameProfile.publisher
+        if (gameProfile.categoryName == "") {
+            holder.view.categoryChip.visibility = View.INVISIBLE
+        } else
+            holder.view.categoryChip.text = gameProfile.categoryName
+        if (gameProfile.mechanicName == "") {
+            holder.view.mechanicChip.visibility = View.INVISIBLE
+        } else
+            holder.view.mechanicChip.text = gameProfile.mechanicName
+
+        if (gameProfile.designer != "") holder.view.artistNameProfile.text = gameProfile.designer
+        else holder.view.artistNameProfile.visibility = View.INVISIBLE
+
+        if (gameProfile.publisher != "") holder.view.publisherNameProfile.text =
+            gameProfile.publisher
+        else holder.view.publisherNameProfile.visibility = View.INVISIBLE
         holder.view.setOnClickListener {
             profileOnClickListener(gameProfile)
         }

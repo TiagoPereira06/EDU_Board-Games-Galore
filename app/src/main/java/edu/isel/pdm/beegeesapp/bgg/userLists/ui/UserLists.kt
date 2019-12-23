@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.snackbar.Snackbar
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.SimpleItemTouchHelper
-import edu.isel.pdm.beegeesapp.bgg.dialog.CreateNewListDialog
-import edu.isel.pdm.beegeesapp.bgg.dialog.IChosenListDialogListener
 import edu.isel.pdm.beegeesapp.bgg.database.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.userLists.view.ListsOfListsAdapter
+import edu.isel.pdm.beegeesapp.bgg.dialog.CreateNewListDialog
+import edu.isel.pdm.beegeesapp.bgg.dialog.DialogType
+import edu.isel.pdm.beegeesapp.bgg.dialog.IChosenStringDialogListener
 import edu.isel.pdm.beegeesapp.bgg.userLists.UserListsActivity
+import edu.isel.pdm.beegeesapp.bgg.userLists.view.ListsOfListsAdapter
 import kotlinx.android.synthetic.main.recycler_view_floating_button.*
 
 class UserLists : UserListsActivity(),
-    IChosenListDialogListener {
+    IChosenStringDialogListener {
 
     private val CODE : Int = 20
 
@@ -118,7 +119,7 @@ class UserLists : UserListsActivity(),
             .show()
     }
 
-    override fun chosenListName(name: String) {
+    override fun chosenName(name: String, type: DialogType) {
         viewModel.addCustomUserListByName(name,
             {
                 // List added

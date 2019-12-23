@@ -69,6 +69,7 @@ class AddGameToCollection : UserListsActivity() {
                 refreshUiAndClearLists()
             }
         }
+        finish()
         return super.onOptionsItemSelected(item)
     }
 

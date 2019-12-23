@@ -43,10 +43,13 @@ class UpdateGameProfileWorker(context : Context, params : WorkerParameters)
         }
 
         //TODO -> INTERNACIONALIZAÇÃO
+        var contextText = ""
+        listOfProfileChanges.forEach { contextText += it.name + " " }
+
         val notification = NotificationCompat.Builder(app, app.PROFILE_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.game_icon)
             .setContentTitle("New Games Available ")
-            .setContentText("Check those out : ${listOfProfileChanges.forEach { it.name }} ")
+            .setContentText("Check those out : $contextText")
             .setContentIntent(action)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()

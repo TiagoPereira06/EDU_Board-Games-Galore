@@ -30,6 +30,8 @@ class ProfileGameActivity : AppCompatActivity() {
 
         var profile = intent.getParcelableExtra(GAME_PROFILE) as GameProfile
 
+        supportActionBar?.title = profile.name
+
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager = LinearLayoutManager(this)
 

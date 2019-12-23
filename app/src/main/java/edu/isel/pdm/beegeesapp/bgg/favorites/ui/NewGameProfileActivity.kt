@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.chip.Chip
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.database.genRandomThumbnailImage
 import edu.isel.pdm.beegeesapp.bgg.dialog.DialogType
@@ -34,7 +35,6 @@ class NewGameProfileActivity : AppCompatActivity(), IChosenStringDialogListener 
 
         catButton.setOnClickListener {
             val dialog =  ChooseFavCategory()
-            dialog.retainInstance = true
             dialog.show(supportFragmentManager, "Category Dialog")
 
         }
@@ -43,6 +43,17 @@ class NewGameProfileActivity : AppCompatActivity(), IChosenStringDialogListener 
             val dialog =  ChooseFavMechanic()
             dialog.retainInstance = true
             dialog.show(supportFragmentManager, "Mechanic Dialog")
+        }
+
+        val catChip = findViewById<Chip>(R.id.categorychip)
+        catChip.setOnCloseIconClickListener {
+            catChip.text = ""
+            catChip.visibility = View.INVISIBLE
+        }
+        val mecChip = findViewById<Chip>(R.id.mechanicchip)
+        mecChip.setOnCloseIconClickListener {
+            mecChip.text = ""
+            mecChip.visibility = View.INVISIBLE
         }
 
     }
@@ -56,6 +67,7 @@ class NewGameProfileActivity : AppCompatActivity(), IChosenStringDialogListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val returnIntent = Intent()
         val profileName = profileName.text.toString()
+        if (profileName == "") return false
         val categoryName = categorychip.text.toString()
         val mechanicName = mechanicchip.text.toString()
         val publisherName = publishername.text.toString()
