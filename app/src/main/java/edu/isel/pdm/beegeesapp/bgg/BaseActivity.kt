@@ -18,15 +18,14 @@ abstract class BaseActivity : AppCompatActivity() {
     // Setting Interface View
     protected abstract fun setContentView()
 
+    // Initialization data
+    protected abstract fun initModel()
+
     // Initialization header
     protected abstract fun initTitle()
 
-
     // Initialization interface
     protected abstract fun initView()
-
-    // Initialization data
-    protected abstract fun initModel()
 
     // Behavior initialization
     protected abstract fun initBehavior(savedInstanceState: Bundle?)

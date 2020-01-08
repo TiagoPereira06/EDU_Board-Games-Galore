@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.BaseActivity
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameCardListeners
 import edu.isel.pdm.beegeesapp.bgg.userLists.ui.AddGameToCollection
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
@@ -61,20 +62,8 @@ abstract class GamesActivity : BaseActivity() {
     }
 
     private fun getGamesAdapter(): GamesListAdapter =
-        GamesListAdapter(viewModel,
-            { gameItem : GameInfo -> gameItemClicked(gameItem) },
-            { gameItem : GameInfo -> addToCollectionItemClicked(gameItem) })
+        GamesListAdapter(viewModel,GameCardListeners(this))
 
-    private fun gameItemClicked(gameItem: GameInfo) {
-        val intent = Intent(this, GameDetailedViewActivity::class.java)
-        intent.putExtra("GAME_OBJECT", gameItem)
-        startActivity(intent)
-    }
 
-    private fun addToCollectionItemClicked(gameItem: GameInfo) {
-        val intent = Intent(this, AddGameToCollection::class.java)
-        intent.putExtra("GAME_INFO", gameItem)
-        startActivity(intent)
-    }
 
 }

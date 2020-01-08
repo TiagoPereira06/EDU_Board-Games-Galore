@@ -12,6 +12,7 @@ import com.mikhaellopez.circularimageview.CircularImageView
 import com.squareup.picasso.Picasso
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.GamesInterface
+import edu.isel.pdm.beegeesapp.bgg.games.model.GameCardListeners
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 
 class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
@@ -26,8 +27,7 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
 
     fun bindTo(
         game: GameInfo?,
-        clickListener: (GameInfo) -> Unit,
-        addToCollectionListener: (GameInfo) -> Unit
+        listeners: GameCardListeners
     ) {
         if (game != null) {
             Picasso.get()
@@ -41,32 +41,31 @@ class GameViewHolder(view: ViewGroup) : RecyclerView.ViewHolder(view) {
             gameReviewersCount.text = "(${game.num_user_ratings} reviews)"
             gamePublisher.text = game.primary_publisher
             gameRating.rating = game.average_user_rating.toFloat()
-            collectionImage.setOnClickListener { addToCollectionListener(game) }
-            cardLayout.setOnClickListener { clickListener(game) }
+            collectionImage.setOnClickListener { listeners.addToCollectionItemClicked(game) }
+            cardLayout.setOnClickListener { listeners.gameItemClicked(game) }
         }
     }
 }
 
-    class GamesListAdapter(
-        private val games: GamesInterface,
-        private val clickListener: (GameInfo) -> Unit,
-        private val addToCollectionListener: (GameInfo) -> Unit
-    ) : RecyclerView.Adapter<GameViewHolder>() {
+class GamesListAdapter(
+    private val games: GamesInterface,
+    private val listeners : GameCardListeners
 
-        override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-            holder.bindTo(
-                games.getGames()[position],
-                clickListener,
-                addToCollectionListener
-            )
-        }
+) : RecyclerView.Adapter<GameViewHolder>() {
 
-        override fun getItemCount(): Int = games.getNumberOfGames()
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
-            GameViewHolder(
-                LayoutInflater
-                    .from(parent.context)
-                    .inflate(R.layout.card_game, parent, false) as ViewGroup
-            )
+    override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
+        holder.bindTo(
+            games.getGames()[position],
+            listeners
+        )
     }
+
+    override fun getItemCount(): Int = games.getNumberOfGames()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
+        GameViewHolder(
+            LayoutInflater
+                .from(parent.context)
+                .inflate(R.layout.card_game, parent, false) as ViewGroup
+        )
+}

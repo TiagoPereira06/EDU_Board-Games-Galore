@@ -40,18 +40,26 @@ class Repository(private val host: BggApplication) {
         onSuccess: (GamesMapper) -> Unit,
         onFail: () -> Unit
         ) {
-        val typeURL : String = when (mode.searchType) {
-            SearchType.Trending -> (trending)
-            SearchType.Artist -> ("artist=" + mode.keyWord)
-            SearchType.Publisher -> ("publisher=" + mode.keyWord)
-            SearchType.Name -> ("name=" + mode.keyWord)
-        }
+        val url = urlBuilder(mode)
+        addRequestToQueue(url, onSuccess, onFail)
+    }
 
-        val url =
-            baseUrl + searchUrl + typeURL + skipUrl + mode.skip + limitUrl + mode.limit + clientId
+    fun getGames(
+        gameProfile: GameProfile,
+        onSuccess: (GamesMapper) -> Unit,
+        onFail: () -> Unit
+    ) {
+        val query = urlBuilder(gameProfile)
+        addRequestToQueue(query, onSuccess, onFail)
+    }
 
+    private fun addRequestToQueue(
+        query: String,
+        onSuccess: (GamesMapper) -> Unit,
+        onFail: () -> Unit
+    ) {
         val request = GetRequest(
-            url,
+            query,
             Response.Listener {
                 onSuccess(it)
             },
@@ -75,7 +83,6 @@ class Repository(private val host: BggApplication) {
         host.queue.add(request)
     }
 
-
     private fun requestCategoriesFromApi(onSuccess: (MutableList<Category>) -> Unit, onFail: () -> Unit) {
         val url = baseUrl + categoriesUrl + clientId
 
@@ -89,6 +96,7 @@ class Repository(private val host: BggApplication) {
 
         host.queue.add(request)
     }
+
 
     fun addCustomUserListByName(newListName: String, onSuccess : (CustomUserList) -> Unit, onFail : () -> Unit) {
         runAsync {
@@ -219,14 +227,7 @@ class Repository(private val host: BggApplication) {
 
     fun getGameProfileChanges(gameProfile: GameProfile): MutableList<GameInfo> {
         val future: RequestFuture<GamesMapper> = RequestFuture.newFuture()
-        var searchQuery = "&"
-        if (gameProfile.designer != "") searchQuery += "designer=$gameProfile.designer&"
-        if (gameProfile.categoryName != "") searchQuery += "categories=${getCategoryId(gameProfile.categoryName)}&"
-        if (gameProfile.mechanicName != "") searchQuery += "mechanics=${getMechanicId(gameProfile.mechanicName)}&"
-        if (gameProfile.publisher != "") searchQuery += "publisher=${gameProfile.publisher}&"
-
-        val url = baseUrl + searchUrl + trending
-        val query = url + searchQuery.substring(0, searchQuery.length - 1) + clientId
+        val query = urlBuilder(gameProfile)
         Log.v("DEBUG", query)
         host.queue.add(GetRequest(query, future, future))
         return future.get().games
@@ -236,12 +237,33 @@ class Repository(private val host: BggApplication) {
         return db.mechanicsDAO().findMechanicIdByName(mechanicName)
     }
 
-    private fun getCategoryId(categoryName: String): String {
+     private fun getCategoryId(categoryName: String): String {
         return db.categoriesDAO().findCategoryIdByName(categoryName)
     }
 
     fun updateGameProfile(gameProfile: GameProfile) {
         db.gameProfileDAO().updateGameProfile(gameProfile)
+    }
+
+    private fun urlBuilder(mode: RequestInfo): String {
+        val typeURL: String = when (mode.searchType) {
+            SearchType.Trending -> (trending)
+            SearchType.Artist -> ("artist=" + mode.keyWord)
+            SearchType.Publisher -> ("publisher=" + mode.keyWord)
+            SearchType.Name -> ("name=" + mode.keyWord)
+        }
+        return (baseUrl + searchUrl + typeURL + skipUrl + mode.skip + limitUrl + mode.limit + clientId).replace(" ", "%20")
+    }
+
+    private fun urlBuilder(gameProfile: GameProfile): String {
+        var searchQuery = "&"
+        if (gameProfile.designer != "") searchQuery += "designer=$gameProfile.designer&"
+        if (gameProfile.categoryName != "") searchQuery += "categories=${getCategoryId(gameProfile.categoryName)}&"
+        if (gameProfile.mechanicName != "") searchQuery += "mechanics=${getMechanicId(gameProfile.mechanicName)}&"
+        if (gameProfile.publisher != "") searchQuery += "publisher=${gameProfile.publisher}&"
+
+        val url = baseUrl + searchUrl + trending
+        return  ((url + searchQuery.substring(0, searchQuery.length - 1) + clientId).replace(" ","%20"))
     }
 }
 

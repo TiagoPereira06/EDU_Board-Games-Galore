@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.database.genRandomThumbnailImage
@@ -18,17 +17,19 @@ import edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments.ChooseFavCategory
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments.ChooseFavMechanic
 import kotlinx.android.synthetic.main.activity_newgameprofile.*
 
-class NewGameProfileActivity : AppCompatActivity(), IChosenStringDialogListener {
+class NewGameProfileActivity : FavoritesBaseActivity(), IChosenStringDialogListener {
 
     private lateinit var randomThumb : String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun setContentView() {
         setContentView(R.layout.activity_newgameprofile)
+    }
 
+    override fun initTitle() {
         supportActionBar?.title = "New Game Profile"
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))    }
 
+    override fun initView() {
         randomThumb = genRandomThumbnailImage()
         val drawableResourceId: Int = resources.getIdentifier(randomThumb, "drawable", packageName)
         profileThumb.setImageResource(drawableResourceId)
@@ -54,8 +55,30 @@ class NewGameProfileActivity : AppCompatActivity(), IChosenStringDialogListener 
         mecChip.setOnCloseIconClickListener {
             mecChip.text = ""
             mecChip.visibility = View.INVISIBLE
-        }
+        }    }
 
+    override fun initBehavior(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            val mec = viewModel.mec
+            val cat = viewModel.cat
+            if (!mec.isNullOrBlank()) {
+                mechanicchip.text = mec
+                mechanicchip.visibility = View.VISIBLE
+
+            }
+            if(!cat.isNullOrBlank()) {
+                categorychip.text = cat
+                categorychip.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (mechanicchip.text.toString().isNotEmpty())
+            viewModel.mec = mechanicchip.text
+        if (categorychip.text.toString().isNotEmpty())
+            viewModel.cat = categorychip.text
+        super.onSaveInstanceState(outState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -67,15 +90,23 @@ class NewGameProfileActivity : AppCompatActivity(), IChosenStringDialogListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val returnIntent = Intent()
         val profileName = profileName.text.toString()
-        if (profileName == "") return false
         val categoryName = categorychip.text.toString()
         val mechanicName = mechanicchip.text.toString()
         val publisherName = publishername.text.toString()
         val designerName = designerName.text.toString()
-        val newGameProfile = GameProfile(randomThumb, profileName, categoryName, mechanicName, publisherName, designerName)
-        returnIntent.putExtra("RETURN_NEWGAMEPROFILE", newGameProfile)
-        setResult(Activity.RESULT_OK, returnIntent)
-        finish()
+        if(viewModel.checkConstraints(profileName,categoryName,mechanicName)) {
+            val newGameProfile = GameProfile(
+                randomThumb,
+                profileName,
+                categoryName,
+                mechanicName,
+                publisherName,
+                designerName
+            )
+            returnIntent.putExtra("RETURN_NEWGAMEPROFILE", newGameProfile)
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
+        }
         return super.onOptionsItemSelected(item)
     }
 

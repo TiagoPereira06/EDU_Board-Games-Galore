@@ -53,7 +53,6 @@ class DashboardActivity : AppCompatActivity() {
 
         // FAVORITES
         favView.setOnClickListener {
-            //TODO
             startActivity(Intent(this, FavouritesActivity::class.java))
         }
         val title1: TextView = favView.findViewById(R.id.titleView) as TextView
@@ -88,7 +87,6 @@ class DashboardActivity : AppCompatActivity() {
         image3.setImageResource(R.drawable.informationdash)
         // CUSTOM LIST
         userList.setOnClickListener{
-            //TODO
             startActivity(Intent(this,
                 UserLists::class.java))
         }

@@ -8,7 +8,12 @@ import edu.isel.pdm.beegeesapp.bgg.Repository
 class FavoritesViewModel(
     val app: BggApplication
 ) : AndroidViewModel(app) {
+
     private val repo: Repository = app.repo
+
+    var cat: CharSequence? = null
+    var mec: CharSequence? = null
+
 
     val favorites : MutableLiveData<MutableList<GameProfile>> = MutableLiveData()
 
@@ -42,9 +47,17 @@ class FavoritesViewModel(
     fun addNewGameProfile(newGameProfile: GameProfile, onSuccess : () -> Unit, onFail: () -> Unit) {
         repo.insertGameProfile( newGameProfile,
             {
-            favorites.value!!.add(newGameProfile)
-            onSuccess()
+                favorites.value!!.add(newGameProfile)
+                onSuccess()
             },
             { onFail() } )
+    }
+
+    fun checkConstraints(
+        profileName: String,
+        categoryName: String,
+        mechanicName: String
+    ): Boolean {
+        return (profileName.isNotEmpty() && (categoryName.isNotEmpty() || mechanicName.isNotEmpty()))
     }
 }
