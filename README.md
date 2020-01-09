@@ -1,4 +1,4 @@
-
+**(Relatório detalhado na raiz do repositório)**
 
 **Licenciatura em Engenharia Informática e de Computadores**
 
@@ -6,10 +6,7 @@
 
 
 
-# Trabalho Prático
-
-
-# BGG
+# Trabalho Prático - BGG Application
 
 
 
