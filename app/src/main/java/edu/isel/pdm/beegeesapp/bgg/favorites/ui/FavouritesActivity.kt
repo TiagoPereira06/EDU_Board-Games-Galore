@@ -82,10 +82,6 @@ class FavouritesActivity : FavoritesBaseActivity() {
 
     private fun gameProfileClicked(profile: GameProfile) {
         val intent = Intent(this, ProfileGameActivity::class.java)
-        /*profile.gamesList.add(GameInfo("yoyo", 20, 25, 40 ,40, "https://s3-us-west-1.amazonaws.com/5cc.images/games/uploaded/1559254941010-61PJxjjnbfL.jpg",
-            6, 20, 1998, "Teste", "vamos passar com 20", "sim", emptyList(), emptyList(), null))
-
-         */
         intent.putExtra("GAME_PROFILE_OBJECT", profile)
         startActivity(intent)
     }
