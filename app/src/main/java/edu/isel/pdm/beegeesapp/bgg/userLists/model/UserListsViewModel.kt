@@ -23,9 +23,9 @@ class UserListsViewModel(
 
     fun getUserLists() : MutableLiveData<MutableList<CustomUserList>> = userLists
 
-    fun getListsToAddGame() : MutableList<CustomUserList> = listsToAddGame.value!!
+    private fun getListsToAddGame() : MutableList<CustomUserList> = listsToAddGame.value!!
 
-    fun getListsToRemoveGame() : MutableList<CustomUserList> = listsToRemoveGame.value!!
+    private fun getListsToRemoveGame() : MutableList<CustomUserList> = listsToRemoveGame.value!!
 
     fun getCheckedLists() = checkedList
 

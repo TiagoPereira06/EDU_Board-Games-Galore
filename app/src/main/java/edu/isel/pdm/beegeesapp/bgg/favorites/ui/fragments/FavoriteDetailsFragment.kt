@@ -3,6 +3,7 @@ package edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,6 @@ import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameDetailsViewModel
 abstract class FavoriteDetailsFragment : AppCompatDialogFragment() {
 
     private lateinit var lastLetterClicked: CompoundButton
-
     protected lateinit var lettersChipGroup: ChipGroup
 
     protected lateinit var detailsChipGroup: ChipGroup
@@ -40,6 +40,10 @@ abstract class FavoriteDetailsFragment : AppCompatDialogFragment() {
     protected lateinit var viewModel: GameDetailsViewModel
 
     protected lateinit var fragment: View
+
+    protected lateinit var primaryColorStateList: ColorStateList
+
+    protected lateinit var dialogType: DialogType
 
     abstract fun initViews()
 
@@ -91,14 +95,13 @@ abstract class FavoriteDetailsFragment : AppCompatDialogFragment() {
                 ).show()
             }
         }
-
         applyButton.setOnClickListener {
             val chipId = detailsChipGroup.checkedChipId
             if (chipId > 0) {
                 val selectedChip = detailsChipGroup.findViewById(chipId) as Chip
                 (activity as (IChosenStringDialogListener)).chosenName(
                     selectedChip.text.toString(),
-                    DialogType.NewCategory
+                    dialogType
                 )
             }
             dismiss()
@@ -137,7 +140,10 @@ abstract class FavoriteDetailsFragment : AppCompatDialogFragment() {
                 if (isChecked) {
                     lastLetterClicked = buttonView
                     setSelectedDetail(chip.text.toString())
-                    updateChips(detailsMap, lastLetterClicked.text[0])
+                    updateChips(
+                        detailsMap,
+                        lastLetterClicked.text[0]
+                    )
                 } else if (lastLetterClicked.text.toString() == buttonView.text.toString()) {
                     detailsChipGroup.removeAllViews()
                 }
@@ -157,12 +163,15 @@ abstract class FavoriteDetailsFragment : AppCompatDialogFragment() {
         lastLetterClicked = lettersChipGroup[1] as CompoundButton
     }
 
-    private fun updateChips(detailsMap: MutableMap<Char, List<String>>, letter: Char) {
+    private fun updateChips(
+        detailsMap: MutableMap<Char, List<String>>,
+        letter: Char
+    ) {
         detailsChipGroup.removeAllViews()
 
         for (detail in detailsMap.getValue(letter)) {
             val chip = Chip(context)
-            chip.chipBackgroundColor = resources.getColorStateList(R.color.colorPrimary)
+            chip.chipBackgroundColor = primaryColorStateList
             chip.highlightColor = detailChip.highlightColor
             chip.typeface = detailChip.typeface
             chip.fontFeatureSettings = detailChip.fontFeatureSettings

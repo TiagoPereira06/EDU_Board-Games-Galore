@@ -2,6 +2,7 @@ package edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments
 
 import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.dialog.DialogType
 
 class ChooseFavMechanic : FavoriteDetailsFragment() {
 
@@ -12,6 +13,8 @@ class ChooseFavMechanic : FavoriteDetailsFragment() {
         lettersChipGroup = fragment.findViewById(R.id.letters)
         detailsChipGroup = fragment.findViewById(R.id.mechanics)
         applyButton = fragment.findViewById(R.id.saveB)
+        primaryColorStateList = resources.getColorStateList(R.color.colorPrimaryDark)
+        dialogType = DialogType.NewMechanic
     }
 
     override fun getDetails(): MutableLiveData<List<String>> {
@@ -29,4 +32,5 @@ class ChooseFavMechanic : FavoriteDetailsFragment() {
     override fun setSelectedDetail(detail: String) {
         viewModel.setSelectedMechanic(detail)
     }
+
 }

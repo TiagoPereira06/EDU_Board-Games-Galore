@@ -4,6 +4,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.Repository
+import edu.isel.pdm.beegeesapp.bgg.favorites.ui.NotificationSettings
 
 class FavoritesViewModel(
     val app: BggApplication
@@ -43,6 +44,18 @@ class FavoritesViewModel(
         repo.getMechanics( { mechanics.value = it },{ onFail() })
     }
 
+    fun getNotificationSettings(): NotificationSettings? {
+        val settings = repo.getCurrentNotificationSettings()
+        if(settings==null){
+            repo.initSettingsConfig()
+            return repo.getCurrentNotificationSettings()
+        }
+        return settings
+    }
+
+    fun saveSpinnersSelection(freq: Int, bat: Int, met: Int) {
+        repo.updateCurrentNotificationSettings(NotificationSettings(freq,bat,met))
+    }
 
     fun addNewGameProfile(newGameProfile: GameProfile, onSuccess : () -> Unit, onFail: () -> Unit) {
         repo.insertGameProfile( newGameProfile,
@@ -53,11 +66,30 @@ class FavoritesViewModel(
             { onFail() } )
     }
 
+    fun removeGameProfile(gameProfile : GameProfile, onSuccess: () -> Unit, onFail: () -> Unit) {
+        repo.removeGameProfile(
+            gameProfile,
+            {
+                favorites.value?.remove(gameProfile)
+                onSuccess()
+            },
+            onFail
+        )
+    }
+
     fun checkConstraints(
         profileName: String,
         categoryName: String,
         mechanicName: String
     ): Boolean {
         return (profileName.isNotEmpty() && (categoryName.isNotEmpty() || mechanicName.isNotEmpty()))
+    }
+
+    fun addGameProfile(profileRemoved: GameProfile, oldPosition: Int, onSuccess: () -> Unit) {
+        repo.insertGameProfile(profileRemoved, onSuccess) {
+            favorites.value?.add(oldPosition, profileRemoved)
+            onSuccess()
+        }
+
     }
 }

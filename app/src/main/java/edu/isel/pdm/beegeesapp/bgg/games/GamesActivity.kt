@@ -1,6 +1,5 @@
 package edu.isel.pdm.beegeesapp.bgg.games
 
-import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,11 +9,8 @@ import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.BaseActivity
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameCardListeners
-import edu.isel.pdm.beegeesapp.bgg.userLists.ui.AddGameToCollection
-import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GamesListAdapter
-import edu.isel.pdm.beegeesapp.bgg.games.ui.GameDetailedViewActivity
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import kotlinx.android.synthetic.main.recycler_view.*
 import java.lang.Exception

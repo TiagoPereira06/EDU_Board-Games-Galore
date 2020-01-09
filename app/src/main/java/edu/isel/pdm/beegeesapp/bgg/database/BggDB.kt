@@ -1,7 +1,7 @@
 package edu.isel.pdm.beegeesapp.bgg.database
 
 import androidx.room.*
-import edu.isel.pdm.beegeesapp.bgg.NotificationSettings
+import edu.isel.pdm.beegeesapp.bgg.favorites.ui.NotificationSettings
 import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
 
 
@@ -77,6 +77,9 @@ interface GameProfileDAO{
 
     @Insert
     fun insertGameProfile(profile: GameProfile)
+
+    @Delete
+    fun deleteGameProfile(gameProfile: GameProfile): Int
 }
 
 @Dao

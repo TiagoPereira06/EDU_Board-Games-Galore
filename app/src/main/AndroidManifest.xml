@@ -33,7 +33,7 @@
         <activity android:name="edu.isel.pdm.beegeesapp.bgg.favorites.ui.FavouritesActivity" />
         <activity android:name="edu.isel.pdm.beegeesapp.bgg.favorites.ui.NewGameProfileActivity" />
         <activity android:name="edu.isel.pdm.beegeesapp.bgg.favorites.ui.ProfileGameActivity" />
-        <activity android:name="edu.isel.pdm.beegeesapp.bgg.NotificationSettingsActivity" />
+        <activity android:name="edu.isel.pdm.beegeesapp.bgg.favorites.ui.NotificationSettingsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

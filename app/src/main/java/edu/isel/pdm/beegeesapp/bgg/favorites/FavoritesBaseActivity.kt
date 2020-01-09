@@ -1,4 +1,4 @@
-package edu.isel.pdm.beegeesapp.bgg.favorites.ui
+package edu.isel.pdm.beegeesapp.bgg.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

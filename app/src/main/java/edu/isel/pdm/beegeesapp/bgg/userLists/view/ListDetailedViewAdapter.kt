@@ -46,29 +46,8 @@ class ListDetailedViewAdapter(
         holder.bindTo(userList.gamesList[position], clickListener)
     }
 
-/*
-    fun removeItem(viewHolder: RecyclerView.ViewHolder, host : Activity) {
-        removedPosition = viewHolder.adapterPosition
-        removedGame = userList.gamesList[viewHolder.adapterPosition]
 
-        userList.gamesList.removeAt(viewHolder.adapterPosition)
-        notifyItemRemoved(viewHolder.adapterPosition)
-
-        Snackbar
-            .make(viewHolder.itemView, removedGame!!.name+" Deleted",Snackbar.LENGTH_LONG).setAction("UNDO") {
-                userList.gamesList.add(removedPosition,removedGame!!)
-                notifyItemInserted(removedPosition)
-            }.setActionTextColor(ContextCompat.getColor(host,R.color.colorPrimary))
-            .show()
-    }
-    */
 
 
 
 }
-
-@Parcelize
-data class GamePosObj(
-    val pos : Int ,
-    val game : GameInfo
-) : Parcelable

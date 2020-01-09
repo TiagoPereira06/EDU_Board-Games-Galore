@@ -10,6 +10,7 @@ import edu.isel.pdm.beegeesapp.bgg.database.Category
 import edu.isel.pdm.beegeesapp.bgg.database.CustomUserList
 import edu.isel.pdm.beegeesapp.bgg.database.Mechanic
 import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
+import edu.isel.pdm.beegeesapp.bgg.favorites.ui.NotificationSettings
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
 import edu.isel.pdm.beegeesapp.bgg.games.model.SearchType
@@ -39,7 +40,7 @@ class Repository(private val host: BggApplication) {
         mode: RequestInfo,
         onSuccess: (GamesMapper) -> Unit,
         onFail: () -> Unit
-        ) {
+    ) {
         val url = urlBuilder(mode)
         addRequestToQueue(url, onSuccess, onFail)
     }
@@ -69,7 +70,10 @@ class Repository(private val host: BggApplication) {
         host.queue.add(request)
     }
 
-    private fun requestMechanicsFromApi(onSuccess: (MutableList<Mechanic>) -> Unit, onFail: () -> Unit) {
+    private fun requestMechanicsFromApi(
+        onSuccess: (MutableList<Mechanic>) -> Unit,
+        onFail: () -> Unit
+    ) {
         val url = baseUrl + mechanicsUrl + clientId
 
         val request = GetMechanicsRequest(url,
@@ -83,7 +87,10 @@ class Repository(private val host: BggApplication) {
         host.queue.add(request)
     }
 
-    private fun requestCategoriesFromApi(onSuccess: (MutableList<Category>) -> Unit, onFail: () -> Unit) {
+    private fun requestCategoriesFromApi(
+        onSuccess: (MutableList<Category>) -> Unit,
+        onFail: () -> Unit
+    ) {
         val url = baseUrl + categoriesUrl + clientId
 
         val request = GetCategoriesRequest(url,
@@ -98,7 +105,11 @@ class Repository(private val host: BggApplication) {
     }
 
 
-    fun addCustomUserListByName(newListName: String, onSuccess : (CustomUserList) -> Unit, onFail : () -> Unit) {
+    fun addCustomUserListByName(
+        newListName: String,
+        onSuccess: (CustomUserList) -> Unit,
+        onFail: () -> Unit
+    ) {
         runAsync {
             db.userListDAO().findListByName(newListName)
         }.andThen {
@@ -119,20 +130,19 @@ class Repository(private val host: BggApplication) {
         }.andThen { onInsert() }
     }
 
-    fun removeCustomUserList(userList : CustomUserList, onSuccess : () -> Unit, onFail : () -> Unit) {
+    fun removeCustomUserList(userList: CustomUserList, onSuccess: () -> Unit, onFail: () -> Unit) {
         runAsync {
             db.userListDAO().delete(userList)
         }.andThen { rowsAffected ->
             if (rowsAffected == 1) {
                 onSuccess()
-            }
-            else {
+            } else {
                 onFail()
             }
         }
     }
 
-    fun getAllCustomUserLists(success : (MutableList<CustomUserList>) -> Unit) {
+    fun getAllCustomUserLists(success: (MutableList<CustomUserList>) -> Unit) {
         runAsync {
             db.userListDAO().getAllLists()
         }.andThen {
@@ -146,7 +156,7 @@ class Repository(private val host: BggApplication) {
         }.andThen { onFinish() }
     }
 
-    fun updateCustomUserLists(lists : List<CustomUserList>, onFinish: () -> Unit) {
+    fun updateCustomUserLists(lists: List<CustomUserList>, onFinish: () -> Unit) {
         runAsync {
             db.userListDAO().updateLists(*lists.toTypedArray())
         }.andThen {
@@ -198,7 +208,7 @@ class Repository(private val host: BggApplication) {
         }
     }
 
-    fun getGameProfiles(success : (MutableList<GameProfile>) -> Unit ) {
+    fun getGameProfiles(success: (MutableList<GameProfile>) -> Unit) {
         runAsync {
             db.gameProfileDAO().getAllGameProfiles()
         }.andThen {
@@ -206,7 +216,19 @@ class Repository(private val host: BggApplication) {
         }
     }
 
-    fun insertGameProfile(gameProfile : GameProfile, onSuccess: () -> Unit, onFail: () -> Unit) {
+    fun removeGameProfile(gameProfile: GameProfile, onSuccess: () -> Unit, onFail: () -> Unit) {
+        runAsync {
+            db.gameProfileDAO().deleteGameProfile(gameProfile)
+        }.andThen { rowsAffected ->
+            if (rowsAffected == 1) {
+                onSuccess()
+            } else {
+                onFail()
+            }
+        }
+    }
+
+    fun insertGameProfile(gameProfile: GameProfile, onSuccess: () -> Unit, onFail: () -> Unit) {
         runAsync {
             db.gameProfileDAO().findProfileByName(gameProfile.name)
         }.andThen {
@@ -216,8 +238,7 @@ class Repository(private val host: BggApplication) {
                 }.andThen {
                     onSuccess()
                 }
-            }
-            else onFail()
+            } else onFail()
         }
     }
 
@@ -237,7 +258,7 @@ class Repository(private val host: BggApplication) {
         return db.mechanicsDAO().findMechanicIdByName(mechanicName)
     }
 
-     private fun getCategoryId(categoryName: String): String {
+    private fun getCategoryId(categoryName: String): String {
         return db.categoriesDAO().findCategoryIdByName(categoryName)
     }
 
@@ -252,7 +273,10 @@ class Repository(private val host: BggApplication) {
             SearchType.Publisher -> ("publisher=" + mode.keyWord)
             SearchType.Name -> ("name=" + mode.keyWord)
         }
-        return (baseUrl + searchUrl + typeURL + skipUrl + mode.skip + limitUrl + mode.limit + clientId).replace(" ", "%20")
+        return (baseUrl + searchUrl + typeURL + skipUrl + mode.skip + limitUrl + mode.limit + clientId).replace(
+            " ",
+            "%20"
+        )
     }
 
     private fun urlBuilder(gameProfile: GameProfile): String {
@@ -263,26 +287,34 @@ class Repository(private val host: BggApplication) {
         if (gameProfile.publisher != "") searchQuery += "publisher=${gameProfile.publisher}&"
 
         val url = baseUrl + searchUrl + trending
-        return  ((url + searchQuery.substring(0, searchQuery.length - 1) + clientId).replace(" ","%20"))
+        return ((url + searchQuery.substring(0, searchQuery.length - 1) + clientId).replace(
+            " ",
+            "%20"
+        ))
     }
-}
 
-    /*
     fun getCurrentNotificationSettings(): NotificationSettings? {
-        return db.
+        return db.notificationSettingsDAO().getNotificationSettings()
     }
 
 
-    fun updateCurrentNotificationSettings(newSettings: NotificationSettings){
+    fun updateCurrentNotificationSettings(newSettings: NotificationSettings) {
         db.notificationSettingsDAO().deleteSettings()
         db.notificationSettingsDAO().updateSettings(newSettings)
     }
 
     fun initSettingsConfig() {
-        if(db.notificationSettingsDAO().getNotificationSettings().isEmpty()){
-            db.notificationSettingsDAO().updateSettings(NotificationSettings(1,0,1))
+        if (db.notificationSettingsDAO().getNotificationSettings()==null) {
+            db.notificationSettingsDAO().updateSettings(
+                NotificationSettings(
+                    1,
+                    0,
+                    1
+                )
+            )
         }
     }
+}
 
-     */
+
 

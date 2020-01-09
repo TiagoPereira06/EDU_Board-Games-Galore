@@ -2,6 +2,7 @@ package edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments
 
 import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.dialog.DialogType
 
 class ChooseFavCategory : FavoriteDetailsFragment() {
 
@@ -12,6 +13,10 @@ class ChooseFavCategory : FavoriteDetailsFragment() {
         lettersChipGroup = fragment.findViewById(R.id.letters1)
         detailsChipGroup = fragment.findViewById(R.id.categories)
         applyButton = fragment.findViewById(R.id.saveB2)
+        primaryColorStateList = resources.getColorStateList(R.color.colorPrimary)
+        dialogType = DialogType.NewCategory
+
+
     }
 
     override fun getDetails(): MutableLiveData<List<String>> {

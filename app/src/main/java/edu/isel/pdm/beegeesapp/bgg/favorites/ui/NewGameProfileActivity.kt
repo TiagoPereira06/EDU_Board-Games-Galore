@@ -12,6 +12,7 @@ import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.database.genRandomThumbnailImage
 import edu.isel.pdm.beegeesapp.bgg.dialog.DialogType
 import edu.isel.pdm.beegeesapp.bgg.dialog.IChosenStringDialogListener
+import edu.isel.pdm.beegeesapp.bgg.favorites.FavoritesBaseActivity
 import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments.ChooseFavCategory
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments.ChooseFavMechanic
@@ -36,6 +37,7 @@ class NewGameProfileActivity : FavoritesBaseActivity(), IChosenStringDialogListe
 
         catButton.setOnClickListener {
             val dialog =  ChooseFavCategory()
+            dialog.retainInstance = true
             dialog.show(supportFragmentManager, "Category Dialog")
 
         }
@@ -72,7 +74,6 @@ class NewGameProfileActivity : FavoritesBaseActivity(), IChosenStringDialogListe
             }
         }
     }
-
     override fun onSaveInstanceState(outState: Bundle) {
         if (mechanicchip.text.toString().isNotEmpty())
             viewModel.mec = mechanicchip.text
