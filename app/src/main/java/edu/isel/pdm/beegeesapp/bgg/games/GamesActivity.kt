@@ -13,7 +13,6 @@ import edu.isel.pdm.beegeesapp.bgg.games.model.GamesViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.view.GamesListAdapter
 import edu.isel.pdm.beegeesapp.bgg.request.RequestInfo
 import kotlinx.android.synthetic.main.recycler_view.*
-import java.lang.Exception
 
 abstract class GamesActivity : BaseActivity() {
 
@@ -28,20 +27,6 @@ abstract class GamesActivity : BaseActivity() {
         }
     }
 
-    override fun setContentView() {
-        setContentView(R.layout.recycler_view)
-    }
-
-    override fun initView() {
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
-
-        recycler_view.setHasFixedSize(true)
-        recycler_view.layoutManager = LinearLayoutManager(this)
-
-        layoutManager = recycler_view.layoutManager as LinearLayoutManager
-
-        recycler_view.adapter = getGamesAdapter()
-    }
 
     override fun initModel() {
         viewModel = ViewModelProviders
@@ -55,6 +40,22 @@ abstract class GamesActivity : BaseActivity() {
             return intent.getParcelableExtra("REQUEST_INFO") as RequestInfo
         }
         throw Exception("Something unexpected happened!")
+    }
+
+
+    override fun setContentView() {
+        setContentView(R.layout.recycler_view)
+    }
+
+    override fun initView() {
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorAccent)))
+
+        recycler_view.setHasFixedSize(true)
+        recycler_view.layoutManager = LinearLayoutManager(this)
+
+        layoutManager = recycler_view.layoutManager as LinearLayoutManager
+
+        recycler_view.adapter = getGamesAdapter()
     }
 
     private fun getGamesAdapter(): GamesListAdapter =

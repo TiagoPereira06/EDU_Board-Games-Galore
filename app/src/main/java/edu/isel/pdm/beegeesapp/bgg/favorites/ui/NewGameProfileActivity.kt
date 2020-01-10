@@ -9,11 +9,11 @@ import android.view.MenuItem
 import android.view.View
 import com.google.android.material.chip.Chip
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.database.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.database.genRandomThumbnailImage
 import edu.isel.pdm.beegeesapp.bgg.dialog.DialogType
 import edu.isel.pdm.beegeesapp.bgg.dialog.IChosenStringDialogListener
 import edu.isel.pdm.beegeesapp.bgg.favorites.FavoritesBaseActivity
-import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments.ChooseFavCategory
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.fragments.ChooseFavMechanic
 import kotlinx.android.synthetic.main.activity_newgameprofile.*

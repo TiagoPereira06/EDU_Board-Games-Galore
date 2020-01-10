@@ -47,14 +47,6 @@ open class GamesWithPagination : GamesActivity() {
         })
     }
 
-    fun onSwipeListener() {
-        // On Refresh listener
-        searchSwipeLayout.setOnRefreshListener {
-            viewModel.clear()
-            (recycler_view.adapter as GamesListAdapter).notifyDataSetChanged()
-            updateGames()
-        }
-    }
 
     fun updateGames() {
         if (!isRequestValid()) {
@@ -62,11 +54,20 @@ open class GamesWithPagination : GamesActivity() {
         } else {
             searchSwipeLayout.isRefreshing = true
             viewModel.getGames {
-                //Todo -> Tradução
                 Toast.makeText(this, "Check your Internet Connection!", Toast.LENGTH_SHORT)
                     .show()
                 searchSwipeLayout.isRefreshing = false
             }
+        }
+    }
+
+
+    fun onSwipeListener() {
+        // On Refresh listener
+        searchSwipeLayout.setOnRefreshListener {
+            viewModel.clear()
+            (recycler_view.adapter as GamesListAdapter).notifyDataSetChanged()
+            updateGames()
         }
     }
 

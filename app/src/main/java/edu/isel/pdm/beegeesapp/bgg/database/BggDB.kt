@@ -2,8 +2,6 @@ package edu.isel.pdm.beegeesapp.bgg.database
 
 import androidx.room.*
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.NotificationSettings
-import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
-
 
 @Dao
 interface CategoriesDAO {
@@ -19,8 +17,6 @@ interface CategoriesDAO {
 
     @Query("SELECT C.id FROM Category AS C WHERE name = :categoryName")
     fun findCategoryIdByName(categoryName: String): String
-
-
 }
 
 @Dao
@@ -42,6 +38,7 @@ interface MechanicsDAO {
 
 @Dao
 interface UserListDAO {
+
     @Query("SELECT * FROM CustomUserList as CU ORDER BY datetime(CU.creationDate)")
     fun getAllLists(): MutableList<CustomUserList>
 
@@ -63,6 +60,7 @@ interface UserListDAO {
 
 @Dao
 interface GameProfileDAO{
+
     @Query("DELETE FROM GameProfile")
     fun nukeTable()
 
@@ -72,18 +70,19 @@ interface GameProfileDAO{
     @Update
     fun updateGameProfile(gameProfile: GameProfile)
 
-    @Query("SELECT * FROM GameProfile")
+    @Query("SELECT * FROM GameProfile AS GP ORDER BY datetime(GP.creationDate)")
     fun getAllGameProfiles() : MutableList<GameProfile>
 
     @Insert
     fun insertGameProfile(profile: GameProfile)
 
     @Delete
-    fun deleteGameProfile(gameProfile: GameProfile): Int
+    fun delete(gameProfile: GameProfile): Int
 }
 
 @Dao
 interface NotificationSettingsDAO{
+
     @Query("SELECT * FROM NotificationSettings")
     fun getNotificationSettings() : NotificationSettings?
 

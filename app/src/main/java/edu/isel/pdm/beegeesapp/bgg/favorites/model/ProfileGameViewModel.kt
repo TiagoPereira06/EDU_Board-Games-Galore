@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.bgg.GamesInterface
 import edu.isel.pdm.beegeesapp.bgg.Repository
+import edu.isel.pdm.beegeesapp.bgg.database.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 
 
@@ -13,13 +14,12 @@ class ProfileGameViewModel(val app: BggApplication, private val gameProfile: Gam
     private val repo: Repository = app.repo
      val games: MutableLiveData<MutableList<GameInfo>> = MutableLiveData(gameProfile.gamesList)
 
-
     fun updateGames(onFail: () -> Unit, onFinish: () -> Unit) {
         repo.getGames(gameProfile, {
             //On Success
-            if (gameProfile.gamesList.size !=it.games.size) {
+            if (gameProfile.gamesList.size != it.games.size) {
                 games.value = it.games
-                gameProfile.gamesList = games.value!!
+                gameProfile.gamesList = it.games
                 repo.updateGameProfile(gameProfile)
             }
             onFinish()

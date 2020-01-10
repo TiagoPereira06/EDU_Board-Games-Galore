@@ -1,15 +1,10 @@
 package edu.isel.pdm.beegeesapp.bgg
 
-import android.util.Log
 import androidx.room.Room
 import com.android.volley.Response
 import com.android.volley.toolbox.RequestFuture
 import edu.isel.pdm.beegeesapp.BggApplication
-import edu.isel.pdm.beegeesapp.bgg.database.BggDataBase
-import edu.isel.pdm.beegeesapp.bgg.database.Category
-import edu.isel.pdm.beegeesapp.bgg.database.CustomUserList
-import edu.isel.pdm.beegeesapp.bgg.database.Mechanic
-import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
+import edu.isel.pdm.beegeesapp.bgg.database.*
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.NotificationSettings
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameInfo
 import edu.isel.pdm.beegeesapp.bgg.games.model.GamesMapper
@@ -218,7 +213,7 @@ class Repository(private val host: BggApplication) {
 
     fun removeGameProfile(gameProfile: GameProfile, onSuccess: () -> Unit, onFail: () -> Unit) {
         runAsync {
-            db.gameProfileDAO().deleteGameProfile(gameProfile)
+            db.gameProfileDAO().delete(gameProfile)
         }.andThen { rowsAffected ->
             if (rowsAffected == 1) {
                 onSuccess()
@@ -238,7 +233,9 @@ class Repository(private val host: BggApplication) {
                 }.andThen {
                     onSuccess()
                 }
-            } else onFail()
+            } else {
+                onFail()
+            }
         }
     }
 
@@ -246,10 +243,9 @@ class Repository(private val host: BggApplication) {
         return db.gameProfileDAO().getAllGameProfiles()
     }
 
-    fun getGameProfileChanges(gameProfile: GameProfile): MutableList<GameInfo> {
+    fun syncGetGameProfileChanges(gameProfile: GameProfile): MutableList<GameInfo> {
         val future: RequestFuture<GamesMapper> = RequestFuture.newFuture()
         val query = urlBuilder(gameProfile)
-        Log.v("DEBUG", query)
         host.queue.add(GetRequest(query, future, future))
         return future.get().games
     }
@@ -304,13 +300,9 @@ class Repository(private val host: BggApplication) {
     }
 
     fun initSettingsConfig() {
-        if (db.notificationSettingsDAO().getNotificationSettings()==null) {
+        if (db.notificationSettingsDAO().getNotificationSettings() == null) {
             db.notificationSettingsDAO().updateSettings(
-                NotificationSettings(
-                    1,
-                    0,
-                    1
-                )
+                NotificationSettings(1, 0, 1)
             )
         }
     }

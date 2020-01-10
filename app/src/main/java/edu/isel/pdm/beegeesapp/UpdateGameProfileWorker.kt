@@ -4,13 +4,12 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.android.volley.VolleyError
-import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
+import edu.isel.pdm.beegeesapp.bgg.database.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.FavouritesActivity
 import edu.isel.pdm.beegeesapp.bgg.favorites.ui.ProfileGameActivity
 
@@ -24,7 +23,6 @@ class UpdateGameProfileWorker(context : Context, params : WorkerParameters)
         app: BggApplication,
         listOfProfileChanges: MutableList<GameProfile>
     ) {
-
         //TODO -> vários profiles com mudanças
         if (listOfProfileChanges.size == 0) return
 
@@ -56,6 +54,7 @@ class UpdateGameProfileWorker(context : Context, params : WorkerParameters)
 
         NotificationManagerCompat.from(app).notify(NOTIFICATION_ID, notification)
     }
+
     private fun canRecover(error: VolleyError): Boolean {
         val statusCode =
             if (error.networkResponse != null) error.networkResponse.statusCode
@@ -66,12 +65,11 @@ class UpdateGameProfileWorker(context : Context, params : WorkerParameters)
 
     override fun doWork(): Result {
         return try {
-            Log.v("DEBUG", "DO WORK !!")
             val app = applicationContext as BggApplication
             val gameProfiles = app.repo.syncGetProfiles()
             val listOfProfileChanges = mutableListOf<GameProfile>()
             gameProfiles.forEach {
-                val list = app.repo.getGameProfileChanges(it)
+                val list = app.repo.syncGetGameProfileChanges(it)
                 if (it.gamesList.size != list.size) {
                     it.gamesList = list
                     app.repo.updateGameProfile(it)

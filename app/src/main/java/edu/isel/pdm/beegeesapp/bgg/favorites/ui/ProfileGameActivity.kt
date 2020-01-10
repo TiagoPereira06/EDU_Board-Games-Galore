@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.BaseActivity
-import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
+import edu.isel.pdm.beegeesapp.bgg.database.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.favorites.model.ProfileGameViewModel
 import edu.isel.pdm.beegeesapp.bgg.games.model.GameCardListeners
 import edu.isel.pdm.beegeesapp.bgg.games.view.GamesListAdapter
 import kotlinx.android.synthetic.main.recycler_view.*
+
 class ProfileGameActivity : BaseActivity() {
 
     companion object {
@@ -35,7 +36,7 @@ class ProfileGameActivity : BaseActivity() {
     private fun getGamesViewModelFactory(application: BggApplication) = object : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ProfileGameViewModel(application,profile) as T
+            return ProfileGameViewModel(application, profile) as T
         }
     }
 
@@ -48,7 +49,6 @@ class ProfileGameActivity : BaseActivity() {
         supportActionBar?.title = profile.name
     }
 
-
     override fun initView() {
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager = LinearLayoutManager(this)
@@ -56,23 +56,28 @@ class ProfileGameActivity : BaseActivity() {
     }
 
     override fun initModel() {
+
         profile = intent.getParcelableExtra(GAME_PROFILE) as GameProfile
+
         viewModel = ViewModelProviders
             .of(this, getGamesViewModelFactory(application as BggApplication))
             .get(ProfileGameViewModel::class.java)
-
-
-
     }
+
     override fun initBehavior(savedInstanceState: Bundle?) {
         observeViewModel()
+
         searchSwipeLayout.setOnRefreshListener {
-            viewModel.updateGames ({
-                Toast.makeText(this,"Check your Internet Connection!",Toast.LENGTH_SHORT).show()
-            },{
-                searchSwipeLayout.isRefreshing = false
-            })
             searchSwipeLayout.isRefreshing = true
+            viewModel.updateGames(
+                {
+                    Toast.makeText(this, "Check your Internet Connection!", Toast.LENGTH_SHORT)
+                        .show()
+                },
+                {
+                searchSwipeLayout.isRefreshing = false
+                }
+            )
         }
     }
 
@@ -82,6 +87,5 @@ class ProfileGameActivity : BaseActivity() {
             searchSwipeLayout.isRefreshing = false
         })
     }
-
 
 }

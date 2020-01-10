@@ -16,8 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
 import edu.isel.pdm.beegeesapp.bgg.SimpleItemTouchHelper
+import edu.isel.pdm.beegeesapp.bgg.database.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.favorites.FavoritesBaseActivity
-import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.favorites.view.ProfileListAdapter
 import kotlinx.android.synthetic.main.recycler_view_floating_button.*
 
@@ -42,6 +42,7 @@ class FavouritesActivity : FavoritesBaseActivity() {
         recyclerView.adapter = ProfileListAdapter(application as BggApplication, viewModel) {
             gameProfile -> gameProfileClicked(gameProfile)
         }
+
         favoritesAdapter = recyclerView.adapter as ProfileListAdapter
 
         val deleteIcon = ContextCompat.getDrawable(this, R.drawable.deleteicon)!!
@@ -124,14 +125,14 @@ class FavouritesActivity : FavoritesBaseActivity() {
             Snackbar.LENGTH_LONG
         )
             .setAction("UNDO") {
-                viewModel.addGameProfile(profileRemoved, oldPosition) {
+                viewModel.addGameProfile(profileRemoved, oldPosition, {
                     favoritesAdapter.notifyItemInserted(oldPosition)
                     Snackbar.make(
                         layout_userLists,
                         "Profile ${profileRemoved.name} Restored",
                         Snackbar.LENGTH_LONG
                     ).show()
-                }
+                }, {})
             }
             .setActionTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
             .show()

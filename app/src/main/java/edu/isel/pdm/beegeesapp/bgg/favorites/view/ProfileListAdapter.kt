@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.isel.pdm.beegeesapp.BggApplication
 import edu.isel.pdm.beegeesapp.R
+import edu.isel.pdm.beegeesapp.bgg.database.GameProfile
 import edu.isel.pdm.beegeesapp.bgg.favorites.model.FavoritesViewModel
-import edu.isel.pdm.beegeesapp.bgg.favorites.model.GameProfile
 import kotlinx.android.synthetic.main.card_gameprofile.view.*
 
 class ProfileListAdapter(

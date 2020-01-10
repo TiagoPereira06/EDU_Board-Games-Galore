@@ -93,7 +93,6 @@ class UserLists : UserListsActivity(),
                 //TODO -> TRADUÇÃO E PLACEHOLDERS
                 Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show()
             })
-
     }
 
     private fun createUndoOption(listRemoved: CustomUserList, oldPosition: Int) {
