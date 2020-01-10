@@ -1,4 +1,4 @@
-
+**(Relatório detalhado na raiz do repositório)**
 
 **Licenciatura em Engenharia Informática e de Computadores**
 
@@ -6,10 +6,7 @@
 
 
 
-# Trabalho Prático
-
-
-# BGG
+# Trabalho Prático - BGG Application
 
 
 
@@ -98,7 +95,7 @@ O seu uso principal é na função de procura e apresentação dos jogos resulta
 
 #### **Actividade Vista Detalhada Jogo**
 
-A actividade vista detalhada do jogo, ao contrário das anteriores, e recorrendo ao padrão de desenho (_MVC_) apenas define a parte de _View_.
+A actividade vista detalhada do jogo, ao contrário das anteriores, e recorrendo ao padrão de desenho (_MVVM_) apenas define a parte de _View_.
 
 Para o seu correto funcionamento é obrigatório a passagem, na forma de _Intent_, do objeto _Game_ a ser apresentado.
 
