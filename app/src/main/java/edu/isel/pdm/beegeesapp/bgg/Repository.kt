@@ -237,6 +237,7 @@ class Repository(private val host: BggApplication) {
                 onFail()
             }
         }
+
     }
 
     fun syncGetProfiles(): MutableList<GameProfile> {
