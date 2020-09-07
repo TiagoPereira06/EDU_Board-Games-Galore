@@ -25,7 +25,8 @@
 
 The aim of this work was to develop a mobile application for _Android_ devices using the _Kotlin_ programming language.
 
-The main theme of the project is board games. All information presented in the application is based on the results of requests made to _API &quot;Board Games Atlas&quot;_
+The main theme of the project is board games. All information presented in the application is based on the results of requests made to &quot;
+<a href="https://www.boardgameatlas.com/api/docs">Board Games Atlas _API </a>&quot;_
 
 The end user will be able to search for specific games by name, author or artist, as well as check the most popular games of the moment, create personalized game lists (_e.g_ Shopping List, Jorge's Favorites) and also the creation of one or more game profiles for which you can receive notification when a new game that fits the profile is launched to the market.
 
