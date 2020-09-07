@@ -17,6 +17,8 @@
 <img src="https://github.com/TiagoPereira06/EDU_Board-Games-Galore/blob/master/docs/screenshots/screenshots.gif" width="300">
 </p>
 
+<p align="center"><i>UI Screens (GIF)</i></p>
+
 
 
 ## **Approach**
@@ -32,3 +34,5 @@ All data regarding the personal use of each user (_e.g_ Game Profiles and Custom
 <p align="center">
 Pedro Tereso | Tiago Pereira
 </p>
+
+Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
