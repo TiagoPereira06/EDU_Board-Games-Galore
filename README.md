@@ -1,5 +1,7 @@
 # Board Games Galore
 
+
+
 <p align="center">
 <img src="https://github.com/TiagoPereira06/EDU_Board-Games-Galore/blob/master/docs/ui/icon.png" width="200">
 </p>
@@ -7,18 +9,14 @@
 
 # UI Showcase
 
-<p align="center">
+
 <img src="https://github.com/TiagoPereira06/EDU_Board-Games-Galore/blob/master/docs/ui/ui%20(1).jpg" width="1500">
+
+
+<p align="center">
+<img src="https://github.com/TiagoPereira06/EDU_Board-Games-Galore/blob/master/docs/screenshots/screenshots.gif" width="300">
 </p>
 
-<img src="https://github.com/TiagoPereira06/EDU_Board-Games-Galore/blob/master/docs/screenshots/Screenshot%20(3).png?raw=true" width="300">
-
-Pedro Tereso 44015
-
-Tiago Pereira 43592
-
-
-<img src="https://github.com/TiagoPereira06/EDU_Board-Games-Galore/blob/master/docs/screenshots/Screenshot%20(3).png?raw=true" width="300">
 
 
 ## **Approach**
@@ -30,3 +28,7 @@ The main theme of the project is board games. All information presented in the a
 The end user will be able to search for specific games by name, author or artist, as well as check the most popular games of the moment, create personalized game lists (_e.g_ Shopping List, Jorge's Favorites) and also the creation of one or more game profiles for which you can receive notification when a new game that fits the profile is launched to the market.
 
 All data regarding the personal use of each user (_e.g_ Game Profiles and Custom Lists) will be stored locally on the device which will allow a correct user experience.
+
+<p align="center">
+Pedro Tereso | Tiago Pereira
+</p>
