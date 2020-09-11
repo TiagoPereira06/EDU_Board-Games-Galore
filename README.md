@@ -7,6 +7,14 @@
 </p>
 
 
+[![License](https://img.shields.io/github/license/TiagoPereira06/EDU_Board-Games-Galore)](https://github.com/i-on-project/android/blob/master/LICENSE)
+[![GitHub tags](https://img.shields.io/github/v/tag/TiagoPereira06/EDU_Board-Games-Galore)](https://github.com/i-on-project/android/tags)
+[![GitHub commits](https://img.shields.io/github/last-commit/TiagoPereira06/EDU_Board-Games-Galore)](https://github.com/i-on-project/android/commits/master)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/TiagoPereira06/EDU_Board-Games-Galore)](https://github.com/i-on-project/android/pulls/)
+[![GitHub issues](https://img.shields.io/github/issues/TiagoPereira06/EDU_Board-Games-Galore)](https://github.com/i-on-project/android/issues/)
+[![GitHub contributors](https://img.shields.io/github/contributors/TiagoPereira06/EDU_Board-Games-Galore)](https://github.com/i-on-project/android/graphs/contributors/)
+
+
 # UI Showcase
 
 
